@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MicroSitioController;
 use App\Models\DenunciaDocumentacion;
 
 /**
@@ -18,6 +19,7 @@ use App\Models\DenunciaDocumentacion;
  * 
  * 
  * RUTAS PUBLICAS PARA LA PAGINA WEB
+ * UTILIZANDO MICROSITIOCONTROLLER
  * 
  * 
  */
@@ -25,15 +27,14 @@ use App\Models\DenunciaDocumentacion;
 
 
 // Ruta de bienvenida
-Route::get('/', function () { return view('micrositio.inicio');})->name('inicio');
-Route::get('/protocolo', function () { return view('micrositio.protocolo');})->name('protocolo');
-Route::get('/pronunciamiento', function () { return view('micrositio.pronunciamiento');})->name('pronunciamiento');
-Route::get('/directorio', function () { return view('micrositio.directorio');})->name('directorio');
-//Route::get('/buzonDenuncia', function () { return view('micrositio.buzonDenuncia');})->name('buzon.denuncia');
-Route::get('/seguimientoDenuncia', function () { return view('micrositio.seguimientoDenuncia');})->name('seguimiento.denuncia');
 
-Route::get('/buzonDenuncia', [DenunciaController::class, 'formularioPublico'])->name('buzonDenuncia');
+Route::get('/', [MicroSitioController::class, 'inicio'])->name('inicio');
+Route::get('/protocolo', [MicroSitioController::class, 'protocolo'])->name('protocolo');
+Route::get('/pronunciamiento', [MicroSitioController::class, 'pronunciamiento'])->name('pronunciamiento');
+Route::get('/directorio', [MicroSitioController::class, 'directorio'])->name('directorio');
+Route::get('/buzonDenuncia', [MicroSitioController::class, 'buzon'])->name('buzonDenuncia');
 
+//Route::get('/seguimientoDenuncia', function () { return view('micrositio.seguimientoDenuncia');})->name('seguimiento.denuncia');
     
     //DECLARAMOS LA VARIABLE A LA CUAL LE CARGAMOS EL METODO LOAD Y LA RUTA DE LA VISTA
     //$pdf = PDF::loadView('pdf.pdf');
@@ -56,8 +57,9 @@ Auth::routes();
 
 //RUTA PARA NUEVAS
 
-Route::middleware(['auth'])->group(function () {
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::middleware(['auth'])->group(function () 
+{
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
 
     /*
     *
