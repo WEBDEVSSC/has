@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
+use Exception;
+
 class DenunciaReincidenciaController extends Controller
 {
     
@@ -96,8 +98,8 @@ class DenunciaReincidenciaController extends Controller
         $registro->save();
 
         // Llamamos las librerias necesarias para enviar un correo y se configura en el metodo build de DenunciaReincidenciaMail
-
-        Mail::send(new DenunciaReincidenciaMail());
+        Mail::to('cesartorres.1688@gmail.com')->send(new DenunciaReincidenciaMail());
+        //Mail::send(new DenunciaReincidenciaMail());
 
         //reincidencia.create
 

@@ -33,6 +33,7 @@ Route::get('/protocolo', [MicroSitioController::class, 'protocolo'])->name('prot
 Route::get('/pronunciamiento', [MicroSitioController::class, 'pronunciamiento'])->name('pronunciamiento');
 Route::get('/directorio', [MicroSitioController::class, 'directorio'])->name('directorio');
 Route::get('/buzonDenuncia', [MicroSitioController::class, 'buzon'])->name('buzonDenuncia');
+Route::post('/buzonDenuncia', [MicroSitioController::class, 'buzonStore'])->name('buzonDenunciaStore');
 
 //Route::get('/seguimientoDenuncia', function () { return view('micrositio.seguimientoDenuncia');})->name('seguimiento.denuncia');
     

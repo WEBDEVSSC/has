@@ -22,26 +22,6 @@ class DenunciaReincidenciaMail extends Mailable
     }
 
     /**
-     * Get the message envelope.
-     */
-    public function envelope(): Envelope
-    {
-        return new Envelope(
-            
-        );
-    }
-
-    /**
-     * Get the message content definition.
-     */
-    public function content(): Content
-    {
-        return new Content(
-            
-        );
-    }
-
-    /**
      * Get the attachments for the message.
      *
      * @return array<int, \Illuminate\Mail\Mailables\Attachment>
@@ -54,7 +34,6 @@ class DenunciaReincidenciaMail extends Mailable
     public function build()
     {
         return $this->view('emails.denuncia-reincidencia') // la vista del correo
-                    ->to('cesartorres.1688@gmail.com') // destinatario
                     ->subject('Nueva reincidencia'); // asunto
     }
 }

@@ -41,6 +41,15 @@ class MicroSitioController extends Controller
         return view('micrositio.buzonDenuncia', [
         'municipios' => $municipios,
         'selectedMunicipio' => old('municipio')
-    ]);
-}
+        ]);
+    }
+
+    public function buzonStore(Request $request)
+    {
+        $municipio = Municipio::find($request->id_municipio)->nombre;
+
+        $request -> validate([
+            
+        ]);
+    }
 }
