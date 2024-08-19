@@ -310,7 +310,7 @@ return [
 
         [
             'text' => 'Home',
-            'url' => '/admin/home',
+            'url' => 'admin/home',
             'icon' => 'fas fa-fw fa-chart-line',
         ],
 
