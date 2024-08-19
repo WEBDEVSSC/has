@@ -28,7 +28,7 @@
         <div class="flex items-center">
             <ul class="flex flex-row font-medium mt-0 space-x-8 rtl:space-x-reverse text-sm">
                 <li>
-                    <a href="{{ route('protocolo') }}" class="text-gray-900 dark:text-white hover:underline">ProtocoloSSSSSS</a>
+                    <a href="{{ route('protocolo') }}" class="text-gray-900 dark:text-white hover:underline">Protocolo</a>
                 </li>
                 <li>
                     <a href="{{ route('pronunciamiento') }}" class="text-gray-900 dark:text-white hover:underline">Pronunciamiento Cero Tolerancia</a>
