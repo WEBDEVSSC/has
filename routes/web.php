@@ -28,7 +28,7 @@ use App\Models\DenunciaDocumentacion;
 
 // Ruta de bienvenida
 
-Route::get('/', [MicroSitioController::class, 'inicio'])->name('inicio');
+Route::get('/', [MicroSitioController::class, 'protocolo'])->name('inicio');
 Route::get('/protocolo', [MicroSitioController::class, 'protocolo'])->name('protocolo');
 Route::get('/pronunciamiento', [MicroSitioController::class, 'pronunciamiento'])->name('pronunciamiento');
 Route::get('/directorio', [MicroSitioController::class, 'directorio'])->name('directorio');
