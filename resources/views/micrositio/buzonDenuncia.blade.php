@@ -1,5 +1,20 @@
 @include('micrositio.partials.header')
 
+@section('plugins.Sweetalert2', true)
+
+@if(session('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    title: 'Éxito',
+                    text: "{{ session('success') }}",
+                    icon: 'success',
+                    confirmButtonText: 'Ok'
+                });
+            });
+        </script>
+    @endif
+
 <br>
 
 <!-- ------------------------------------------ -->
@@ -16,9 +31,13 @@
 
 <div class="container mx-auto p-4">
 
+
+
 <!-- ----------------------------------------------------- -->
 
-<form action="" method="POST"  enctype="multipart/form-data">
+<form action="{{ route('buzonStore') }}" method="POST"  enctype="multipart/form-data">
+
+@csrf
 
 <p class="font-bold dark:text-purple-600">Tipo de solicitud</p>
 <br>
@@ -28,20 +47,19 @@
     <div class="col">
         <div class="mb-5">
             <select name="tipo_solicitud" id="tipo_solicitud" class="bg-white border border-white text-black text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-white dark:border-purple-600 dark:placeholder-purple-400 dark:text-black dark:focus:ring-purple-500 dark:focus:border-purple-500" required>
-                <option value="" disabled selected>Selecciona una opción</option>
-                <option value="ACOSO SEXUAL">ACOSO SEXUAL</option>
-                <option value="HOSTIGAMIENTO SEXUAL">HOSTIGAMIENTO SEXUAL</option>
-                <option value="OTRO">OTRO</option>
+                <option value="" disabled {{ old('tipo_solicitud') ? '' : 'selected' }}>Selecciona una opción</option>
+                <option value="ACOSO SEXUAL" {{ old('tipo_solicitud')=='ACOSO SEXUAL' }}>ACOSO SEXUAL</option>
+                <option value="HOSTIGAMIENTO SEXUAL" {{ old('tipo_solicitud')=='HOSTIGAMIENTO SEXUAL' }}>HOSTIGAMIENTO SEXUAL</option>
+                <option value="OTRO" {{ old('tipo_solicitud')=='OTRO' }}>OTRO</option>
             </select>
             <!-- MOSTRAMOS EL ERROR EN CASO DE QUE EXISTA -->
             @error('tipo_solicitud')
-                <div class="alert alert-danger">{{ $message }}</div>
+                <div class="text-red-500 text-sm mt-2">{{ $message }}</div>
             @enderror
         </div>
     </div>
 
 </div>
-
 
 <!-- ----------------------------------------------------- -->
 
@@ -55,7 +73,7 @@
             <input type="text" id="nombre" name="nombre" value="{{ old('nombre') }}" required class="bg-white border border-white text-black text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-white dark:border-purple-600 dark:placeholder-purple-400 dark:text-black dark:focus:ring-purple-500 dark:focus:border-purple-500" required />
             <!-- MOSTRAMOS EL ERROR EN CASO DE QUE EXISTA -->
             @error('nombre')
-                <div class="alert alert-danger">{{ $message }}</div>
+                <div class="text-red-500 text-sm mt-2">{{ $message }}</div>
             @enderror
         </div>
     </div>
@@ -63,9 +81,9 @@
     <div class="col"> 
         <div class="mb-5">
             <label for="edad" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Edad <small>(Años cumplidos)</small></label>
-            <input type="text" id="edad" class="bg-white border border-white text-black text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-white dark:border-purple-600 dark:placeholder-purple-400 dark:text-black dark:focus:ring-purple-500 dark:focus:border-purple-500" required />
+            <input type="text" id="edad" name="edad" value="{{ old('edad') }}" class="bg-white border border-white text-black text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-white dark:border-purple-600 dark:placeholder-purple-400 dark:text-black dark:focus:ring-purple-500 dark:focus:border-purple-500" required />
             @error('edad')
-                <div class="alert alert-danger">{{ $message }}</div>
+                <div class="text-red-500 text-sm mt-2">{{ $message }}</div>
             @enderror
         </div>
     </div>
@@ -74,12 +92,12 @@
         <div class="mb-5">
             <label for="sexo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Sexo</label>
             <select name="sexo" id="sexo" class="bg-white border border-white text-black text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-white dark:border-purple-600 dark:placeholder-purple-400 dark:text-black dark:focus:ring-purple-500 dark:focus:border-purple-500" >
-                <option value="" disabled selected>Selecciona una opción</option>
-                <option value="MASCULINO">MASCULINO</option>
-                <option value="FEMENINO">FEMENINO</option>
+                <option value="" disabled {{ old('sexo') ? '' : 'selected' }}>Selecciona una opción</option>
+                <option value="MASCULINO" {{ old('sexo')=='MASCULINO' }}>MASCULINO</option>
+                <option value="FEMENINO" {{ old('sexo')=='FEMENINO' }}>FEMENINO</option>
             </select>
             @error('sexo')
-                <div class="alert alert-danger">{{ $message }}</div>
+                <div class="text-red-500 text-sm mt-2">{{ $message }}</div>
             @enderror
         </div>
     </div>
@@ -87,9 +105,9 @@
     <div class="col">
         <div class="mb-5">
             <label for="correo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">E-mail</label>
-            <input type="email" id="correo" class="bg-white border border-white text-black text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-white dark:border-purple-600 dark:placeholder-purple-400 dark:text-black dark:focus:ring-purple-500 dark:focus:border-purple-500" required />
+            <input type="email" id="correo" name="correo" value="{{ old('correo') }}"  class="bg-white border border-white text-black text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-white dark:border-purple-600 dark:placeholder-purple-400 dark:text-black dark:focus:ring-purple-500 dark:focus:border-purple-500" required />
             @error('correo')
-                <div class="alert alert-danger">{{ $message }}</div>
+                <div class="text-red-500 text-sm mt-2">{{ $message }}</div>
             @enderror
         </div>
     </div>
@@ -106,7 +124,7 @@
     <div class="col">
         <div class="mb-5">
             <label for="celular" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Celular</label>
-            <input type="text" id="celular" class="bg-white border border-white text-black text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-white dark:border-purple-600 dark:placeholder-purple-400 dark:text-black dark:focus:ring-purple-500 dark:focus:border-purple-500" placeholder="10 Digitos" required />
+            <input type="text" id="celular" name="celular" value="{{ old('celular') }}" class="bg-white border border-white text-black text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-white dark:border-purple-600 dark:placeholder-purple-400 dark:text-black dark:focus:ring-purple-500 dark:focus:border-purple-500" placeholder="10 Digitos" required />
             @error('celular')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
@@ -124,8 +142,8 @@
     <div class="col">
         <div class="mb-5">
             <label for="adscripcion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Área de adscripción</label>
-            <input type="text" id="area_adscripcion" class="bg-white border border-white text-black text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-white dark:border-purple-600 dark:placeholder-purple-400 dark:text-black dark:focus:ring-purple-500 dark:focus:border-purple-500" required />
-            @error('area_adscripcion')
+            <input type="text" id="adscripcion" name="adscripcion" value="{{ old('adscripcion') }}" class="bg-white border border-white text-black text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-white dark:border-purple-600 dark:placeholder-purple-400 dark:text-black dark:focus:ring-purple-500 dark:focus:border-purple-500" required />
+            @error('adscripcion')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
         </div>
@@ -134,7 +152,7 @@
     <div class="col">
         <div class="mb-5">
             <label for="unidad_responsable" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Unidad responsable</label>
-            <input type="text" id="unidad_responsable" class="bg-white border border-white text-black text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-white dark:border-purple-600 dark:placeholder-purple-400 dark:text-black dark:focus:ring-purple-500 dark:focus:border-purple-500" required />
+            <input type="text" id="unidad_responsable" name="unidad_responsable" value="{{ old('unidad_responsable') }}" class="bg-white border border-white text-black text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-white dark:border-purple-600 dark:placeholder-purple-400 dark:text-black dark:focus:ring-purple-500 dark:focus:border-purple-500" required />
             @error('unidad_responsable')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
@@ -161,21 +179,19 @@
     <div class="col">
         <div class="mb-5">
             <label for="tipo_contratacion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Tipo de contratación</label>
-            <select name="tipo_contratacion" id="tipo_contratacion" name="tipo_contratacion" class="bg-white border border-white text-black text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-white dark:border-purple-600 dark:placeholder-purple-400 dark:text-black dark:focus:ring-purple-500 dark:focus:border-purple-500" >
-                <option value="" selected disabled>Selecciona una opción</option>
-                <option value="CONFIANZA">CONFIANZA</option>
-                <option value="BASE">BASE</option>
-                <option value="CONTRATO">CONTRATO</option>
-                <option value="EN FORMACIÓN">EN FORMACIÓN</option>
-                <option value="OTRA">OTRA</option>
+            <select name="tipo_contratacion" id="tipo_contratacion"  class="bg-white border border-white text-black text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-white dark:border-purple-600 dark:placeholder-purple-400 dark:text-black dark:focus:ring-purple-500 dark:focus:border-purple-500" >
+                <option value="" disabled {{ old('tipo_contratacion') ? '' : 'selected' }}>Selecciona una opción</option>
+                <option value="CONFIANZA" {{ old('tipo_contratacion') ? '' : 'CONFIANZA' }}>CONFIANZA</option>
+                <option value="BASE" {{ old('tipo_contratacion') ? '' : 'BASE' }}>BASE</option>
+                <option value="CONTRATO" {{ old('tipo_contratacion') ? '' : 'CONTRATO' }}>CONTRATO</option>
+                <option value="EN FORMACIÓN" {{ old('tipo_contratacion') ? '' : 'EN FORMACIÓN' }}>EN FORMACIÓN</option>
+                <option value="OTRA" {{ old('tipo_contratacion') ? '' : 'OTRA' }}>OTRA</option>
             </select>
             @error('tipo_contratacion')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
         </div>
-    </div>
-
-    
+    </div>    
 
   </div>
 </div>
@@ -188,7 +204,7 @@
     <div class="col">
         <div class="mb-5">
             <label for="cargo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Cargo</label>
-            <input type="text" id="cargo" name="cargo" class="bg-white border border-white text-black text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-white dark:border-purple-600 dark:placeholder-purple-400 dark:text-black dark:focus:ring-purple-500 dark:focus:border-purple-500" required />
+            <input type="text" id="cargo" name="cargo" value="{{ old('cargo') }}" class="bg-white border border-white text-black text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-white dark:border-purple-600 dark:placeholder-purple-400 dark:text-black dark:focus:ring-purple-500 dark:focus:border-purple-500" required />
             @error('cargo')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
@@ -196,35 +212,37 @@
     </div>
 
     <div class="col"> 
-        <div class="mb-5">
-            <label for="vulnerabilidad" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Situación de vulnerabilidad</label>
-            <select id="vulnerabilidad" name="vulnerabilidad" class="form-control" required>
-                <option value="" disabled selected>Selecciona un tipo</option>
-                <option value="SI" {{ old('vulnerabilidad') == 'SI' ? 'selected' : '' }}>SI</option>
-                <option value="NO" {{ old('vulnerabilidad') == 'NO' ? 'selected' : '' }}>NO</option>
-            </select>
-            @error('nombre')
-                <div class="alert alert-danger">{{ $message }}</div>
-            @enderror
-        </div>
+    <div class="mb-5">
+        <label for="vulnerabilidad" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Situación de vulnerabilidad</label>
+        <select id="vulnerabilidad" name="vulnerabilidad" class="bg-white border border-white text-black text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-white dark:border-purple-600 dark:placeholder-purple-400 dark:text-black dark:focus:ring-purple-500 dark:focus:border-purple-500" required>
+            <option value="" disabled {{ old('vulnerabilidad') ? '' : 'selected' }}>Selecciona un tipo</option>
+            <option value="SI" {{ old('vulnerabilidad') == 'SI' ? 'selected' : '' }}>SI</option>
+            <option value="NO" {{ old('vulnerabilidad') == 'NO' ? 'selected' : '' }}>NO</option>
+        </select>
+        @error('vulnerabilidad')
+            <div class="text-red-500 text-sm mt-2">{{ $message }}</div>
+        @enderror
     </div>
-    <div class="col">
-        <div class="mb-5">
-            <label for="cual" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Cual</label>
-            <select id="cual" name="cual" class="form-control" required>
-                <option value="" disabled selected>Selecciona un tipo</option>
-                <option value="Personas migrante" {{ old('cual') == 'Personas Migrante' ? 'selected' : '' }}>Personas Migrante</option>
-                <option value="Personas con discapacidad" {{ old('cual') == 'Personas con discapacidad' ? 'selected' : '' }}>Personas con discapacidad</option>
-                <option value="Poblacion indigena" {{ old('cual') == 'Poblacion indigena' ? 'selected' : '' }}>Poblacion indigena</option>
-                <option value="Otra situacion" {{ old('cual') == 'Otra situacion' ? 'selected' : '' }}>Otra situacion</option>
-                <option value="Dos o mas situaciones" {{ old('cual') == 'Dos o mas situaciones' ? 'selected' : '' }}>Dos o mas situaciones</option>
-            </select>
-            <!-- MOSTRAMOS EL ERROR EN CASO DE QUE EXISTA -->
-            @error('cual')
-                <div class="alert alert-danger">{{ $message }}</div>
-            @enderror
-        </div>
+</div>
+
+<div class="col">
+    <div class="mb-5">
+        <label for="cual" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Cuál</label>
+        <select id="cual" name="cual" class="bg-white border border-white text-black text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-white dark:border-purple-600 dark:placeholder-purple-400 dark:text-black dark:focus:ring-purple-500 dark:focus:border-purple-500" required>
+            <option value="" disabled {{ old('cual') ? '' : 'selected' }}>Selecciona un tipo</option>
+            <option value="PERSONAS MIGRANTES" {{ old('cual') == 'PERSONAS MIGRANTES' ? 'selected' : '' }}>PERSONAS MIGRANTES</option>
+            <option value="PERSONAS CON DISCAPACIDAD" {{ old('cual') == 'PERSONAS CON DISCAPACIDAD' ? 'selected' : '' }}>PERSONAS CON DISCAPACIDAD</option>
+            <option value="POBLACION INDIGENA" {{ old('cual') == 'POBLACION INDIGENA' ? 'selected' : '' }}>POBLACION INDIGENA</option>
+            <option value="OTRA SITUACION" {{ old('cual') == 'OTRA SITUACION' ? 'selected' : '' }}>OTRA SITUACION</option>
+            <option value="DOS O MAS SITUACIONES" {{ old('cual') == 'DOS O MAS SITUACIONES' ? 'selected' : '' }}>DOS O MAS SITUACIONES</option>
+        </select>
+        <!-- MOSTRAR EL ERROR SI EXISTE -->
+        @error('cual')
+            <div class="text-red-500 text-sm mt-2">{{ $message }}</div>
+        @enderror
     </div>
+</div>
+
     
   </div>
 
@@ -236,10 +254,10 @@
     <div class="col">
 
         <div class="mb-5">
-            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Nombre completo</label>
-            <input type="email" id="email" class="bg-white border border-white text-black text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-white dark:border-purple-600 dark:placeholder-purple-400 dark:text-black dark:focus:ring-purple-500 dark:focus:border-purple-500" required />
-            @error('nombre')
-                <div class="alert alert-danger">{{ $message }}</div>
+            <label for="denunciado_nombre" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Nombre completo</label>
+            <input type="text" id="denunciado_nombre" name="denunciado_nombre" value="{{ old('denunciado_nombre') }}" class="bg-white border border-white text-black text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-white dark:border-purple-600 dark:placeholder-purple-400 dark:text-black dark:focus:ring-purple-500 dark:focus:border-purple-500" required />
+            @error('denunciado_nombre')
+                <div class="text-red-500 text-sm mt-2">{{ $message }}</div>
             @enderror
         </div>
 
@@ -248,10 +266,10 @@
     <div class="col">
 
         <div class="mb-5">
-            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Cargo</label>
-            <input type="email" id="email" class="bg-white border border-white text-black text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-white dark:border-purple-600 dark:placeholder-purple-400 dark:text-black dark:focus:ring-purple-500 dark:focus:border-purple-500" required />
-            @error('nombre')
-                <div class="alert alert-danger">{{ $message }}</div>
+            <label for="denunciado_cargo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Cargo</label>
+            <input type="text" id="denunciado_cargo" name="denunciado_cargo" value="{{ old('denunciado_cargo') }}"  class="bg-white border border-white text-black text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-white dark:border-purple-600 dark:placeholder-purple-400 dark:text-black dark:focus:ring-purple-500 dark:focus:border-purple-500" required />
+            @error('denunciado_cargo')
+                <div class="text-red-500 text-sm mt-2">{{ $message }}</div>
             @enderror
         </div>
 
@@ -260,14 +278,14 @@
     <div class="col">
 
         <div class="mb-5">
-            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Puesto</label>
-            <select name="sexo" id="email" class="bg-white border border-white text-black text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-white dark:border-purple-600 dark:placeholder-purple-400 dark:text-black dark:focus:ring-purple-500 dark:focus:border-purple-500" >
-                <option value="">Selecciona una opción</option>
-                <option value="HOMOLOGO">HOMOLOGO</option>
-                <option value="SUPERIOR">SUPERIOR</option>
+            <label for="denunciado_puesto" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Puesto</label>
+            <select name="denunciado_puesto" id="denunciado_puesto" class="bg-white border border-white text-black text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-white dark:border-purple-600 dark:placeholder-purple-400 dark:text-black dark:focus:ring-purple-500 dark:focus:border-purple-500" >   
+                <option value="" disabled {{ old('denunciado_puesto') ? '' : 'selected' }}>Selecciona una opción</option>
+                <option value="HOMOLOGO" {{ old('denunciado_puesto') == 'HOMOLOGO' ? 'selected' : '' }}>HOMOLOGO</option>
+                <option value="SUPERIOR" {{ old('denunciado_puesto') == 'SUPERIOR' ? 'selected' : '' }}>SUPERIOR</option>
             </select>
-            @error('nombre')
-                <div class="alert alert-danger">{{ $message }}</div>
+            @error('denunciado_puesto')
+                <div class="text-red-500 text-sm mt-2">{{ $message }}</div>
             @enderror
         </div>
 
@@ -277,15 +295,16 @@
 
     <div class="grid grid-cols-1 gap-1">
 
-    <div class="col">
-        <div class="mb-5">
-            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Cuenta con antecedentes</label>
-            <textarea name="" id="" rows="5" class="bg-white border border-white text-black text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-white dark:border-purple-600 dark:placeholder-purple-400 dark:text-black dark:focus:ring-purple-500 dark:focus:border-purple-500" ></textarea>
-            @error('nombre')
-                <div class="alert alert-danger">{{ $message }}</div>
-            @enderror
+        <div class="col">
+            <div class="mb-5">
+                <label for="denunciado_antecedentes" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Cuenta con antecedentes</label>
+                <textarea name="denunciado_antecedentes" id="denunciado_antecedentes" rows="5" class="bg-white border border-white text-black text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-white dark:border-purple-600 dark:placeholder-purple-400 dark:text-black dark:focus:ring-purple-500 dark:focus:border-purple-500">{{ old('denunciado_antecedentes') }}</textarea>
+                @error('denunciado_antecedentes')
+                    <div class="text-red-500 text-sm mt-2">{{ $message }}</div>
+                @enderror
+            </div>
         </div>
-    </div>
+
     </div>
 
     <p class="font-bold dark:text-purple-600">Hechos (Favor de ser breve en la descripción del evento)</p>
@@ -295,10 +314,10 @@
 
     <div class="col">
         <div class="mb-5">
-            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">¿Cómo sucedierón?</label>
-            <textarea name="" id="" rows="5" class="bg-white border border-white text-black text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-white dark:border-purple-600 dark:placeholder-purple-400 dark:text-black dark:focus:ring-purple-500 dark:focus:border-purple-500" ></textarea>
-            @error('nombre')
-                <div class="alert alert-danger">{{ $message }}</div>
+            <label for="como" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">¿Cómo sucedierón?</label>
+            <textarea name="como" id="como" rows="5" class="bg-white border border-white text-black text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-white dark:border-purple-600 dark:placeholder-purple-400 dark:text-black dark:focus:ring-purple-500 dark:focus:border-purple-500">{{ old('como') }}</textarea>
+            @error('como')
+                <div class="text-red-500 text-sm mt-2">{{ $message }}</div>
             @enderror
         </div>
     </div>
@@ -308,10 +327,10 @@
 
     <div class="col">
         <div class="mb-5">
-            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">¿Cuándo sucedierón?</label>
-            <textarea name="" id="" rows="5" class="bg-white border border-white text-black text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-white dark:border-purple-600 dark:placeholder-purple-400 dark:text-black dark:focus:ring-purple-500 dark:focus:border-purple-500" ></textarea>
-            @error('nombre')
-                <div class="alert alert-danger">{{ $message }}</div>
+            <label for="cuando" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">¿Cuándo sucedierón?</label>
+            <textarea name="cuando" id="cuando" rows="5" class="bg-white border border-white text-black text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-white dark:border-purple-600 dark:placeholder-purple-400 dark:text-black dark:focus:ring-purple-500 dark:focus:border-purple-500">{{ old('cuando') }}</textarea>
+            @error('cuando')
+                <div class="text-red-500 text-sm mt-2">{{ $message }}</div>
             @enderror
         </div>
     </div>
@@ -321,10 +340,10 @@
 
     <div class="col">
         <div class="mb-5">
-            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">¿Dónde sucedierón?</label>
-            <textarea name="" id="" rows="5" class="bg-white border border-white text-black text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-white dark:border-purple-600 dark:placeholder-purple-400 dark:text-black dark:focus:ring-purple-500 dark:focus:border-purple-500" ></textarea>
-            @error('nombre')
-                <div class="alert alert-danger">{{ $message }}</div>
+            <label for="donde" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">¿Dónde sucedierón?</label>
+            <textarea name="donde" id="donde" rows="5" class="bg-white border border-white text-black text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-white dark:border-purple-600 dark:placeholder-purple-400 dark:text-black dark:focus:ring-purple-500 dark:focus:border-purple-500">{{ old('donde') }}</textarea>
+            @error('donde')
+                <div class="text-red-500 text-sm mt-2">{{ $message }}</div>
             @enderror
         </div>
     </div>
@@ -334,10 +353,10 @@
 
     <div class="col">
         <div class="mb-5">
-            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Testigos <small>Nombres, cargos y teléfonos, especificar si están dispuestos a sustentar lo dicho en escrito</small></label>
-            <textarea name="" id="" rows="5" class="bg-white border border-white text-black text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-white dark:border-purple-600 dark:placeholder-purple-400 dark:text-black dark:focus:ring-purple-500 dark:focus:border-purple-500" ></textarea>
-            @error('nombre')
-                <div class="alert alert-danger">{{ $message }}</div>
+            <label for="testigos" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Testigos <small>Nombres, cargos y teléfonos, especificar si están dispuestos a sustentar lo dicho en escrito</small></label>
+            <textarea name="testigos" id="testigos" rows="5" class="bg-white border border-white text-black text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-white dark:border-purple-600 dark:placeholder-purple-400 dark:text-black dark:focus:ring-purple-500 dark:focus:border-purple-500">{{ old('testigos') }}</textarea>
+            @error('testigos')
+                <div class="text-red-500 text-sm mt-2">{{ $message }}</div>
             @enderror
         </div>
     </div>
@@ -349,24 +368,37 @@
     <div class="grid grid-cols-1 gap-1">
 
     <div class="col">
-        <div class="mb-5">
-            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-black" for="file_input">Evidencia 1</label>
-            <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file">
-            <p class="mt-1 text-sm text-gray-500 dark:text-black" id="file_input_help">JPE, JPEG, PNG, DOC, PDF, TXT (MAX. 5MB).</p>
-        </div>
+    <div class="mb-5">
+        <label for="evidencia_uno" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Evidencia 1</label>
+        <input 
+            id="evidencia_uno" 
+            name="evidencia_uno" 
+            type="file" 
+            class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+        >
+        <p class="mt-1 text-sm text-gray-500 dark:text-black">JPG, JPEG, PNG, DOC, PDF, TXT (MAX. 5MB).</p>
+        @error('evidencia_uno')
+            <div class="text-red-500 text-sm mt-2">{{ $message }}</div>
+        @enderror
     </div>
-    </div>
+</div>
 
-    <div class="grid grid-cols-1 gap-1">
+<div class="col">
+    <div class="mb-5">
+        <label for="evidencia_dos" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Evidencia 2</label>
+        <input 
+            id="evidencia_dos" 
+            name="evidencia_dos" 
+            type="file" 
+            class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+        >
+        <p class="mt-1 text-sm text-gray-500 dark:text-black">JPG, JPEG, PNG, DOC, PDF, TXT (MAX. 5MB).</p>
+        @error('evidencia_dos')
+            <div class="text-red-500 text-sm mt-2">{{ $message }}</div>
+        @enderror
+    </div>
+</div>
 
-    <div class="col">
-        <div class="mb-5">
-            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-black" for="file_input">Evidencia 2</label>
-            <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file">
-            <p class="mt-1 text-sm text-gray-500 dark:text-black" id="file_input_help">JPE, JPEG, PNG, DOC, PDF, TXT (MAX. 5MB).</p>
-        </div>
-    </div>
-    </div>
 
     <div class="grid grid-cols-1 gap-1">
 
