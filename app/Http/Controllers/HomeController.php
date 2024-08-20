@@ -173,13 +173,100 @@ class HomeController extends Controller
 
         // CONSULTAS DEL TOTAL DE REGISTROS POR MES
 
-        // Obtener todos los registros del mes de enero que están en el campo created_ad
-        $denunciasEnero = Denuncia::whereMonth('created_at', 8) // Filtrar por el mes de enero (1 es enero)
-        ->whereYear('created_at', date('Y'))  // Filtrar por el año actual (opcional)
+        // ENERO
+        $denunciasEnero = Denuncia::whereMonth('created_at', 1) 
+            ->whereYear('created_at', date('Y')) 
+            ->get();
+
+        $totalDenunciasEnero = $denunciasEnero->count();
+
+        //FEBRERO
+        $denunciasFebrero = Denuncia::whereMonth('created_at', 2) 
+            ->whereYear('created_at', date('Y')) 
+            ->get();
+
+        // Contar el número de registros
+        $totalDenunciasFebrero = $denunciasFebrero->count();
+
+        //MARZO
+        $denunciasMarzo = Denuncia::whereMonth('created_at', 3) 
+            ->whereYear('created_at', date('Y')) 
+            ->get();
+
+        // Contar el número de registros
+        $totalDenunciasMarzo = $denunciasMarzo->count();
+
+        //ABRIL
+        $denunciasAbril = Denuncia::whereMonth('created_at', 4) 
+            ->whereYear('created_at', date('Y')) 
+            ->get();
+
+        // Contar el número de registros
+        $totalDenunciasAbril = $denunciasAbril->count();
+
+        //MAYO
+        $denunciasMayo = Denuncia::whereMonth('created_at', 5) 
+            ->whereYear('created_at', date('Y')) 
+            ->get();
+
+        // Contar el número de registros
+        $totalDenunciasMayo = $denunciasMayo->count();
+
+        //JUNIO
+        $denunciasJunio = Denuncia::whereMonth('created_at', 6) 
+            ->whereYear('created_at', date('Y')) 
+            ->get();
+
+        // Contar el número de registros
+        $totalDenunciasJunio = $denunciasJunio->count();
+
+        //JULIO
+        $denunciasJulio = Denuncia::whereMonth('created_at', 7) 
+            ->whereYear('created_at', date('Y')) 
+            ->get();
+
+        // Contar el número de registros
+        $totalDenunciasJulio = $denunciasJulio->count();
+
+        //AGOSTO
+        $denunciasAgosto = Denuncia::whereMonth('created_at', 8) 
+            ->whereYear('created_at', date('Y')) 
+            ->get();
+
+        // Contar el número de registros
+        $totalDenunciasAgosto = $denunciasAgosto->count();
+
+        //SEPTIEMBRE
+        $denunciasSeptiembre = Denuncia::whereMonth('created_at', 9) 
+            ->whereYear('created_at', date('Y')) 
+            ->get();
+
+        // Contar el número de registros
+        $totalDenunciasSeptiembre = $denunciasSeptiembre->count();
+
+        //OCTUBRE
+        $denunciasOctubre = Denuncia::whereMonth('created_at', 10) 
+            ->whereYear('created_at', date('Y')) 
+            ->get();
+
+        // Contar el número de registros
+        $totalDenunciasOctubre = $denunciasOctubre->count();
+
+        //NOVIEMBRE
+        $denunciasNoviembre = Denuncia::whereMonth('created_at', 11) 
+        ->whereYear('created_at', date('Y')) 
         ->get();
 
         // Contar el número de registros
-        $totalDenunciasEnero = $denunciasEnero->count();
+        $totalDenunciasNoviembre = $denunciasNoviembre->count();
+
+        //DICIEMBRE
+        $denunciasDiciembre = Denuncia::whereMonth('created_at', 12) 
+        ->whereYear('created_at', date('Y')) 
+        ->get();
+
+        // Contar el número de registros
+        $totalDenunciasDiciembre = $denunciasDiciembre->count();
 
 
         return view('home', compact(
@@ -197,7 +284,18 @@ class HomeController extends Controller
             'municipio_cinco',
             'cantidadRepeticiones_cinco',
             'denunciasEnero',
-            'totalDenunciasEnero'
+            'totalDenunciasEnero',
+            'totalDenunciasFebrero',
+            'totalDenunciasMarzo',
+            'totalDenunciasAbril',
+            'totalDenunciasMayo',
+            'totalDenunciasJunio',
+            'totalDenunciasJulio',
+            'totalDenunciasAgosto',
+            'totalDenunciasSeptiembre',
+            'totalDenunciasOctubre',
+            'totalDenunciasNoviembre',
+            'totalDenunciasDiciembre'
         ));
     }
 }

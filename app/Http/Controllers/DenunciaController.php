@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Denuncia;
 use App\Models\Municipio;
 use Illuminate\Http\Request;
-
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Crypt;
 
 class DenunciaController extends Controller
 {
@@ -20,6 +19,12 @@ class DenunciaController extends Controller
         
         // Contar el número de registros
         $totalDenuncias = $denuncias->count();
+
+        // Desencriptar el valor "nombre" para cada denuncia
+        $denuncias->transform(function ($denuncia) {
+            $denuncia->nombre = Crypt::decryptString($denuncia->nombre);
+            return $denuncia;
+        });
 
         // Pasar los registros a una vista para mostrarlos
         return view('nuevas', compact('denuncias', 'totalDenuncias'));
@@ -36,6 +41,12 @@ class DenunciaController extends Controller
         // Contar el número de registros
         $totalDenuncias = $denuncias->count();
 
+        // Desencriptar el valor "nombre" para cada denuncia
+        $denuncias->transform(function ($denuncia) {
+            $denuncia->nombre = Crypt::decryptString($denuncia->nombre);
+            return $denuncia;
+        });
+
         // Pasar los registros a una vista para mostrarlos
         return view('enproceso', compact('denuncias', 'totalDenuncias'));
     }
@@ -51,6 +62,12 @@ class DenunciaController extends Controller
         // Contar el número de registros
         $totalDenuncias = $denuncias->count();
 
+        // Desencriptar el valor "nombre" para cada denuncia
+        $denuncias->transform(function ($denuncia) {
+            $denuncia->nombre = Crypt::decryptString($denuncia->nombre);
+            return $denuncia;
+        });
+
         // Pasar los registros a una vista para mostrarlos
         return view('atendidas', compact('denuncias', 'totalDenuncias'));
     }
@@ -65,6 +82,12 @@ class DenunciaController extends Controller
 
         // Contar el número de registros
         $totalDenuncias = $denuncias->count();
+
+        // Desencriptar el valor "nombre" para cada denuncia
+        $denuncias->transform(function ($denuncia) {
+            $denuncia->nombre = Crypt::decryptString($denuncia->nombre);
+            return $denuncia;
+        });
 
         // Pasar los registros a una vista para mostrarlos
         return view('total', compact('denuncias', 'totalDenuncias'));
@@ -324,6 +347,13 @@ class DenunciaController extends Controller
     {
         // Consulta la denuncia por ID
         $denuncia = Denuncia::findOrFail($id);
+
+         // Desencriptar los campos
+        $denuncia->nombre = Crypt::decryptString($denuncia->nombre);
+        $denuncia->correo = Crypt::decryptString($denuncia->correo);
+        $denuncia->celular = Crypt::decryptString($denuncia->celular);
+        $denuncia->denunciado_nombre = Crypt::decryptString($denuncia->denunciado_nombre);
+        $denuncia->testigos = Crypt::decryptString($denuncia->testigos);
 
         // Retorna la vista con los datos de la denuncia
         return view('detalles', ['denuncia' => $denuncia]);

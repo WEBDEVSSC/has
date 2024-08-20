@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\DenunciaNuevaMail;
 use App\Models\Denuncia;
 use App\Models\Municipio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Mail;
 
 class MicroSitioController extends Controller
 {
@@ -73,8 +75,8 @@ class MicroSitioController extends Controller
             'denunciado_puesto' => 'required|string|max:255',
             'denunciado_antecedentes' => 'required|string|max:10000',
             'testigos' => 'required|string|max:10000',
-            'evidencia_uno' => 'required|file|mimes:jpg,jpeg,png,mp4,mp3,pdf,doc,docx,|max:10240',
-            'evidencia_dos' => 'required|file|mimes:jpg,jpeg,png,mp4,mp3,pdf,doc,docx,|max:10240',
+            'evidencia_uno' => 'file|mimes:jpg,jpeg,png,mp4,mp3,pdf,doc,docx,|max:10240',
+            'evidencia_dos' => 'file|mimes:jpg,jpeg,png,mp4,mp3,pdf,doc,docx,|max:10240',
         ],[
             'archivo.required' => 'Debe seleccionar un archivo para subir.',
             'archivo.mimes' => 'El archivo debe ser de tipo jpg,jpeg,png,mp4,mp3,pdf,doc,docx,.',
@@ -100,7 +102,6 @@ class MicroSitioController extends Controller
         $encryptedNombre = Crypt::encryptString($request->input('nombre'));
         $encryptedCelular = Crypt::encryptString($request->input('celular'));
         $encryptedCorreo = Crypt::encryptString($request->input('correo'));
-
         $encryptedDenunciadoNombre = Crypt::encryptString($request->input('denunciado_nombre'));
         $encryptedTestigos = Crypt::encryptString($request->input('testigos'));
 
@@ -145,6 +146,10 @@ class MicroSitioController extends Controller
 
         // Guardar la denuncia en la base de datos
         $denuncia->save();
+
+        // Enviamos el correo de confirmacion
+        Mail::to(['cesartorres.1688@gmail.com'])->send(new DenunciaNuevaMail($folio));
+        //Mail::to(['cesartorres.1688@gmail.com', 'igualdadcoahuila@gmail.com'])->send(new DenunciaNuevaMail($folio));
 
         //return redirect()->route('denuncias.nuevas')->with('success', 'La denuncia se registró correctamente con el folio: ' . $folio);
 

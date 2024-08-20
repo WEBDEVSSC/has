@@ -233,34 +233,47 @@
       labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio','Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
       datasets: [{
         label: 'Total de registros',
-        data: [{{$totalDenunciasEnero}}, 19, 3, 5, 2, 3,5, 6, 7, 2, 12, 36],
+        data: [
+        {{$totalDenunciasEnero}},
+        {{$totalDenunciasFebrero}},
+        {{$totalDenunciasMarzo}},
+        {{$totalDenunciasAbril}},
+        {{$totalDenunciasMayo}},
+        {{$totalDenunciasJunio}},
+        {{$totalDenunciasJulio}},
+        {{$totalDenunciasAgosto}},
+        {{$totalDenunciasSeptiembre}},
+        {{$totalDenunciasOctubre}},
+        {{$totalDenunciasNoviembre}},
+        {{$totalDenunciasDiciembre}}
+    ],
         backgroundColor: [
-      'rgba(255, 99, 132, 0.2)',
-      'rgba(255, 159, 64, 0.2)',
-      'rgba(255, 205, 86, 0.2)',
-      'rgba(75, 192, 192, 0.2)',
-      'rgba(54, 162, 235, 0.2)',
-      'rgba(153, 102, 255, 0.2)',
-      'rgba(201, 203, 207, 0.2)',
-      'rgba(201, 203, 207, 0.2)',
-      'rgba(201, 203, 207, 0.2)',
-      'rgba(201, 203, 207, 0.2)',
-      'rgba(201, 203, 207, 0.2)',
-      'rgba(201, 203, 207, 0.2)'
+        'rgba(255, 99, 132, 0.2)',    // Rosa
+        'rgba(54, 162, 235, 0.2)',   // Azul
+        'rgba(255, 206, 86, 0.2)',   // Amarillo
+        'rgba(75, 192, 192, 0.2)',   // Verde agua
+        'rgba(153, 102, 255, 0.2)',  // Morado
+        'rgba(255, 159, 64, 0.2)',   // Naranja
+        'rgba(255, 205, 210, 0.2)',  // Rosa claro
+        'rgba(201, 203, 207, 0.2)',  // Gris claro
+        'rgba(244, 67, 54, 0.2)',    // Rojo
+        'rgba(0, 188, 212, 0.2)',    // Cian
+        'rgba(76, 175, 80, 0.2)',    // Verde
+        'rgba(255, 193, 7, 0.2)',    // Ámbar
     ],
     borderColor: [
       'rgb(255, 99, 132)',
-      'rgb(255, 159, 64)',
-      'rgb(255, 205, 86)',
-      'rgb(75, 192, 192)',
       'rgb(54, 162, 235)',
+      'rgb(255, 206, 86)',
+      'rgb(75, 192, 192)',
       'rgb(153, 102, 255)',
+      'rgb(255, 159, 64)',
+      'rgb(255, 205, 210)',
       'rgb(201, 203, 207)',
-      'rgb(201, 203, 207)',
-      'rgb(201, 203, 207)',
-      'rgb(201, 203, 207)',
-      'rgb(201, 203, 207)',
-      'rgb(201, 203, 207)'
+      'rgb(244, 67, 54)',
+      'rgb(0, 188, 212)',
+      'rgb(76, 175, 80)',
+      'rgb(255, 193, 7)'
     ],
     borderWidth: 1
       }]
