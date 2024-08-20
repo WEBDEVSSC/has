@@ -157,4 +157,10 @@ class MicroSitioController extends Controller
         return redirect()->route('buzonDenuncia')->with('success', 'La denuncia se registro correctamente con el folio : HAS/SSC/'.$folio);         
         
     }
+
+    public function buzonSeguimiento()
+    {
+        // Aquí puedes agregar lógica adicional si la necesitas
+        return view('micrositio.buzonSeguimiento');
+    }
 }

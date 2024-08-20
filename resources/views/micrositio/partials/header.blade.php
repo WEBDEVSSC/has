@@ -39,7 +39,7 @@
                     <a href="{{ route('buzonDenuncia') }}" class="text-gray-900 dark:text-white hover:underline">Buzón de denuncias</a>
                 </li>
                 <li>
-                    <a href="" class="text-gray-900 dark:text-white hover:underline">Seguimiento de denuncia</a>
+                    <a href="{{ route('buzonSeguimiento') }}" class="text-gray-900 dark:text-white hover:underline">Seguimiento de denuncia</a>
                 </li>
                 <li>
                     <a href="" class="text-gray-900 dark:text-white hover:underline">Reincidencia de denuncia</a>
