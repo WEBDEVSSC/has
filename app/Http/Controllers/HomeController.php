@@ -42,6 +42,14 @@ class HomeController extends Controller
 
         // Contar el número de registros
         $totalDenunciasAtendidas = $denunciasAtendidas->count();
+
+        /*
+        *
+        *
+        // CONSULTAS LOS MUNICIPIOS CON MAS DENUNCIAS
+        *
+        *
+        */
         
         // Obtener el id_municipio que más veces se repite usando Eloquent
         $resultado = Denuncia::select('id_municipio')
@@ -294,7 +302,157 @@ class HomeController extends Controller
         // Contar el número de registros
         $totalDenunciasFemenino = $denunciasFemenino->count();
 
+        /*
+        *
+        *
+        // CONSULTAS DEL TOTAL DE REGISTROS POR JURISDICCION
+        *
+        *
+        */
 
+        //JURISDICCION 1
+
+        // Obtener todos los registros de la tabla denuncia
+        $denunciasJurisdiccionUno = Denuncia::where('jurisdiccion', '1')->get();
+
+        // Contar el número de registros
+        $totaldenunciasJurisdiccionUno = $denunciasJurisdiccionUno->count();
+
+        //JURISDICCION 2
+
+        // Obtener todos los registros de la tabla denuncia
+        $denunciasJurisdiccionDos = Denuncia::where('jurisdiccion', '2')->get();
+
+        // Contar el número de registros
+        $totaldenunciasJurisdiccionDos = $denunciasJurisdiccionDos->count();
+
+        //JURISDICCION 3
+
+        // Obtener todos los registros de la tabla denuncia
+        $denunciasJurisdiccionTres = Denuncia::where('jurisdiccion', '3')->get();
+
+        // Contar el número de registros
+        $totaldenunciasJurisdiccionTres = $denunciasJurisdiccionTres->count();
+
+        //JURISDICCION 4
+
+        // Obtener todos los registros de la tabla denuncia
+        $denunciasJurisdiccionCuatro = Denuncia::where('jurisdiccion', '4')->get();
+
+        // Contar el número de registros
+        $totaldenunciasJurisdiccionCuatro = $denunciasJurisdiccionCuatro->count();
+
+        //JURISDICCION 5
+
+        // Obtener todos los registros de la tabla denuncia
+        $denunciasJurisdiccionCinco = Denuncia::where('jurisdiccion', '5')->get();
+
+        // Contar el número de registros
+        $totaldenunciasJurisdiccionCinco = $denunciasJurisdiccionCinco->count();
+
+        //JURISDICCION 6
+
+        // Obtener todos los registros de la tabla denuncia
+        $denunciasJurisdiccionSeis = Denuncia::where('jurisdiccion', '6')->get();
+
+        // Contar el número de registros
+        $totaldenunciasJurisdiccionSeis = $denunciasJurisdiccionSeis->count();
+
+        //JURISDICCION 7
+
+        // Obtener todos los registros de la tabla denuncia
+        $denunciasJurisdiccionSiete = Denuncia::where('jurisdiccion', '7')->get();
+
+        // Contar el número de registros
+        $totaldenunciasJurisdiccionSiete = $denunciasJurisdiccionSiete->count();
+
+        //JURISDICCION 8
+
+        // Obtener todos los registros de la tabla denuncia
+        $denunciasJurisdiccionOcho = Denuncia::where('jurisdiccion', '8')->get();
+
+        // Contar el número de registros
+        $totaldenunciasJurisdiccionOcho = $denunciasJurisdiccionOcho->count();
+
+        /*
+        *
+        *
+        // TIPO DE DENUNCIA
+        *
+        *
+        */
+
+        // ACOSO SEXUAL
+
+        // Obtener todos los registros de la tabla denuncia
+        $denunciasAcosoSexual = Denuncia::where('tipo_solicitud', 'ACOSO SEXUAL')->get();
+
+        // Contar el número de registros
+        $totaldenunciasAcosoSexual = $denunciasAcosoSexual->count();
+
+        // HOSTIGAMIENTO
+
+        // Obtener todos los registros de la tabla denuncia
+        $denunciasHostigamiento = Denuncia::where('tipo_solicitud', 'HOSTIGAMIENTO SEXUAL')->get();
+
+        // Contar el número de registros
+        $totaldenunciasHostigamiento = $denunciasHostigamiento->count();
+
+        // OTRO
+
+        // Obtener todos los registros de la tabla denuncia
+        $denunciasOtro = Denuncia::where('tipo_solicitud', 'OTRO')->get();
+
+        // Contar el número de registros
+        $totaldenunciasOtro = $denunciasOtro->count();
+
+        /*
+        *
+        *
+        // TIPO DE CONTRATACION
+        *
+        *
+        */
+
+        // CONFIANZA
+
+        // Obtener todos los registros de la tabla denuncia
+        $denunciasConfianza = Denuncia::where('tipo_contratacion', 'CONFIANZA')->get();
+
+        // Contar el número de registros
+        $totaldenunciasConfianza = $denunciasConfianza->count();
+
+        // BASE
+
+        // Obtener todos los registros de la tabla denuncia
+        $denunciasBase = Denuncia::where('tipo_contratacion', 'BASE')->get();
+
+        // Contar el número de registros
+        $totaldenunciasBase = $denunciasBase->count();
+        
+        // CONTRATO
+
+        // Obtener todos los registros de la tabla denuncia
+        $denunciasContrato = Denuncia::where('tipo_contratacion', 'CONTRATO')->get();
+
+        // Contar el número de registros
+        $totaldenunciasContrato = $denunciasContrato->count();
+
+        // EN FORMACION
+
+        // Obtener todos los registros de la tabla denuncia
+        $denunciasEnFormacion = Denuncia::where('tipo_contratacion', 'EN FORMACION')->get();
+
+        // Contar el número de registros
+        $totaldenunciasEnFormacion = $denunciasEnFormacion->count();
+
+        // OTRA
+
+        // Obtener todos los registros de la tabla denuncia
+        $denunciasOtra = Denuncia::where('tipo_contratacion', 'OTRA')->get();
+
+        // Contar el número de registros
+        $totaldenunciasOtra = $denunciasOtra->count();
 
         return view('home', compact(
             'totalDenunciasNuevas',
@@ -324,7 +482,23 @@ class HomeController extends Controller
             'totalDenunciasNoviembre',
             'totalDenunciasDiciembre',
             'totalDenunciasMasculino',
-            'totalDenunciasFemenino'
+            'totalDenunciasFemenino',
+            'totaldenunciasJurisdiccionUno',
+            'totaldenunciasJurisdiccionDos',
+            'totaldenunciasJurisdiccionTres',
+            'totaldenunciasJurisdiccionCuatro',
+            'totaldenunciasJurisdiccionCinco',
+            'totaldenunciasJurisdiccionSeis',
+            'totaldenunciasJurisdiccionSiete',
+            'totaldenunciasJurisdiccionOcho',
+            'totaldenunciasAcosoSexual',
+            'totaldenunciasHostigamiento',
+            'totaldenunciasOtro',
+            'totaldenunciasConfianza',
+            'totaldenunciasBase',
+            'totaldenunciasContrato',
+            'totaldenunciasEnFormacion',
+            'totaldenunciasOtra'
         ));
     }
 }

@@ -53,6 +53,7 @@ class MicroSitioController extends Controller
     public function buzonStore(Request $request)
     {
         $municipio = Municipio::find($request->id_municipio)->nombre;
+        $jurisdiccion = Municipio::find($request->id_municipio)->jurisdiccion;
         
         // Validar los datos del formulario
         $request->validate([
@@ -67,7 +68,7 @@ class MicroSitioController extends Controller
             'tipo_contratacion' => 'required|string|max:255',
             'cargo' => 'required|string|max:255',
             'vulnerabilidad' => 'required|string|max:255',
-            'cual' => 'required|string|max:255',
+            'cual' => 'string|max:255',
             'tipo_solicitud' => 'required|string|max:255',
             'como' => 'required|string|max:10000',
             'cuando' => 'required|string|max:10000',
@@ -98,15 +99,12 @@ class MicroSitioController extends Controller
         // Obtener la fecha y hora actual en el formato deseado
         $timestamp = now()->format('Ymd_His');
 
-        // Ciframos los datos sensibles
-
          // Cifra el los datos sensibles
         $encryptedNombre = Crypt::encryptString($request->input('nombre'));
         $encryptedCelular = Crypt::encryptString($request->input('celular'));
         $encryptedCorreo = Crypt::encryptString($request->input('correo'));
         $encryptedDenunciadoNombre = Crypt::encryptString($request->input('denunciado_nombre'));
         $encryptedTestigos = Crypt::encryptString($request->input('testigos'));
-
 
         // Crear el nombre del archivo con la fecha y hora
         //$archivoNombre = $denuncia . '_R_' . $timestamp . '.' . $archivo->extension();
@@ -145,6 +143,7 @@ class MicroSitioController extends Controller
 
         $denuncia->status = 'NUEVO';
         $denuncia->folio = $folio;  
+        $denuncia->jurisdiccion = $jurisdiccion;
 
         // Guardar la denuncia en la base de datos
         $denuncia->save();
@@ -154,7 +153,8 @@ class MicroSitioController extends Controller
 
         // Redirigir a la vista de detalles con los datos recién registrados
         return redirect()->route('buzonDenuncia')->with('success', 'La denuncia se registro correctamente con el folio : HAS/SSC/'.$folio);         
-    }
+
+        }
 
     public function buzonSeguimiento()
     {

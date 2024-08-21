@@ -186,7 +186,7 @@
                 <option value="CONFIANZA" {{ old('tipo_contratacion') ? '' : 'CONFIANZA' }}>CONFIANZA</option>
                 <option value="BASE" {{ old('tipo_contratacion') ? '' : 'BASE' }}>BASE</option>
                 <option value="CONTRATO" {{ old('tipo_contratacion') ? '' : 'CONTRATO' }}>CONTRATO</option>
-                <option value="EN FORMACIÓN" {{ old('tipo_contratacion') ? '' : 'EN FORMACIÓN' }}>EN FORMACIÓN</option>
+                <option value="EN FORMACION" {{ old('tipo_contratacion') ? '' : 'EN FORMACIÓN' }}>EN FORMACIÓN</option>
                 <option value="OTRA" {{ old('tipo_contratacion') ? '' : 'OTRA' }}>OTRA</option>
             </select>
             @error('tipo_contratacion')
@@ -378,7 +378,7 @@
             type="file" 
             class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
         >
-        <p class="mt-1 text-sm text-gray-500 dark:text-black">JPG, JPEG, PNG, DOC, PDF, TXT (MAX. 5MB).</p>
+        <p class="mt-1 text-sm text-gray-500 dark:text-black">JPG, JPEG, PNG, DOC, PDF, TXT (MAX. 10 MB).</p>
         @error('evidencia_uno')
             <div class="text-red-500 text-sm mt-2">{{ $message }}</div>
         @enderror
@@ -394,7 +394,7 @@
             type="file" 
             class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
         >
-        <p class="mt-1 text-sm text-gray-500 dark:text-black">JPG, JPEG, PNG, DOC, PDF, TXT (MAX. 5MB).</p>
+        <p class="mt-1 text-sm text-gray-500 dark:text-black">JPG, JPEG, PNG, DOC, PDF, TXT (MAX. 10 MB).</p>
         @error('evidencia_dos')
             <div class="text-red-500 text-sm mt-2">{{ $message }}</div>
         @enderror
