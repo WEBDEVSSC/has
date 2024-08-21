@@ -2,7 +2,7 @@
 
 @section('plugins.Sweetalert2', true)
 
-@if(session('error'))
+@if(session('success'))
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 Swal.fire({
