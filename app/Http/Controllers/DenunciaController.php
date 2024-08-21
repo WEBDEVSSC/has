@@ -150,7 +150,7 @@ class DenunciaController extends Controller
             'tipo_contratacion' => 'required|string|max:255',
             'cargo' => 'required|string|max:255',
             'vulnerabilidad' => 'required|string|max:255',
-            'cual' => 'required|string|max:255',
+            'cual' => 'string|max:255',
             'tipo_solicitud' => 'required|string|max:255',
             'como' => 'required|string|max:10000',
             'cuando' => 'required|string|max:10000',
@@ -160,7 +160,7 @@ class DenunciaController extends Controller
             'denunciado_puesto' => 'required|string|max:255',
             'denunciado_antecedentes' => 'required|string|max:10000',
             'testigos' => 'required|string|max:10000',
-            'archivo' => 'required|file|mimes:jpg,jpeg,png,mp4,mp3,pdf,doc,docx,|max:10240',
+            'archivo' => 'file|mimes:jpg,jpeg,png,mp4,mp3,pdf,doc,docx,|max:10240',
         ],[
             'archivo.required' => 'Debe seleccionar un archivo para subir.',
             'archivo.mimes' => 'El archivo debe ser de tipo jpg,jpeg,png,mp4,mp3,pdf,doc,docx,.',
