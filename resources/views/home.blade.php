@@ -154,7 +154,7 @@
 </div>
 
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-3">
 
         <div class="card">
                 <div class="card-header">
@@ -170,7 +170,7 @@
         </div>
 
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
 
         <div class="card">
                 <div class="card-header">
@@ -186,16 +186,32 @@
         </div>
 
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
 
         <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Registros por sexo</h3>
+                    <h3 class="card-title">Tipo de denuncia</h3>
                 </div>
                 <div class="card-body">
 
                     <div>
                         <canvas id="myDoughnutChart" width="400" height="400"></canvas>
+                    </div>
+
+                </div>
+        </div>
+
+    </div>
+    <div class="col-md-3">
+
+        <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Tipo de contratación</h3>
+                </div>
+                <div class="card-body">
+
+                    <div>
+                        <canvas id="registrosPorJurisdiccion" width="400" height="400"></canvas>
                     </div>
 
                 </div>
@@ -360,14 +376,14 @@ document.addEventListener('DOMContentLoaded', function() {
             labels: ['Masculino', 'Femenino'],
             datasets: [{
                 label: 'Número de votos',
-                data: [69, 180],
+                data: [{{$totalDenunciasMasculino}}, {{$totalDenunciasFemenino}}],
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(255, 206, 86, 0.2)'
+                    'rgba(133, 193, 233, 0.2)',
+                    'rgba(195, 155, 211, 0.2)'
                 ],
                 borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(255, 206, 86, 1)'
+                    'rgba(133, 193, 233, 1)',
+                    'rgba(195, 155, 211, 1)'
                 ],
                 borderWidth: 1
             }]

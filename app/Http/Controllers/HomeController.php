@@ -171,7 +171,13 @@ class HomeController extends Controller
             }
         }
 
+        /*
+        *
+        *
         // CONSULTAS DEL TOTAL DE REGISTROS POR MES
+        *
+        *
+        */
 
         // ENERO
         $denunciasEnero = Denuncia::whereMonth('created_at', 1) 
@@ -268,6 +274,27 @@ class HomeController extends Controller
         // Contar el número de registros
         $totalDenunciasDiciembre = $denunciasDiciembre->count();
 
+        /*
+        *
+        *
+        // CONSULTAS DEL TOTAL DE REGISTROS POR SEXO
+        *
+        *
+        */
+
+        // Obtener todos los registros de la tabla denuncia
+        $denunciasMasculino = Denuncia::where('sexo', 'MASCULINO')->get();
+
+        // Contar el número de registros
+        $totalDenunciasMasculino = $denunciasMasculino->count();
+
+        // Obtener todos los registros de la tabla denuncia
+        $denunciasFemenino = Denuncia::where('sexo', 'FEMENINO')->get();
+
+        // Contar el número de registros
+        $totalDenunciasFemenino = $denunciasFemenino->count();
+
+
 
         return view('home', compact(
             'totalDenunciasNuevas',
@@ -295,7 +322,9 @@ class HomeController extends Controller
             'totalDenunciasSeptiembre',
             'totalDenunciasOctubre',
             'totalDenunciasNoviembre',
-            'totalDenunciasDiciembre'
+            'totalDenunciasDiciembre',
+            'totalDenunciasMasculino',
+            'totalDenunciasFemenino'
         ));
     }
 }
