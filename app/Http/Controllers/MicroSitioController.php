@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Mail\DenunciaNuevaMail;
 use App\Models\Denuncia;
+use App\Models\DenunciaSeguimiento;
 use App\Models\Municipio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 
 class MicroSitioController extends Controller
 {
@@ -142,25 +144,70 @@ class MicroSitioController extends Controller
         $denuncia->imagendos = $archivoPathDos;
 
         $denuncia->status = 'NUEVO';
-        $denuncia->folio = $folio;      
+        $denuncia->folio = $folio;  
 
         // Guardar la denuncia en la base de datos
         $denuncia->save();
 
         // Enviamos el correo de confirmacion
-        Mail::to(['cesartorres.1688@gmail.com'])->send(new DenunciaNuevaMail($folio));
-        //Mail::to(['cesartorres.1688@gmail.com', 'igualdadcoahuila@gmail.com'])->send(new DenunciaNuevaMail($folio));
-
-        //return redirect()->route('denuncias.nuevas')->with('success', 'La denuncia se registró correctamente con el folio: ' . $folio);
+        Mail::to(['cesartorres.1688@gmail.com',$request->correo])->send(new DenunciaNuevaMail($folio));
 
         // Redirigir a la vista de detalles con los datos recién registrados
         return redirect()->route('buzonDenuncia')->with('success', 'La denuncia se registro correctamente con el folio : HAS/SSC/'.$folio);         
-        
     }
 
     public function buzonSeguimiento()
     {
         // Aquí puedes agregar lógica adicional si la necesitas
         return view('micrositio.buzonSeguimiento');
+    }
+
+    public function buzonSeguimientoShow(Request $request)
+    {
+        
+         // Validar los datos del formulario
+        $validator = Validator::make($request->all(), [
+            'folio' => 'required|digits:4',
+        ], [
+            'folio.required' => 'El número de folio es obligatorio.',
+            'folio.digits' => 'El folio debe ser un número de exactamente 4 dígitos.',
+        ]);
+
+        // Si la validación falla, redirigir de vuelta con errores
+        if ($validator->fails()) 
+        {
+            return redirect()->route('buzonSeguimiento')
+                            ->withErrors($validator)
+                            ->withInput();
+        }
+
+        // Capturamos el folio
+        $folio = $request->input('folio');
+
+        // Busca la denuncia por el folio
+        $denuncia = Denuncia::where('folio', $folio)->first();   
+        
+        // Verificamos si se encontro la denuncia
+        if ($denuncia) 
+        {
+            // Obtén el ID del registro encontrado
+            $id = $denuncia->id; 
+
+            // Busca todos los seguimientos que coincidan con el ID en el campo 'relacion'
+            $seguimientos = DenunciaSeguimiento::where('relacion', $id)
+                ->orderBy('created_at', 'desc')
+                ->get();
+
+            // Retorna la vista con los resultados
+            return view('micrositio.buzonSeguimientoShow', [
+                'denuncia' => $denuncia,
+                'seguimientos' => $seguimientos,
+            ]);
+        } 
+        else 
+        {
+            return redirect()->route('buzonSeguimiento')->with('error', 'Folio no encontrado.');
+        }
+        
     }
 }

@@ -37,6 +37,7 @@ class DenunciaNuevaMail extends Mailable
     public function build()
     {
         return $this->view('emails.denuncia-nueva') // la vista del correo
-                    ->subject('Nueva denuncia'); // asunto
+                    ->subject('Nueva denuncia')
+                    ->from('soportewebssc@gmail.com', 'H.A.S. Coah'); // Correo y nombre del remitente
     }
 }

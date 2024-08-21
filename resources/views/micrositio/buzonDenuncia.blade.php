@@ -2,7 +2,7 @@
 
 @section('plugins.Sweetalert2', true)
 
-@if(session('success'))
+@if(session('error'))
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 Swal.fire({
@@ -83,7 +83,7 @@
     <div class="col"> 
         <div class="mb-5">
             <label for="edad" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Edad <small>(Años cumplidos)</small></label>
-            <input type="text" id="edad" name="edad" value="{{ old('edad') }}" class="bg-white border border-white text-black text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-white dark:border-purple-600 dark:placeholder-purple-400 dark:text-black dark:focus:ring-purple-500 dark:focus:border-purple-500" required />
+            <input type="number" id="edad" name="edad" value="{{ old('edad') }}" class="bg-white border border-white text-black text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-white dark:border-purple-600 dark:placeholder-purple-400 dark:text-black dark:focus:ring-purple-500 dark:focus:border-purple-500" required />
             @error('edad')
                 <div class="text-red-500 text-sm mt-2">{{ $message }}</div>
             @enderror
@@ -230,7 +230,7 @@
 <div class="col">
     <div class="mb-5">
         <label for="cual" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Cuál</label>
-        <select id="cual" name="cual" class="bg-white border border-white text-black text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-white dark:border-purple-600 dark:placeholder-purple-400 dark:text-black dark:focus:ring-purple-500 dark:focus:border-purple-500" required>
+        <select id="cual" name="cual" class="bg-white border border-white text-black text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-white dark:border-purple-600 dark:placeholder-purple-400 dark:text-black dark:focus:ring-purple-500 dark:focus:border-purple-500">
             <option value="" disabled {{ old('cual') ? '' : 'selected' }}>Selecciona un tipo</option>
             <option value="PERSONAS MIGRANTES" {{ old('cual') == 'PERSONAS MIGRANTES' ? 'selected' : '' }}>PERSONAS MIGRANTES</option>
             <option value="PERSONAS CON DISCAPACIDAD" {{ old('cual') == 'PERSONAS CON DISCAPACIDAD' ? 'selected' : '' }}>PERSONAS CON DISCAPACIDAD</option>
