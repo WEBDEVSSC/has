@@ -35,9 +35,15 @@ Route::get('/directorio', [MicroSitioController::class, 'directorio'])->name('di
 Route::get('/buzonDenuncia', [MicroSitioController::class, 'buzon'])->name('buzonDenuncia');
 Route::post('/buzonDenuncia', [MicroSitioController::class, 'buzonStore'])->name('buzonStore');
 
-// Ruta para mostrar el formulario de seguimiento
+// Ruta para mostrar el formulario de Seguimiento
 Route::get('/buzonSeguimiento', [MicroSitioController::class, 'buzonSeguimiento'])->name('buzonSeguimiento');
 Route::post('/buzonSeguimientoResultados', [MicroSitioController::class, 'buzonSeguimientoShow'])->name('buzonSeguimientoShow');
+
+// Ruta para mostrar el formulario de Reincidencia
+Route::get('/buzonReincidencia', [MicroSitioController::class, 'buzonReincidencia'])->name('buzonReincidencia');
+Route::post('/buzonReincidenciaCreate', [MicroSitioController::class, 'buzonReincidenciaCreate'])->name('buzonReincidenciaCreate');
+Route::post('/buzonReincidenciaStore', [MicroSitioController::class, 'buzonReincidenciaStore'])->name('buzonReincidenciaStore');
+//Route::post('/buzonSeguimientoResultados', [MicroSitioController::class, 'buzonSeguimientoShow'])->name('buzonSeguimientoShow');
 
 
 //Route::get('/seguimientoDenuncia', function () { return view('micrositio.seguimientoDenuncia');})->name('seguimiento.denuncia');

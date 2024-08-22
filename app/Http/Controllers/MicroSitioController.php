@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Mail\DenunciaNuevaMail;
+use App\Mail\DenunciaReincidenciaMail;
 use App\Models\Denuncia;
+use App\Models\DenunciaReincidencia;
 use App\Models\DenunciaSeguimiento;
 use App\Models\Municipio;
 use Illuminate\Http\Request;
@@ -38,6 +40,13 @@ class MicroSitioController extends Controller
         // Aquí puedes agregar lógica adicional si la necesitas
         return view('micrositio.directorio');
     }
+
+    /*
+    *
+    *
+    * BUZON DE DENUNCIAS
+    *
+    */
 
     public function buzon()
     {
@@ -80,10 +89,13 @@ class MicroSitioController extends Controller
             'testigos' => 'required|string|max:10000',
             'evidencia_uno' => 'file|mimes:jpg,jpeg,png,mp4,mp3,pdf,doc,docx,|max:10240',
             'evidencia_dos' => 'file|mimes:jpg,jpeg,png,mp4,mp3,pdf,doc,docx,|max:10240',
-        ],[
-            'archivo.required' => 'Debe seleccionar un archivo para subir.',
-            'archivo.mimes' => 'El archivo debe ser de tipo jpg,jpeg,png,mp4,mp3,pdf,doc,docx,.',
-            'archivo.max' => 'El tamaño máximo permitido para el archivo es de 10MB.',
+        ], [
+            'evidencia_uno.required' => 'Debe seleccionar un archivo para la primera evidencia.',
+            'evidencia_uno.mimes' => 'El archivo de la primera evidencia debe ser de tipo: jpg, jpeg, png, mp4, mp3, pdf, doc, docx.',
+            'evidencia_uno.max' => 'El tamaño máximo permitido para la primera evidencia es de 10MB.',
+            'evidencia_dos.required' => 'Debe seleccionar un archivo para la segunda evidencia.',
+            'evidencia_dos.mimes' => 'El archivo de la segunda evidencia debe ser de tipo: jpg, jpeg, png, mp4, mp3, pdf, doc, docx.',
+            'evidencia_dos.max' => 'El tamaño máximo permitido para la segunda evidencia es de 10MB.',
         ]);
 
         //GENERAMOS EL RANDOM PARA FOLIO
@@ -149,12 +161,19 @@ class MicroSitioController extends Controller
         $denuncia->save();
 
         // Enviamos el correo de confirmacion
-        Mail::to(['cesartorres.1688@gmail.com',$request->correo])->send(new DenunciaNuevaMail($folio));
+        Mail::to(['cesartorres.1688@gmail.com','igualdadcoahuila@gmail.com',$request->correo])->send(new DenunciaNuevaMail($folio));
 
         // Redirigir a la vista de detalles con los datos recién registrados
         return redirect()->route('buzonDenuncia')->with('success', 'La denuncia se registro correctamente con el folio : HAS/SSC/'.$folio);         
 
         }
+
+    /*
+    *
+    *
+    * SEGUIMIENTO
+    *
+    */
 
     public function buzonSeguimiento()
     {
@@ -210,4 +229,78 @@ class MicroSitioController extends Controller
         }
         
     }
+
+    /*
+    *
+    *
+    * REINCIDENCIA
+    *
+    */
+
+    public function buzonReincidencia()
+    {
+        // Aquí puedes agregar lógica adicional si la necesitas
+        return view('micrositio.buzonReincidencia');
+    }
+
+    public function buzonReincidenciaCreate(Request $request)
+    {
+        // Buscamos el id que corresponda a ese folio y lo almacenamos en id_denuncia
+
+        $denuncia = Denuncia::where('folio', $request->folio)->first();   
+
+        $id_denuncia = $denuncia->id;
+        
+        // Pasamos el id_denuncia al formulario para realizar un registro
+        
+        return view('micrositio.buzonReincidenciaForm',['id_denuncia'=>$id_denuncia,'folio'=>$request->folio]);
+    }
+
+    public function buzonReincidenciaStore(Request $request)
+    {
+        // Traemos las variables ocultas en el codigo
+        $folio = $request->input('folio');
+        $id_denuncia = $request->input('id_denuncia');
+
+        // Asignamos el valor cuando la reincidencia viene desde el formulario
+        $responsable = 9999;
+
+        // Consultamos los datos con el numero de id de la denuncia
+        $datosDenuncia = Denuncia::where('id', $id_denuncia)->first();   
+
+        // Traemos el correo y lo desencriptamos
+        $correoDeCrypt = Crypt::decryptString($datosDenuncia->correo);        
+
+        // Validamos los datos que vienen desde el formulario
+        $request->validate([
+            'descripcion'=>'required|string',
+            'archivo' => 'file|mimes:jpg,jpeg,png,mp4,mp3,pdf,doc,docx,|max:10240',
+        ],[
+            'archivo.mimes' => 'El archivo debe ser de tipo jpg,jpeg,png,mp4,mp3,pdf,doc,docx,.',
+            'archivo.max' => 'El tamaño máximo permitido para el archivo es de 10MB.',
+        ]);
+
+        // Obtener la fecha y hora actual en el formato deseado
+        $timestamp = now()->format('Ymd_His');
+
+        // Creamos el pad para guardar el archivo y renombrarlo
+        $archivoPath = $request->hasFile('archivo') ? $request->file('archivo')->store('documents', 'local') : null;
+
+        // Creamos el objeto y vamos asignando valores a cada campo de la tabla
+        $reincidencia=new DenunciaReincidencia();
+        $reincidencia->id_denuncia = $id_denuncia;
+        $reincidencia->descripcion = $request->descripcion;
+        $reincidencia->responsable = $responsable;
+        $reincidencia->archivo = $archivoPath;
+
+        // Guardamos el registros en la base de datos
+        $reincidencia->save();
+
+        // Enviamos email de notificacion
+        Mail::to(['cesartorres.1688@gmail.com','igualdadcoahuila.gob.mx',$correoDeCrypt])->send(new DenunciaReincidenciaMail($folio));
+
+        // Redireccionamos al formulario con el mensaje de exito
+        return redirect()->route('buzonReincidencia')->with('reincidencia', 'La reincidencia se registro correctamente en el folio : HAS/SSC/'.$folio);         
+    }
+
 }
