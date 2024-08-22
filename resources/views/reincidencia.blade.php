@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'H.A.S. | S.S.C.')
+@section('title', 'Reincidencia')
 
 @section('plugins.Sweetalert2', true)
 
@@ -23,9 +23,9 @@
         </script>
     @endif
 
-<div class="card card card-info">
+<div class="card card card-purple">
     <div class="card-header">
-        <h3 class="card-title">Denuncia <span class="badge badge-secondary">SSC/HAS/{{ $denuncia->folio}}2024</span></h3>
+        <h3 class="card-title">Denuncia <span class="badge badge-secondary">SSC/HAS/{{ $denuncia->folio}}/2024</span></h3>
     </div>
     <div class="card-body">
 
@@ -59,7 +59,7 @@
         <div class="col-md-12">
 
             <div class="form-group">
-                <label for="file">Archivo</label>
+                <label for="file">Archivo <small>Máximo 10 M.B.</small></label>
                 <input type="file" name="archivo" class="form-control-file">
                 <!-- MOSTRAMOS EL ERROR EN CASO DE QUE EXISTA -->
                 @error('archivo')
@@ -74,7 +74,7 @@
 
     <div class="card-footer">
         <!-- Contenido del pie de la tarjeta -->
-        <button type="submit" class="btn btn-info float-right">Registrar datos</button>
+        <button type="submit" class="btn btn-dark float-right">Registrar datos</button>
     </div>
         
     </form>
@@ -87,7 +87,7 @@
 <!--                           LISTADO DE DENUNCIAS                          -->
 <!-- ----------------------------------------------------------------------- -->
 
-<div class="card card card-info">
+<div class="card card card-purple">
     <div class="card-header">
         <h3 class="card-title">Listado de reincidencias </h3>
     </div>

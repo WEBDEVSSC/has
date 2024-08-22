@@ -1,8 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'H.A.S. | S.S.C.')
+@section('title', 'Denuncias nuevas')
 
 @section('plugins.Sweetalert2', true)
+
 @section('plugins.Datatables', true)
 
 @section('content_header')
@@ -12,7 +13,7 @@
 @section('content')
 <div class="row">
     <div class="col-md-12">
-        <div class="card card card-info">
+        <div class="card card card-purple">
         <div class="card-header">
         <h3 class="card-title">Nuevas denuncias <span class="badge badge-secondary">{{ $totalDenuncias }}</span></h3>
 @if(session('success'))
@@ -61,7 +62,7 @@
                             <!-- -------------------------------------- -->
 
                             <div class="btn-group" role="group">
-                                <button id="btnGroupDrop1" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <button id="btnGroupDrop1" type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Opciones
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">

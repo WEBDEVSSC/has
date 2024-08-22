@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Registro denuncia')
 
 @section('content_header')
 <h1>Hostigamiento y Acoso Sexual</h1>
@@ -9,7 +9,7 @@
 @section('content')
 
 
-<div class="card card-info">
+<div class="card card-purple">
     <div class="card-header">
         <h3 class="card-title">Formato de registro</h3>
     </div>

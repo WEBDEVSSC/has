@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'H.A.S. | S.S.C.')
+@section('title', 'Denuncias total')
 
 @section('plugins.Sweetalert2', true)
 @section('plugins.Datatables', true)
@@ -12,7 +12,7 @@
 @section('content')
 <div class="row">
     <div class="col-md-12">
-        <div class="card card card-info">
+        <div class="card card card-purple">
         <div class="card-header">
         <h3 class="card-title">Total de registros <span class="badge badge-secondary">{{ $totalDenuncias }}</span></h3>
 @if(session('success'))

@@ -9,11 +9,11 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class DenunciaReincidenciaMail extends Mailable
+class DenunciaSeguimientoMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $folio;
+    public $folio; // Hacemos la variable accesible en la vista
 
     /**
      * Create a new message instance.
@@ -36,8 +36,8 @@ class DenunciaReincidenciaMail extends Mailable
 
     public function build()
     {
-        return $this->view('emails.denuncia-reincidencia') // la vista del correo
-                    ->subject('Reincidencia de Denuncia')
+        return $this->view('emails.denuncia-seguimiento') // la vista del correo
+                    ->subject('Seguimiento de Denuncia')
                     ->from('soportewebssc@gmail.com', 'H.A.S. Coah'); // Correo y nombre del remitente
     }
 }

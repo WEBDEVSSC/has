@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'H.A.S. | S.S.C.')
+@section('title', 'Detalles')
 
 @section('plugins.Sweetalert2', true)
 
@@ -55,7 +55,7 @@
 
         <div class="col-md-6">
 
-        <div class="card card-info">
+        <div class="card card-purple">
 
     <div class="card-header">
         <h3 class="card-title">Expediente completo de la denuncia :  SSC/HAS/{{ $denuncia->folio}}/2024</h3>
@@ -275,7 +275,7 @@
 
         <div class="col-md-6">
 
-            <div class="card card-info">
+            <div class="card card-purple">
 
                 <div class="card-header">
                     <h3 class="card-title">Seguimiento</h3>
@@ -289,7 +289,7 @@
 
             <!-- ----------------------------------------- -->
 
-            <div class="card card-info">
+            <div class="card card-purple">
 
                 <div class="card-header">
                     <h3 class="card-title">Reincidencias</h3>
@@ -303,7 +303,7 @@
 
             <!-- ----------------------------------------- -->
 
-            <div class="card card-info">
+            <div class="card card-purple">
 
                 <div class="card-header">
                     <h3 class="card-title">Documentación</h3>

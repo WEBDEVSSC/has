@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 use Exception;
+use Illuminate\Support\Facades\Crypt;
 
 class DenunciaReincidenciaController extends Controller
 {
@@ -61,22 +62,31 @@ class DenunciaReincidenciaController extends Controller
      */
     public function store(Request $request, $id)
     {
-         // Validar los datos recibidos y personalizar los mensajes de error
+        // Validar los datos recibidos y personalizar los mensajes de error
          $request->validate([
             'descripcion' => 'required|string',
-            'archivo' => 'required|file|mimes:pdf,doc,docx|max:2048', // Ejemplo de validación para archivos PDF, DOC y DOCX de hasta 2MB
+            'archivo' => 'required|file|mimes:pdf,doc,docx|max:10240', // Ejemplo de validación para archivos PDF, DOC y DOCX de hasta 2MB
             'responsable' => 'required|integer|max:255',
         ], [
             'descripcion.required' => 'El campo descripción es obligatorio.',
             'archivo.required' => 'Debe seleccionar un archivo para subir.',
             'archivo.mimes' => 'El archivo debe ser de tipo PDF, DOC o DOCX.',
-            'archivo.max' => 'El tamaño máximo permitido para el archivo es de 2MB.',
+            'archivo.max' => 'El tamaño máximo permitido para el archivo es de 10 MB.',
         ]);
 
         $denuncia = $id;
         $descripcion = $request->input('descripcion');
         $archivo = $request->file('archivo');
         $responsable =$request->input('responsable');
+
+        // Consultamos el correo de esa denuncia
+        $correo = Denuncia::find($denuncia)->correo;
+
+        // Descodificamos el correo para que pueda funcionar
+        $correoDeCrypt = Crypt::decryptString($correo);
+
+        // Consultamos el folio para enviarlo a la vista del correo
+        $folio = Denuncia::find($denuncia)->folio;
 
         // Obtener la fecha y hora actual en el formato deseado
         $timestamp = now()->format('Ymd_His');
@@ -88,23 +98,21 @@ class DenunciaReincidenciaController extends Controller
         $archivoPath = $archivo->storeAs('documents', $archivoNombre, 'local');
 
         //Guardar la información del archivo en la base de datos
-        
         $registro = new DenunciaReincidencia();
         $registro->id_denuncia = $denuncia;        
         $registro->descripcion = $descripcion;
-        $registro->archivo = $archivoPath; // Guarda el nombre del archivo en la base de datos
+        $registro->archivo = $archivoPath;
         $registro->responsable = $responsable;
-        
+    
+        // Guardamos el registro en la DB
         $registro->save();
 
         // Llamamos las librerias necesarias para enviar un correo y se configura en el metodo build de DenunciaReincidenciaMail
-        Mail::to('cesartorres.1688@gmail.com')->send(new DenunciaReincidenciaMail());
-        //Mail::send(new DenunciaReincidenciaMail());
+        Mail::to(['cesartorres.1688@gmail.com',$correoDeCrypt])->send(new DenunciaReincidenciaMail($folio));
 
-        //reincidencia.create
+        // Redireccionamos a la vista con el mensaje
 
         return redirect()->route('reincidencia.create',['id' => $denuncia])->with('reincidencia', 'La reincidencia se registro correctamente.');
-        
     }
 
     /**

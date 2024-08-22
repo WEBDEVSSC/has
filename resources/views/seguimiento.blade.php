@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'H.A.S. | S.S.C.')
+@section('title', 'Seguimiento')
 
 @section('content_header')
 <h1>Hostigamiento y Acoso Sexual </h1>
@@ -9,9 +9,9 @@
 @section('content')
 
 
-<div class="card card card-info">
+<div class="card card card-purple">
     <div class="card-header">
-        <h3 class="card-title">Denuncia <span class="badge badge-secondary">SSC/HAS/{{ $denuncia->folio}}2024</span></h3>
+        <h3 class="card-title">Denuncia <span class="badge badge-secondary">SSC/HAS/{{ $denuncia->folio}}/2024</span></h3>
     </div>
     <div class="card-body">
 
@@ -34,7 +34,7 @@
     </div>
     <div class="card-footer">
         <!-- Contenido del pie de la tarjeta -->
-        <button type="submit" class="btn btn-info float-right">Registrar seguimiento</button>
+        <button type="submit" class="btn btn-dark float-right">Registrar seguimiento</button>
     </div>
     </form>
 </div>
@@ -43,7 +43,7 @@
 <!--                           LISTADO DE SEGUIMIENTO                        -->
 <!-- ----------------------------------------------------------------------- -->
 
-<div class="card card card-info">
+<div class="card card card-purple">
     <div class="card-header">
         <h3 class="card-title">Listado de seguimiento </h3>
     </div>

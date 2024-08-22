@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Status')
 
 @section('content_header')
 <h1>Hostigamiento y Acoso Sexual </h1>
@@ -8,7 +8,7 @@
 
 @section('content')
 
-<div class="card card card-info">
+<div class="card card card-purple">
     <div class="card-header">
         <h3 class="card-title">Denuncia <span class="badge badge-secondary">SSC/HAS/{{ $denuncia->folio}}2024</span></h3>
     </div>

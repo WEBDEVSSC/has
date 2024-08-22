@@ -6,7 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Se ha registrado una nueva reincidencia en el Folio #DEFOLIO</h1>
+    <h1>Se ha registrado una nueva reincidencia en el Folio SSC/HAS/{{ $folio }}</h1>
 
     <p>Hostigamiento y Acoso Sexual</p>
     <p>Secretaría de Salud de Coahuila</p>
