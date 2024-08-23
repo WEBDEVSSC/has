@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Denuncia;
+use App\Models\DenunciaDocumentacion;
+use App\Models\DenunciaReincidencia;
+use App\Models\DenunciaSeguimiento;
 use App\Models\Municipio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
@@ -355,8 +358,36 @@ class DenunciaController extends Controller
         $denuncia->denunciado_nombre = Crypt::decryptString($denuncia->denunciado_nombre);
         $denuncia->testigos = Crypt::decryptString($denuncia->testigos);
 
+        //Consultamos todos los seguimientos que tiene esa denuncia
+        $seguimientos = DenunciaSeguimiento::where('relacion',$id)->orderBy('id','desc')->get();
+
+        //Consultamos todos las reincidencias que tiene esa denuncia
+        $reincidencias = DenunciaReincidencia::where('id_denuncia',$id)->orderBy('id','desc')->get();
+
+        //Consultamos toda la documentacion que tiene esa denuncia
+        $documentaciones = DenunciaDocumentacion::where('id_denuncia',$id)->orderBy('id','desc')->get();
+
         // Retorna la vista con los datos de la denuncia
-        return view('detalles', ['denuncia' => $denuncia]);
+        return view('detalles', [
+            'denuncia' => $denuncia,
+            'seguimientos' => $seguimientos,
+            'reincidencias' => $reincidencias,
+            'documentaciones' => $documentaciones
+        ]);
+    }
+
+    public function download($filename)
+    {
+        $filePath = storage_path('app/documents/' . $filename);
+
+        if (file_exists($filePath)) 
+        {
+            return response()->download($filePath);
+        } 
+        else 
+        {
+            return redirect()->back()->with('error', 'Archivo no encontrado');
+        }
     }
    
     /**

@@ -43,10 +43,6 @@ Route::post('/buzonSeguimientoResultados', [MicroSitioController::class, 'buzonS
 Route::get('/buzonReincidencia', [MicroSitioController::class, 'buzonReincidencia'])->name('buzonReincidencia');
 Route::post('/buzonReincidenciaCreate', [MicroSitioController::class, 'buzonReincidenciaCreate'])->name('buzonReincidenciaCreate');
 Route::post('/buzonReincidenciaStore', [MicroSitioController::class, 'buzonReincidenciaStore'])->name('buzonReincidenciaStore');
-//Route::post('/buzonSeguimientoResultados', [MicroSitioController::class, 'buzonSeguimientoShow'])->name('buzonSeguimientoShow');
-
-
-//Route::get('/seguimientoDenuncia', function () { return view('micrositio.seguimientoDenuncia');})->name('seguimiento.denuncia');
     
     //DECLARAMOS LA VARIABLE A LA CUAL LE CARGAMOS EL METODO LOAD Y LA RUTA DE LA VISTA
     //$pdf = PDF::loadView('pdf.pdf');
@@ -100,6 +96,9 @@ Route::middleware(['auth'])->group(function ()
 
     //RUTA PARA MOSTRAR LA VISTA DE DETALLES DE DENUNCIA
     Route::get('admin/{id}/detalles', [DenunciaController::class, 'detalles'])->name('denuncias.detalles');
+
+    Route::get('admin/detalles/{filename}', [DenunciaController::class, 'download'])->name('file.detalles');
+
 
     
 

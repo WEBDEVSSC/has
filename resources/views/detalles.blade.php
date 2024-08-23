@@ -66,17 +66,17 @@
     <div class="card-body">
 
     <!-- ------------------------------------------------------------------------------------ -->
-        
-    <hr>
-
-    <center><p><strong>Datos generales de contacto</strong></p></center>
-
-    <hr>
 
     <div class="row">
-        <div class="col-md-4">
-            <p><strong>Status</strong><br>
-            <span class="badge badge-pill
+
+        <div class="col-md-6">
+            <p><strong>Tipo de solicitud</strong></p>
+            <p>{{ $denuncia->tipo_solicitud }}</p>
+        </div>
+
+        <div class="col-md-6">
+            <p><strong>Status</strong></p>
+            <p> <span class="badge badge-pill
                 @if($denuncia->status === 'NUEVO')
                     badge-primary
                 @elseif($denuncia->status === 'EN PROCESO')
@@ -99,6 +99,16 @@
             </span></p>
         </div>
 
+    </div>
+
+    <hr>
+
+    <center><p><strong>Datos generales de contacto</strong></p></center>
+
+    <hr>
+
+    <div class="row">
+
         <div class="col-md-4">
             <p><strong>Nombre completo</strong><br>{{ $denuncia->nombre }}</p>
         </div>
@@ -107,15 +117,13 @@
             <p><strong>Edad</strong><br>{{ $denuncia->edad }} años cumplidos</p>
         </div>
 
-        
+        <div class="col-md-4">
+            <p><strong>Sexo</strong><br>{{ $denuncia->sexo }}</p>
+        </div>
 
     </div>
 
     <div class="row">
-
-        <div class="col-md-4">
-            <p><strong>Sexo</strong><br>{{ $denuncia->sexo }}</p>
-        </div>
 
         <div class="col-md-4">
             <p><strong>Email</strong><br>{{ $denuncia->correo }}</p>
@@ -146,7 +154,6 @@
             <p><strong>Municipio</strong><br>{{ $denuncia->municipio }}</p>
         </div>
         
-
     </div>
 
     <div class="row">
@@ -158,6 +165,7 @@
         <div class="col-md-4">
             <p><strong>Cargo</strong><br>{{ $denuncia->cargo }}</p>
         </div>
+
         <div class="col-md-4">
             <p><strong>Situación de vulnerabilidad</strong><br>{{ $denuncia->vulnerabilidad }}</p>
         </div>
@@ -174,43 +182,6 @@
 
     <!-- ------------------------------------------------------------------------------------ -->
 
-    <hr>
-
-    <center><p><strong>Tipo de solicitud</strong></p></center>
-
-    <hr>
-
-    <div class="row">
-
-        <div class="col-md-12">
-            <p>{{ $denuncia->tipo_solicitud }}</p>
-        </div>
-
-    </div>
-
-    <!-- ------------------------------------------------------------------------------------ -->
-    
-    <hr>
-
-    <center><p><strong>Hechos</strong></p></center>
-
-    <hr>
-
-    <div class="row">
-        <div class="col-md-12">
-            <p><strong>Como</strong></p>
-            <p>{{ $denuncia->como }}</p>
-            
-            <p><strong>Cuando</strong></p>
-            <p>{{ $denuncia->cuando }}</p>
-
-            <p><strong>Donde</strong></p>
-            <p>{{ $denuncia->donde }}</p>
-        </div>
-    </div>
-
-    <!-- ------------------------------------------------------------------------------------ -->
-    
     <hr>
 
     <center><p><strong>Datos del denunciado</strong></p></center>
@@ -231,7 +202,7 @@
             <p><strong>Puesto</strong><br>{{ $denuncia->denunciado_puesto }}</p>
         </div>
 
-    </div>
+    </div> 
 
     <div class="row">
 
@@ -242,20 +213,30 @@
 
     </div>
 
-    <!-- ------------------------------------------------------------------------------------ -->
 
+    <!-- ------------------------------------------------------------------------------------ -->
+    
     <hr>
 
-    <center><p><strong>Testigos</strong></p></center>
+    <center><p><strong>Hechos</strong></p></center>
 
     <hr>
 
     <div class="row">
-
         <div class="col-md-12">
-            {{ $denuncia->testigos }}
-        </div>
+            <p><strong>Como</strong></p>
+            <p>{{ $denuncia->como }}</p>
+            
+            <p><strong>Cuando</strong></p>
+            <p>{{ $denuncia->cuando }}</p>
 
+            <p><strong>Donde</strong></p>
+            <p>{{ $denuncia->donde }}</p>
+
+            <p><strong>Testigos</strong></p>
+            <p>{{ $denuncia->testigos }}</p>
+
+        </div>
     </div>
 
     <!-- ------------------------------------------------------------------------------------ -->
@@ -265,6 +246,14 @@
     <center><p><strong>Evidencia digital</strong></p></center>
 
     <hr>
+
+    @if($denuncia->imagenuno !== null)
+        <a class="btn btn-dark btn-sm btn-block" href="{{ route('file.detalles', basename($denuncia->imagenuno)) }}">Descargar archivo</a>
+    @endif
+
+    @if($denuncia->imagendos !== null)
+        <a class="btn btn-dark btn-sm btn-block" href="{{ route('file.detalles', basename($denuncia->imagendos)) }}">Descargar archivo</a>
+    @endif
 
     <!-- ------------------------------------------------------------------------------------ -->
 
@@ -283,6 +272,20 @@
 
                 <div class="card-body">
 
+                <ul class="list-group">
+
+                @foreach ($seguimientos as $seguimiento)
+                    
+                    <li class="list-group-item">
+                        <strong>{{ $seguimiento->created_at->format('d/m/Y') }}</strong>
+                        <br>
+                        {{ $seguimiento->mensaje }}
+                    </li>
+                
+                @endforeach
+
+                </ul>
+
                 </div>
 
             </div>
@@ -297,6 +300,20 @@
 
                 <div class="card-body">
 
+                <ul class="list-group">
+
+                    @foreach ($reincidencias as $reincidencia)
+                        
+                        <li class="list-group-item">
+                            <strong>{{ $reincidencia->created_at->format('d/m/Y') }}</strong>
+                            <br>
+                            {{ $reincidencia->descripcion }}
+                        </li>
+                    
+                    @endforeach
+
+                </ul>
+
                 </div>
 
             </div>
@@ -310,6 +327,20 @@
                 </div>
 
                 <div class="card-body">
+
+                <ul class="list-group">
+
+                    @foreach ($documentaciones as $documentacion)
+                        
+                        <li class="list-group-item">
+                            <strong>{{ $documentacion->created_at->format('d/m/Y') }}</strong>
+                            <br>
+                            {{ $documentacion->descripcion }}
+                        </li>
+                    
+                    @endforeach
+
+                </ul>
 
                 </div>
 

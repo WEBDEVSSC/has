@@ -48,7 +48,7 @@ class DenunciaSeguimientoController extends Controller
         $seguimiento->mensaje = $request->mensaje;
 
         // Enviamos el correo de confirmacion
-        Mail::to(['cesartorres.1688@gmail.com',$correoDeCrypt])->send(new DenunciaSeguimientoMail($folio));
+        //Mail::to(['cesartorres.1688@gmail.com',$correoDeCrypt])->send(new DenunciaSeguimientoMail($folio));
 
         $seguimiento->save();
 
