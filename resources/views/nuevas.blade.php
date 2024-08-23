@@ -11,6 +11,7 @@
 @stop
 
 @section('content')
+
 <div class="row">
     <div class="col-md-12">
         <div class="card card card-purple">
@@ -71,7 +72,7 @@
                                 <a class="dropdown-item" href="{{ route('seguimiento.create', $denuncia->id) }}">Seguimiento (NOSOTROS)</a>
                                 <a class="dropdown-item" href="{{ route('reincidencia.create', $denuncia->id) }}">Reincidencia (VICTIMA)</a>
                                 <a class="dropdown-item" href="{{ route('documento.create', $denuncia->id) }}">Documentación</a>
-                                <a class="dropdown-item" href="#">Imprimir PDF</a>
+                                <a class="dropdown-item" target="_blank" href="{{ route('generar.pdf', $denuncia->id)}}">Imprimir PDF</a>
                                 </div>
                             </div>
 

@@ -156,4 +156,14 @@ Route::middleware(['auth'])->group(function ()
     //ENLACE PARA DESCARGAR DE MANERA SEGURA LOS DOCUMENTOS
     Route::get('download/{filename}', [DenunciaReincidenciaController::class, 'download'])->name('file.download');
 
+    /**
+     * 
+     * 
+     *  RUTAS PARA GENERAR ARCHIVO PDF CON DONPDF
+     * 
+     * 
+     */
+
+    Route::get('admin/{id}/generar-pdf', [DenunciaController::class, 'generarPDF'])->name('generar.pdf');
+
 });
