@@ -401,11 +401,6 @@
     </div>
 </div>
 
-        {!! NoCaptcha::display() !!}
-        @error('g-recaptcha-response')
-            <span class="text-danger">{{ $message }}</span>
-        @enderror
-
     <div class="grid grid-cols-1 gap-1">
 
     <div class="col">
@@ -424,7 +419,7 @@
 <!-- ------------------------------------------ -->
 </form>
 
-{!! NoCaptcha::renderJs() !!}
+
 </div>
 
 <!-- ------------------------------------------ -->

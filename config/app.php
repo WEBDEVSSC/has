@@ -2,20 +2,6 @@
 
 return [
 
-    // Configuraciones anteriores...
-
-    'providers' => [
-        // Otros proveedores...
-
-        Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class,
-    ],
-
-    'aliases' => [
-        // Otros alias...
-
-        'NoCaptcha' => Anhskohbo\NoCaptcha\Facades\NoCaptcha::class,
-    ],
-
     /*
     |--------------------------------------------------------------------------
     | Application Name
