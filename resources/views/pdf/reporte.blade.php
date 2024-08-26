@@ -15,10 +15,16 @@
             position: fixed;
             bottom: 0;
             left: 0;
-            width: 100%;
+            right: 0;
+            height: 50px;
             text-align: center;
+            font-size: 12px;
             border-top: 1px solid black;
             padding-top: 10px;
+        }
+
+        .pagenum:before {
+            content: counter(page);
         }
     </style>
 </head>
@@ -69,6 +75,8 @@
         </tr>
     </table>
 
+    <br>
+
     <table style="width: 100%; border: 1px solid black; border-collapse: collapse;">
         <tr>
             <td style="border: 1px solid black; background-color: #e5e7e9;"><strong>Adscripción</strong></td>
@@ -103,6 +111,8 @@
         </tr>
     </table>
 
+    <br>
+
     <table style="width: 100%; border: 1px solid black; border-collapse: collapse;">
         <tr>
             <td style="border: 1px solid black; background-color: #e5e7e9;"><strong>Datos del denunciado</strong></td>
@@ -130,6 +140,8 @@
             <td style="border: 1px solid black;">{{ $denuncia->denunciado_antecedentes }}</td>
         </tr>
     </table>
+
+    <br>
 
     <table style="width: 100%; border: 1px solid black; border-collapse: collapse;">
         <tr>
@@ -177,6 +189,7 @@
     </div><!-- DIV CONTENT -->
 
     <div class="footer">
+        <p>Página <span class="pagenum"></span> de <span class="total-pages"></span></p>
         <p>© {{ date('Y') }} - Secretaría de Salud de Coahuila. Todos los derechos reservados.</p>
     </div>
      

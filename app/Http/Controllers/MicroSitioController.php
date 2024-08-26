@@ -89,6 +89,7 @@ class MicroSitioController extends Controller
             'testigos' => 'required|string|max:10000',
             'evidencia_uno' => 'file|mimes:jpg,jpeg,png,mp4,mp3,pdf,doc,docx,|max:10240',
             'evidencia_dos' => 'file|mimes:jpg,jpeg,png,mp4,mp3,pdf,doc,docx,|max:10240',
+            'g-recaptcha-response' => 'required|captcha',
         ], [
             'evidencia_uno.required' => 'Debe seleccionar un archivo para la primera evidencia.',
             'evidencia_uno.mimes' => 'El archivo de la primera evidencia debe ser de tipo: jpg, jpeg, png, mp4, mp3, pdf, doc, docx.',
@@ -96,6 +97,8 @@ class MicroSitioController extends Controller
             'evidencia_dos.required' => 'Debe seleccionar un archivo para la segunda evidencia.',
             'evidencia_dos.mimes' => 'El archivo de la segunda evidencia debe ser de tipo: jpg, jpeg, png, mp4, mp3, pdf, doc, docx.',
             'evidencia_dos.max' => 'El tamaño máximo permitido para la segunda evidencia es de 10MB.',
+            'g-recaptcha-response.required' => 'Por favor, verifica que no eres un robot.',
+            'g-recaptcha-response.captcha' => 'La verificación de reCAPTCHA ha fallado, intenta de nuevo.',
         ]);
 
         //GENERAMOS EL RANDOM PARA FOLIO

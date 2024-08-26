@@ -31,7 +31,6 @@ class DenunciaController extends Controller
         $denuncia->denunciado_nombre = Crypt::decryptString($denuncia->denunciado_nombre);
         $denuncia->testigos = Crypt::decryptString($denuncia->testigos);
 
-
         // Renderizar la vista y generar el PDF
         $pdf = PDF::loadView('pdf.reporte', ['denuncia' => $denuncia])->setPaper('a4', 'landscape');;
 
