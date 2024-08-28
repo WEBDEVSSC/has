@@ -221,6 +221,8 @@
     </div>
 </div>
 
+<?php echo "TOTAL D DENUNCIAS DE ENERO ".$totalDenunciasEnero; ?>
+
 <!-- --------------------------------------------------------- -->
 
 @stop
