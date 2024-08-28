@@ -19,6 +19,56 @@
         @csrf <!-- Token de seguridad para formularios en Laravel -->
 
         <!-- ---------------------------------------------------------------------------------------------- -->
+        <!--                                                                                                -->
+        <!--  TIPO DE SOLICITUD                                                                             -->
+        <!--                                                                                                -->
+        <!-- ---------------------------------------------------------------------------------------------- -->
+
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Tipo de solicitud</h4>
+            </div>
+        </div>
+
+        <!-- ---------------------------------------------------------------------------------------------- -->
+
+        <div class="row">
+
+            <!-- INPUT PARA MOSTRAR EL CAMPO DE TIPO DE SOLICITUD -->
+            <div class="col-md-12">
+                
+                <div class="form-group">
+                    <select id="tipo_solicitud" name="tipo_solicitud" class="form-control" required>
+                        <option value="" disabled selected>Selecciona un tipo</option>
+                        <option value="ACOSO SEXUAL" {{ old('tipo_solicitud') == 'ACOSO SEXUAL' ? 'selected' : '' }}>Acoso sexual</option>
+                        <option value="HOSTIGAMIENTO SEXUAL" {{ old('tipo_solicitud') == 'HOSTIGAMIENTO SEXUAL' ? 'selected' : '' }}>Hostigamiento sexual</option>
+                        <option value="OTRO" {{ old('tipo_solicitud') == 'OTRO' ? 'selected' : '' }}>Otra</option>
+                    </select>
+                    <!-- MOSTRAMOS EL ERROR EN CASO DE QUE EXISTA -->
+                    @error('tipo_solicitud')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+
+            </div>
+
+        </div>
+
+        <br>
+
+        <!-- ---------------------------------------------------------------------------------------------- -->
+        <!--                                                                                                -->
+        <!--  DATOS GENERALES DEL LA AFECTADO AFECTADA                                                      -->
+        <!--                                                                                                -->
+        <!-- ---------------------------------------------------------------------------------------------- -->
+
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Datos generales del/la afectado/afectada</h4>
+            </div>
+        </div>
+
+        <!-- ---------------------------------------------------------------------------------------------- -->
 
         <div class="row">
 
@@ -37,8 +87,8 @@
             <!-- INPUT PARA MOSTRAR EL CAMPO DE EDAD -->
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="edad">Edad:</label>
-                    <input type="text" id="edad" name="edad" class="form-control" value="{{ old('edad') }}" required>
+                    <label for="edad">Edad <small>Años cumplidos</small></label>
+                    <input type="number" id="edad" name="edad" class="form-control" value="{{ old('edad') }}" required>
                     <!-- MOSTRAMOS EL ERROR EN CASO DE QUE EXISTA -->
                     @error('edad')
                         <div class="alert alert-danger">{{ $message }}</div>
@@ -63,7 +113,7 @@
             </div>
 
         </div>
-        
+
         <!-- ---------------------------------------------------------------------------------------------- -->
 
         <div class="row">
@@ -162,7 +212,7 @@
                         <option value="BASE" {{ old('tipo_contratacion') == 'BASE' ? 'selected' : '' }}>BASE</option>
                         <option value="CONTRATO" {{ old('tipo_contratacion') == 'CONTRATO' ? 'selected' : '' }}>CONTRATO</option>
                         <option value="EN FORMACION" {{ old('tipo_contratacion') == 'EN FORMACION' ? 'selected' : '' }}>EN FORMACION</option>
-                        <option value="OTRO" {{ old('tipo_contratacion') == 'OTRO' ? 'selected' : '' }}>OTRO</option>
+                        <option value="OTRA" {{ old('tipo_contratacion') == 'OTRA' ? 'selected' : '' }}>OTRO</option>
                     </select>
                     <!-- MOSTRAMOS EL ERROR EN CASO DE QUE EXISTA -->
                     @error('tipo_contratacion')
@@ -216,12 +266,12 @@
                 <div class="form-group">
                     <label for="cual">Cual:</label>
                     <select id="cual" name="cual" class="form-control" required>
-                        <option value="" disabled selected>Selecciona un tipo</option>
-                        <option value="Personas migrante" {{ old('cual') == 'Personas Migrante' ? 'selected' : '' }}>Personas Migrante</option>
-                        <option value="Personas con discapacidad" {{ old('cual') == 'Personas con discapacidad' ? 'selected' : '' }}>Personas con discapacidad</option>
-                        <option value="Poblacion indigena" {{ old('cual') == 'Poblacion indigena' ? 'selected' : '' }}>Poblacion indigena</option>
-                        <option value="Otra situacion" {{ old('cual') == 'Otra situacion' ? 'selected' : '' }}>Otra situacion</option>
-                        <option value="Dos o mas situaciones" {{ old('cual') == 'Dos o mas situaciones' ? 'selected' : '' }}>Dos o mas situaciones</option>
+                        <option value="" disabled {{ old('cual') ? '' : 'selected' }}>Selecciona un tipo</option>
+                        <option value="PERSONAS MIGRANTES" {{ old('cual') == 'PERSONAS MIGRANTES' ? 'selected' : '' }}>PERSONAS MIGRANTES</option>
+                        <option value="PERSONAS CON DISCAPACIDAD" {{ old('cual') == 'PERSONAS CON DISCAPACIDAD' ? 'selected' : '' }}>PERSONAS CON DISCAPACIDAD</option>
+                        <option value="POBLACION INDIGENA" {{ old('cual') == 'POBLACION INDIGENA' ? 'selected' : '' }}>POBLACION INDIGENA</option>
+                        <option value="OTRA SITUACION" {{ old('cual') == 'OTRA SITUACION' ? 'selected' : '' }}>OTRA SITUACION</option>
+                        <option value="DOS O MAS SITUACIONES" {{ old('cual') == 'DOS O MAS SITUACIONES' ? 'selected' : '' }}>DOS O MAS SITUACIONES</option>
                     </select>
                     <!-- MOSTRAMOS EL ERROR EN CASO DE QUE EXISTA -->
                     @error('cual')
@@ -234,89 +284,16 @@
         </div>
 
         <!-- ---------------------------------------------------------------------------------------------- -->
-
-        <div class="row">
-
-            <!-- INPUT PARA MOSTRAR EL CAMPO DE TIPO DE SOLICITUD -->
-            <div class="col-md-12">
-                
-                <div class="form-group">
-                    <label for="tipo_solicitud">Tipo de solicitud:</label>
-                    <select id="tipo_solicitud" name="tipo_solicitud" class="form-control" required>
-                        <option value="" disabled selected>Selecciona un tipo</option>
-                        <option value="ACOSO SEXUAL" {{ old('tipo_solicitud') == 'ACOSO SEXUAL' ? 'selected' : '' }}>Acoso sexual</option>
-                        <option value="HOSTIGAMIENTO SEXUAL" {{ old('tipo_solicitud') == 'HOSTIGAMIENTO SEXUAL' ? 'selected' : '' }}>Hostigamiento sexual</option>
-                        <option value="OTRO" {{ old('tipo_solicitud') == 'OTRO' ? 'selected' : '' }}>Otra</option>
-                    </select>
-                    <!-- MOSTRAMOS EL ERROR EN CASO DE QUE EXISTA -->
-                    @error('tipo_solicitud')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
-            </div>
-
-        </div>
-
-        <!-- ---------------------------------------------------------------------------------------------- -->
-       
-        <div class="row">
-
-            <!-- INPUT PARA MOSTRAR EL CAMPO DE COMO -->
-            <div class="col-md-12">
-
-                <div class="form-group">
-                    <label for="como">¿Cómo sucedierón?:</label>
-                    <textarea id="como" name="como" class="form-control" rows="4" required>{{ old('como') }}</textarea>
-                    <!-- MOSTRAMOS EL ERROR EN CASO DE QUE EXISTA -->
-                    @error('como')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
-            </div>
-        </div>
-
-        <!-- ---------------------------------------------------------------------------------------------- -->
-       
-        <div class="row">
-
-            <!-- INPUT PARA MOSTRAR EL CAMPO DE CUANDO -->
-            <div class="col-md-12">
-
-                <div class="form-group">
-                    <label for="cuando">¿Cuándo sucedierón?:</label>
-                    <textarea id="cuando" name="cuando" class="form-control" rows="4" required>{{ old('cuando') }}</textarea>
-                    <!-- MOSTRAMOS EL ERROR EN CASO DE QUE EXISTA -->
-                    @error('cuando')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
-            </div>
-
-        </div>
-
+        <!--                                                                                                -->
+        <!--  DATOS DEL LA DENUNCIADO DENUNCIADA                                                            -->
+        <!--                                                                                                -->
         <!-- ---------------------------------------------------------------------------------------------- -->
 
         <div class="row">
-
-            <!-- INPUT PARA MOSTRAR EL CAMPO DE DONDE -->
             <div class="col-md-12">
-
-                <div class="form-group">
-                    <label for="donde">¿Dónde sucedierón?:</label>
-                    <textarea id="donde" name="donde" class="form-control" rows="4" required>{{ old('donde') }}</textarea>
-                    <!-- MOSTRAMOS EL ERROR EN CASO DE QUE EXISTA -->
-                    @error('donde')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
+                <h4>Datos del/la denunciado/denunciada</h4>
             </div>
-
         </div>
-        
 
         <!-- ---------------------------------------------------------------------------------------------- -->
 
@@ -395,7 +372,77 @@
             </div>
 
         </div>
-        
+
+        <!-- ---------------------------------------------------------------------------------------------- -->
+        <!--                                                                                                -->
+        <!--  HECHOS                                                                                        -->
+        <!--                                                                                                -->
+        <!-- ---------------------------------------------------------------------------------------------- -->
+
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Hechos (Favor de ser breve en la descripción del evento)</h4>
+            </div>
+        </div>
+
+        <!-- ---------------------------------------------------------------------------------------------- -->
+
+        <div class="row">
+
+            <!-- INPUT PARA MOSTRAR EL CAMPO DE COMO -->
+            <div class="col-md-12">
+
+                <div class="form-group">
+                    <label for="como">¿Cómo sucedierón?:</label>
+                    <textarea id="como" name="como" class="form-control" rows="4" required>{{ old('como') }}</textarea>
+                    <!-- MOSTRAMOS EL ERROR EN CASO DE QUE EXISTA -->
+                    @error('como')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ---------------------------------------------------------------------------------------------- -->
+       
+        <div class="row">
+
+            <!-- INPUT PARA MOSTRAR EL CAMPO DE CUANDO -->
+            <div class="col-md-12">
+
+                <div class="form-group">
+                    <label for="cuando">¿Cuándo sucedierón?:</label>
+                    <textarea id="cuando" name="cuando" class="form-control" rows="4" required>{{ old('cuando') }}</textarea>
+                    <!-- MOSTRAMOS EL ERROR EN CASO DE QUE EXISTA -->
+                    @error('cuando')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ---------------------------------------------------------------------------------------------- -->
+
+        <div class="row">
+
+            <!-- INPUT PARA MOSTRAR EL CAMPO DE DONDE -->
+            <div class="col-md-12">
+
+                <div class="form-group">
+                    <label for="donde">¿Dónde sucedierón?:</label>
+                    <textarea id="donde" name="donde" class="form-control" rows="4" required>{{ old('donde') }}</textarea>
+                    <!-- MOSTRAMOS EL ERROR EN CASO DE QUE EXISTA -->
+                    @error('donde')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+
+            </div>
+
+        </div>
 
         <!-- ---------------------------------------------------------------------------------------------- -->
 
@@ -416,23 +463,52 @@
             </div>
 
         </div>
-        
+
+        <!-- ---------------------------------------------------------------------------------------------- -->
+        <!--                                                                                                -->
+        <!--  EVIDENCIA DIGITAL                                                                             -->
+        <!--                                                                                                -->
         <!-- ---------------------------------------------------------------------------------------------- -->
 
         <div class="row">
-        <div class="col-md-12">
-
-            <div class="form-group">
-                <label for="file">Archivo <small>Formatos soportados(jpg,jpeg,png,mp4,mp3,pdf,doc,docx) con un tamaño máximo de 10 MB.</small> </label>
-                <input type="file" name="archivo" class="form-control-file">
-                <!-- MOSTRAMOS EL ERROR EN CASO DE QUE EXISTA -->
-                @error('archivo')
-                    <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
+            <div class="col-md-12">
+                <h4>Evidencia digital</h4>
             </div>
-
         </div>
-    </div>
+
+        <!-- ---------------------------------------------------------------------------------------------- -->
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="form-group">
+                    <label for="file">Evidencia uno <small>Formatos soportados(jpg,jpeg,png,mp4,mp3,pdf,doc,docx) con un tamaño máximo de 10 MB.</small> </label>
+                    <input type="file" name="evidencia_uno" class="form-control-file">
+                    <!-- MOSTRAMOS EL ERROR EN CASO DE QUE EXISTA -->
+                    @error('archivo')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+
+            </div>
+        </div>
+
+    <!-- ---------------------------------------------------------------------------------------------- -->
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="form-group">
+                    <label for="file">Evidencia dos <small>Formatos soportados(jpg,jpeg,png,mp4,mp3,pdf,doc,docx) con un tamaño máximo de 10 MB.</small> </label>
+                    <input type="file" name="evidencia_dos" class="form-control-file">
+                    <!-- MOSTRAMOS EL ERROR EN CASO DE QUE EXISTA -->
+                    @error('archivo')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+
+            </div>
+        </div>
 
     <!-- ---------------------------------------------------------------------------------------------- -->
 

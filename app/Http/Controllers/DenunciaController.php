@@ -165,6 +165,7 @@ class DenunciaController extends Controller
      */
     public function formularioregistra(Request $request)
     {
+        // Consultamos el municipio
         $municipio = Municipio::find($request->id_municipio)->nombre;
         
         // Validar los datos del formulario
@@ -190,39 +191,44 @@ class DenunciaController extends Controller
             'denunciado_puesto' => 'required|string|max:255',
             'denunciado_antecedentes' => 'required|string|max:10000',
             'testigos' => 'required|string|max:10000',
-            'archivo' => 'file|mimes:jpg,jpeg,png,mp4,mp3,pdf,doc,docx,|max:10240',
+            'evidencia_uno' => 'file|mimes:jpg,jpeg,png,mp4,mp3,pdf,doc,docx,|max:10240',
+            'evidencia_dos' => 'file|mimes:jpg,jpeg,png,mp4,mp3,pdf,doc,docx,|max:10240',
         ],[
-            'archivo.required' => 'Debe seleccionar un archivo para subir.',
-            'archivo.mimes' => 'El archivo debe ser de tipo jpg,jpeg,png,mp4,mp3,pdf,doc,docx,.',
-            'archivo.max' => 'El tamaño máximo permitido para el archivo es de 10MB.',
+            'evidencia_uno.required' => 'Debe seleccionar un archivo para subir.',
+            'evidencia_uno.mimes' => 'El archivo debe ser de tipo jpg,jpeg,png,mp4,mp3,pdf,doc,docx,.',
+            'evidencia_uno.max' => 'El tamaño máximo permitido para el archivo es de 10MB.',
+            'evidencia_dos.required' => 'Debe seleccionar un archivo para subir.',
+            'evidencia_dos.mimes' => 'El archivo debe ser de tipo jpg,jpeg,png,mp4,mp3,pdf,doc,docx,.',
+            'evidencia_dos.max' => 'El tamaño máximo permitido para el archivo es de 10MB.',
         ]);
 
-        //GENERAMOS EL RANDOM PARA FOLIO
+        // Generamos el numero aleatorio para el folio
         $folio = '';
         for ($i = 0; $i < 4; $i++) {
-            $folio .= mt_rand(0, 9); // Concatena un número aleatorio entre 0 y 9
+            $folio .= mt_rand(0, 9); 
         }
-
-        //$archivo = $request->file('archivo');
-        
-        // Configuracion para manipular el archivo
-
-        // Obtener la fecha y hora actual en el formato deseado
-        $timestamp = now()->format('Ymd_His');
 
         // Crear el nombre del archivo con la fecha y hora
         //$archivoNombre = $denuncia . '_R_' . $timestamp . '.' . $archivo->extension();
 
-        // Almacenar el archivo en la carpeta 'documents' en el almacenamiento local
-        $archivoPath = $request->archivo->store('documents','local');
+        // Almacenar los archivos en la carpeta 'documents' en el almacenamiento local
+        $archivoPathUno = $request->hasFile('evidencia_uno') ? $request->file('evidencia_uno')->store('documents', 'local') : null;
+        $archivoPathDos = $request->hasFile('evidencia_dos') ? $request->file('evidencia_dos')->store('documents', 'local') : null;
+
+        // Cifra el los datos sensibles
+        $encryptedNombre = Crypt::encryptString($request->input('nombre'));
+        $encryptedCelular = Crypt::encryptString($request->input('celular'));
+        $encryptedCorreo = Crypt::encryptString($request->input('correo'));
+        $encryptedDenunciadoNombre = Crypt::encryptString($request->input('denunciado_nombre'));
+        $encryptedTestigos = Crypt::encryptString($request->input('testigos'));
 
         // Crear una nueva instancia del modelo Denuncia y asignar los valores
         $denuncia = new Denuncia();
-        $denuncia->nombre = $request->nombre;
+        $denuncia->nombre = $encryptedNombre;
         $denuncia->edad = $request->edad;
         $denuncia->sexo = $request->sexo;
-        $denuncia->correo = $request->correo;
-        $denuncia->celular = $request->celular;
+        $denuncia->correo = $encryptedCorreo;
+        $denuncia->celular = $encryptedCelular;
         $denuncia->adscripcion = $request->adscripcion;
         $denuncia->unidad_resposable = $request->unidad_responsable;
         $denuncia->id_municipio = $request->id_municipio;
@@ -236,12 +242,13 @@ class DenunciaController extends Controller
         $denuncia->cuando = $request->cuando;
         $denuncia->donde = $request->donde;
         $denuncia->tipo_solicitud = $request->tipo_solicitud;
-        $denuncia->denunciado_nombre = $request->denunciado_nombre;
+        $denuncia->denunciado_nombre = $encryptedDenunciadoNombre;
         $denuncia->denunciado_cargo = $request->denunciado_cargo;
         $denuncia->denunciado_puesto = $request->denunciado_puesto;
         $denuncia->denunciado_antecedentes = $request->denunciado_antecedentes;
-        $denuncia->testigos = $request->testigos;
-        $denuncia->imagenuno = $archivoPath;
+        $denuncia->testigos = $encryptedTestigos;
+        $denuncia->imagenuno = $archivoPathUno;
+        $denuncia->imagendos = $archivoPathDos;
 
         $denuncia->status = 'NUEVO';
         $denuncia->folio = $folio;      
@@ -249,10 +256,12 @@ class DenunciaController extends Controller
         // Guardar la denuncia en la base de datos
         $denuncia->save();
 
-        //return redirect()->route('denuncias.nuevas')->with('success', 'La denuncia se registró correctamente con el folio: ' . $folio);
+        // Enviamos los correos de alertas
 
-          // Redirigir a la vista de detalles con los datos recién registrados
-          return redirect()->route('denuncias.detalles', ['id' => $denuncia->id])->with('success', 'La denuncia se registro correctamente con el folio : '.$folio);         
+        //Mail::to(['cesartorres.1688@gmail.com','igualdadcoahuila@gmail.com',$request->correo])->send(new DenunciaNuevaMail($folio));
+
+        // Redirigir a la vista de detalles con los datos recién registrados
+        return redirect()->route('denuncias.detalles', ['id' => $denuncia->id])->with('success', 'La denuncia se registro correctamente con el folio : '.$folio);         
         
     }
 
