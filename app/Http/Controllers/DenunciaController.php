@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\DenunciaNuevaMail;
 use App\Models\Denuncia;
 use App\Models\DenunciaDocumentacion;
 use App\Models\DenunciaReincidencia;
@@ -12,7 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 
 use Barryvdh\DomPDF\Facade\Pdf;
-
+use Illuminate\Support\Facades\Mail;
 
 class DenunciaController extends Controller
 {
@@ -258,7 +259,7 @@ class DenunciaController extends Controller
 
         // Enviamos los correos de alertas
 
-        //Mail::to(['cesartorres.1688@gmail.com','igualdadcoahuila@gmail.com',$request->correo])->send(new DenunciaNuevaMail($folio));
+        Mail::to(['cesartorres.1688@gmail.com','igualdadcoahuila@gmail.com',$request->correo])->send(new DenunciaNuevaMail($folio));
 
         // Redirigir a la vista de detalles con los datos recién registrados
         return redirect()->route('denuncias.detalles', ['id' => $denuncia->id])->with('success', 'La denuncia se registro correctamente con el folio : '.$folio);         

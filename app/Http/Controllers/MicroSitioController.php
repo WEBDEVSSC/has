@@ -161,7 +161,7 @@ class MicroSitioController extends Controller
         $denuncia->save();
 
         // Enviamos el correo de confirmacion
-        //Mail::to(['cesartorres.1688@gmail.com','igualdadcoahuila@gmail.com',$request->correo])->send(new DenunciaNuevaMail($folio));
+        Mail::to(['cesartorres.1688@gmail.com','igualdadcoahuila@gmail.com',$request->correo])->send(new DenunciaNuevaMail($folio));
 
         // Redirigir a la vista de detalles con los datos recién registrados
         return redirect()->route('buzonDenuncia')->with('success', 'La denuncia se registro correctamente con el folio : HAS/SSC/'.$folio);         
