@@ -330,7 +330,9 @@ class HomeController extends Controller
         //JURISDICCION 1
 
         // Obtener todos los registros de la tabla denuncia
-        $denunciasJurisdiccionUno = Denuncia::where('jurisdiccion', '1')->get();
+        $denunciasJurisdiccionUno = Denuncia::where('jurisdiccion', '1')
+        ->whereYear('created_at', 2024)
+        ->get();
 
         // Contar el número de registros
         $totaldenunciasJurisdiccionUno = $denunciasJurisdiccionUno->count();
@@ -338,7 +340,9 @@ class HomeController extends Controller
         //JURISDICCION 2
 
         // Obtener todos los registros de la tabla denuncia
-        $denunciasJurisdiccionDos = Denuncia::where('jurisdiccion', '2')->get();
+        $denunciasJurisdiccionDos = Denuncia::where('jurisdiccion', '2')
+        ->whereYear('created_at', 2024)
+        ->get();
 
         // Contar el número de registros
         $totaldenunciasJurisdiccionDos = $denunciasJurisdiccionDos->count();
@@ -346,7 +350,9 @@ class HomeController extends Controller
         //JURISDICCION 3
 
         // Obtener todos los registros de la tabla denuncia
-        $denunciasJurisdiccionTres = Denuncia::where('jurisdiccion', '3')->get();
+        $denunciasJurisdiccionTres = Denuncia::where('jurisdiccion', '3')
+        ->whereYear('created_at', 2024)
+        ->get();
 
         // Contar el número de registros
         $totaldenunciasJurisdiccionTres = $denunciasJurisdiccionTres->count();
@@ -354,7 +360,9 @@ class HomeController extends Controller
         //JURISDICCION 4
 
         // Obtener todos los registros de la tabla denuncia
-        $denunciasJurisdiccionCuatro = Denuncia::where('jurisdiccion', '4')->get();
+        $denunciasJurisdiccionCuatro = Denuncia::where('jurisdiccion', '4')
+        ->whereYear('created_at', 2024)
+        ->get();
 
         // Contar el número de registros
         $totaldenunciasJurisdiccionCuatro = $denunciasJurisdiccionCuatro->count();
@@ -362,7 +370,9 @@ class HomeController extends Controller
         //JURISDICCION 5
 
         // Obtener todos los registros de la tabla denuncia
-        $denunciasJurisdiccionCinco = Denuncia::where('jurisdiccion', '5')->get();
+        $denunciasJurisdiccionCinco = Denuncia::where('jurisdiccion', '5')
+        ->whereYear('created_at', 2024)
+        ->get();
 
         // Contar el número de registros
         $totaldenunciasJurisdiccionCinco = $denunciasJurisdiccionCinco->count();
@@ -370,7 +380,9 @@ class HomeController extends Controller
         //JURISDICCION 6
 
         // Obtener todos los registros de la tabla denuncia
-        $denunciasJurisdiccionSeis = Denuncia::where('jurisdiccion', '6')->get();
+        $denunciasJurisdiccionSeis = Denuncia::where('jurisdiccion', '6')
+        ->whereYear('created_at', 2024)
+        ->get();
 
         // Contar el número de registros
         $totaldenunciasJurisdiccionSeis = $denunciasJurisdiccionSeis->count();
@@ -378,7 +390,9 @@ class HomeController extends Controller
         //JURISDICCION 7
 
         // Obtener todos los registros de la tabla denuncia
-        $denunciasJurisdiccionSiete = Denuncia::where('jurisdiccion', '7')->get();
+        $denunciasJurisdiccionSiete = Denuncia::where('jurisdiccion', '7')
+        ->whereYear('created_at', 2024)
+        ->get();
 
         // Contar el número de registros
         $totaldenunciasJurisdiccionSiete = $denunciasJurisdiccionSiete->count();
@@ -386,7 +400,9 @@ class HomeController extends Controller
         //JURISDICCION 8
 
         // Obtener todos los registros de la tabla denuncia
-        $denunciasJurisdiccionOcho = Denuncia::where('jurisdiccion', '8')->get();
+        $denunciasJurisdiccionOcho = Denuncia::where('jurisdiccion', '8')
+        ->whereYear('created_at', 2024)
+        ->get();
 
         // Contar el número de registros
         $totaldenunciasJurisdiccionOcho = $denunciasJurisdiccionOcho->count();
@@ -402,7 +418,9 @@ class HomeController extends Controller
         // ACOSO SEXUAL
 
         // Obtener todos los registros de la tabla denuncia
-        $denunciasAcosoSexual = Denuncia::where('tipo_solicitud', 'ACOSO SEXUAL')->get();
+        $denunciasAcosoSexual = Denuncia::where('tipo_solicitud', 'ACOSO SEXUAL')
+        ->whereYear('created_at', 2024)
+        ->get();
 
         // Contar el número de registros
         $totaldenunciasAcosoSexual = $denunciasAcosoSexual->count();
@@ -410,7 +428,9 @@ class HomeController extends Controller
         // HOSTIGAMIENTO
 
         // Obtener todos los registros de la tabla denuncia
-        $denunciasHostigamiento = Denuncia::where('tipo_solicitud', 'HOSTIGAMIENTO SEXUAL')->get();
+        $denunciasHostigamiento = Denuncia::where('tipo_solicitud', 'HOSTIGAMIENTO SEXUAL')
+        ->whereYear('created_at', 2024)
+        ->get();
 
         // Contar el número de registros
         $totaldenunciasHostigamiento = $denunciasHostigamiento->count();
@@ -418,7 +438,9 @@ class HomeController extends Controller
         // OTRO
 
         // Obtener todos los registros de la tabla denuncia
-        $denunciasOtro = Denuncia::where('tipo_solicitud', 'OTRO')->get();
+        $denunciasOtro = Denuncia::where('tipo_solicitud', 'OTRO')
+        ->whereYear('created_at', 2024)
+        ->get();
 
         // Contar el número de registros
         $totaldenunciasOtro = $denunciasOtro->count();
@@ -434,7 +456,9 @@ class HomeController extends Controller
         // CONFIANZA
 
         // Obtener todos los registros de la tabla denuncia
-        $denunciasConfianza = Denuncia::where('tipo_contratacion', 'CONFIANZA')->get();
+        $denunciasConfianza = Denuncia::where('tipo_contratacion', 'CONFIANZA')
+        ->whereYear('created_at', 2024)
+        ->get();
 
         // Contar el número de registros
         $totaldenunciasConfianza = $denunciasConfianza->count();
@@ -442,7 +466,9 @@ class HomeController extends Controller
         // BASE
 
         // Obtener todos los registros de la tabla denuncia
-        $denunciasBase = Denuncia::where('tipo_contratacion', 'BASE')->get();
+        $denunciasBase = Denuncia::where('tipo_contratacion', 'BASE')
+        ->whereYear('created_at', 2024)
+        ->get();
 
         // Contar el número de registros
         $totaldenunciasBase = $denunciasBase->count();
@@ -450,7 +476,9 @@ class HomeController extends Controller
         // CONTRATO
 
         // Obtener todos los registros de la tabla denuncia
-        $denunciasContrato = Denuncia::where('tipo_contratacion', 'CONTRATO')->get();
+        $denunciasContrato = Denuncia::where('tipo_contratacion', 'CONTRATO')
+        ->whereYear('created_at', 2024)
+        ->get();
 
         // Contar el número de registros
         $totaldenunciasContrato = $denunciasContrato->count();
@@ -458,7 +486,9 @@ class HomeController extends Controller
         // EN FORMACION
 
         // Obtener todos los registros de la tabla denuncia
-        $denunciasEnFormacion = Denuncia::where('tipo_contratacion', 'EN FORMACION')->get();
+        $denunciasEnFormacion = Denuncia::where('tipo_contratacion', 'EN FORMACION')
+        ->whereYear('created_at', 2024)
+        ->get();
 
         // Contar el número de registros
         $totaldenunciasEnFormacion = $denunciasEnFormacion->count();
@@ -466,7 +496,9 @@ class HomeController extends Controller
         // OTRA
 
         // Obtener todos los registros de la tabla denuncia
-        $denunciasOtra = Denuncia::where('tipo_contratacion', 'OTRA')->get();
+        $denunciasOtra = Denuncia::where('tipo_contratacion', 'OTRA')
+        ->whereYear('created_at', 2024)
+        ->get();
 
         // Contar el número de registros
         $totaldenunciasOtra = $denunciasOtra->count();
