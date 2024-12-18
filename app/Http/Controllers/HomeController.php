@@ -504,6 +504,26 @@ class HomeController extends Controller
         // Contar el número de registros
         $totaldenunciasOtra = $denunciasOtra->count();
 
+        // Rangos de edad
+
+        // Primera infancia: De 0 a 5 años
+        $primeraInfancia = Denuncia::whereBetween('edad', [0, 5])->count();
+
+        // Infancia: De 6 a 11 años
+        $infancia = Denuncia::whereBetween('edad', [6, 11])->count();
+        
+        // Adolescencia: De 12 a 18 años
+        $adolescencia = Denuncia::whereBetween('edad', [12, 18])->count();
+
+        // Juventud: De 14 a 26 años
+        $juventud = Denuncia::whereBetween('edad', [14, 26])->count();
+
+        // Adultez: De 27 a 59 años
+        $adultez = Denuncia::whereBetween('edad', [27, 50])->count();
+
+        // Persona mayor: De 60 años o más
+        $personaMayor = Denuncia::whereBetween('edad', [60, 100])->count();
+
         return view('home', compact(
             'totalDenunciasNuevas',
             'totalDenunciasEnProceso',
@@ -548,7 +568,13 @@ class HomeController extends Controller
             'totaldenunciasBase',
             'totaldenunciasContrato',
             'totaldenunciasEnFormacion',
-            'totaldenunciasOtra'
+            'totaldenunciasOtra',
+            'primeraInfancia',
+            'infancia',
+            'adolescencia',
+            'juventud',
+            'adultez',
+            'personaMayor'
         ));
     }
 }

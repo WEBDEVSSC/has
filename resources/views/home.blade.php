@@ -223,6 +223,27 @@
 
 <!-- --------------------------------------------------------- -->
 
+    <div class="row">
+        <div class="col-md-3">
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Rangos de Edad</h3>
+                </div>
+                <div class="card-body">
+
+                    <div>
+                        <canvas id="registrosRangosDeEdad" width="400" height="400"></canvas>
+                    </div>
+
+                </div>
+        </div>
+            
+        </div>
+    </div>
+
+<!-- --------------------------------------------------------- -->
+
 @stop
 
 @section('footer')
@@ -500,6 +521,66 @@ document.addEventListener('DOMContentLoaded', function() {
                     'rgba(236, 112, 99, 1)',   // Azul claro
                     'rgba(245, 176, 65, 1)',   // Amarillo suave
                     'rgba(187, 143, 206, 1)'      // Rojo coral claro
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            return tooltipItem.label + ': ' + tooltipItem.raw;
+                        }
+                    }
+                }
+            }
+        }
+    });
+});
+
+</script>
+
+<script>
+    // Espera a que el contenido del DOM esté cargado
+document.addEventListener('DOMContentLoaded', function() {
+    // Obtén el contexto del canvas
+    var ctx = document.getElementById('registrosRangosDeEdad').getContext('2d');
+    
+    // Crea la gráfica de dona
+    var myDoughnutChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['PRIMERA INFANCIA', 'INFANCIA', 'ADOLESCENCIA','JUVENTUD','ADULTEZ','PERSONA MAYOR'],
+            datasets: [{
+                label: 'Número de votos',
+                data: [
+                    {{$primeraInfancia}}, 
+                    {{$infancia}},
+                    {{$adolescencia}},
+                    {{$juventud}},
+                    {{$adultez}},
+                    {{$personaMayor}}
+                ],
+                backgroundColor: [
+                    'rgba(236, 112, 99, 0.2)',   // Primera Infancia (rojo claro)
+                    'rgba(245, 176, 65, 0.2)',    // Infancia (amarillo suave)
+                    'rgba(187, 143, 206, 0.2)',   // Adolescencia (morado claro)
+                    'rgba(54, 162, 235, 0.2)',    // Juventud (azul brillante)
+                    'rgba(75, 192, 192, 0.2)',    // Adultez (verde claro)
+                    'rgba(153, 102, 255, 0.2)'    // Persona Mayor (lavanda suave)
+                ],
+                borderColor: [
+                    'rgba(236, 112, 99, 1)',     // Primera Infancia (rojo claro)
+                    'rgba(245, 176, 65, 1)',     // Infancia (amarillo suave)
+                    'rgba(187, 143, 206, 1)',    // Adolescencia (morado claro)
+                    'rgba(54, 162, 235, 1)',     // Juventud (azul brillante)
+                    'rgba(75, 192, 192, 1)',     // Adultez (verde claro)
+                    'rgba(153, 102, 255, 1)'     // Persona Mayor (lavanda suave)
                 ],
                 borderWidth: 1
             }]
