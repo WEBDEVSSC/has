@@ -34,13 +34,17 @@ class HomeController extends Controller
         $totalDenunciasNuevas = $denunciasNuevas->count();
 
         // Obtener todos los registros de la tabla denuncia
-        $denunciasEnProceso = Denuncia::where('status', 'EN PROCESO')->get();
+        $denunciasEnProceso = Denuncia::where('status', 'EN PROCESO')
+                            ->whereYear('created_at', 2024)
+                            ->get();
 
         // Contar el número de registros
         $totalDenunciasEnProceso = $denunciasEnProceso->count();
 
         // Obtener todos los registros de la tabla denuncia
-        $denunciasAtendidas = Denuncia::where('status', 'ATENDIDA')->get();
+        $denunciasAtendidas = Denuncia::where('status', 'ATENDIDA')
+                            ->whereYear('created_at', 2024)
+                            ->get();
 
         // Contar el número de registros
         $totalDenunciasAtendidas = $denunciasAtendidas->count();
@@ -58,6 +62,7 @@ class HomeController extends Controller
             ->selectRaw('COUNT(*) as count')
             ->groupBy('id_municipio')
             ->orderBy('count', 'desc')
+            ->whereYear('created_at', 2024)
             ->first();
 
          // Inicializar variables
@@ -84,6 +89,7 @@ class HomeController extends Controller
             ->selectRaw('COUNT(*) as count')
             ->groupBy('id_municipio')
             ->orderBy('count', 'desc')
+            ->whereYear('created_at', 2024)
             ->skip(1)->take(1)->first();
 
          // Inicializar variables
@@ -110,6 +116,7 @@ class HomeController extends Controller
             ->selectRaw('COUNT(*) as count')
             ->groupBy('id_municipio')
             ->orderBy('count', 'desc')
+            ->whereYear('created_at', 2024)
             ->skip(2)->take(2)->first();
 
          // Inicializar variables
@@ -136,6 +143,7 @@ class HomeController extends Controller
             ->selectRaw('COUNT(*) as count')
             ->groupBy('id_municipio')
             ->orderBy('count', 'desc')
+            ->whereYear('created_at', 2024)
             ->skip(3)->take(3)->first();
 
          // Inicializar variables
@@ -162,6 +170,7 @@ class HomeController extends Controller
             ->selectRaw('COUNT(*) as count')
             ->groupBy('id_municipio')
             ->orderBy('count', 'desc')
+            ->whereYear('created_at', 2024)
             ->skip(4)->take(4)->first();
 
          // Inicializar variables
@@ -190,15 +199,17 @@ class HomeController extends Controller
         */
 
         // ENERO
-        $denunciasEnero = Denuncia::whereMonth('created_at', 1) 
-            ->whereYear('created_at', date('Y')) 
+        $año = 2024;
+
+        $denunciasEnero = Denuncia::whereMonth('created_at', 1)
+            ->whereYear('created_at', $año)
             ->get();
 
         $totalDenunciasEnero = $denunciasEnero->count();
 
         //FEBRERO
         $denunciasFebrero = Denuncia::whereMonth('created_at', 2) 
-            ->whereYear('created_at', date('Y')) 
+            ->whereYear('created_at', $año)
             ->get();
 
         // Contar el número de registros
@@ -206,7 +217,7 @@ class HomeController extends Controller
 
         //MARZO
         $denunciasMarzo = Denuncia::whereMonth('created_at', 3) 
-            ->whereYear('created_at', date('Y')) 
+            ->whereYear('created_at', $año)
             ->get();
 
         // Contar el número de registros
@@ -214,7 +225,7 @@ class HomeController extends Controller
 
         //ABRIL
         $denunciasAbril = Denuncia::whereMonth('created_at', 4) 
-            ->whereYear('created_at', date('Y')) 
+            ->whereYear('created_at', $año)
             ->get();
 
         // Contar el número de registros
@@ -222,7 +233,7 @@ class HomeController extends Controller
 
         //MAYO
         $denunciasMayo = Denuncia::whereMonth('created_at', 5) 
-            ->whereYear('created_at', date('Y')) 
+            ->whereYear('created_at', $año)
             ->get();
 
         // Contar el número de registros
@@ -230,7 +241,7 @@ class HomeController extends Controller
 
         //JUNIO
         $denunciasJunio = Denuncia::whereMonth('created_at', 6) 
-            ->whereYear('created_at', date('Y')) 
+            ->whereYear('created_at', $año)
             ->get();
 
         // Contar el número de registros
@@ -238,7 +249,7 @@ class HomeController extends Controller
 
         //JULIO
         $denunciasJulio = Denuncia::whereMonth('created_at', 7) 
-            ->whereYear('created_at', date('Y')) 
+            ->whereYear('created_at', $año)
             ->get();
 
         // Contar el número de registros
@@ -246,7 +257,7 @@ class HomeController extends Controller
 
         //AGOSTO
         $denunciasAgosto = Denuncia::whereMonth('created_at', 8) 
-            ->whereYear('created_at', date('Y')) 
+            ->whereYear('created_at', $año)
             ->get();
 
         // Contar el número de registros
@@ -254,7 +265,7 @@ class HomeController extends Controller
 
         //SEPTIEMBRE
         $denunciasSeptiembre = Denuncia::whereMonth('created_at', 9) 
-            ->whereYear('created_at', date('Y')) 
+            ->whereYear('created_at', $año)
             ->get();
 
         // Contar el número de registros
@@ -262,7 +273,7 @@ class HomeController extends Controller
 
         //OCTUBRE
         $denunciasOctubre = Denuncia::whereMonth('created_at', 10) 
-            ->whereYear('created_at', date('Y')) 
+            ->whereYear('created_at', $año)
             ->get();
 
         // Contar el número de registros
@@ -270,16 +281,16 @@ class HomeController extends Controller
 
         //NOVIEMBRE
         $denunciasNoviembre = Denuncia::whereMonth('created_at', 11) 
-        ->whereYear('created_at', date('Y')) 
-        ->get();
+            ->whereYear('created_at', $año) 
+            ->get();
 
         // Contar el número de registros
         $totalDenunciasNoviembre = $denunciasNoviembre->count();
 
         //DICIEMBRE
         $denunciasDiciembre = Denuncia::whereMonth('created_at', 12) 
-        ->whereYear('created_at', date('Y')) 
-        ->get();
+            ->whereYear('created_at', $año)
+            ->get();
 
         // Contar el número de registros
         $totalDenunciasDiciembre = $denunciasDiciembre->count();
@@ -293,13 +304,17 @@ class HomeController extends Controller
         */
 
         // Obtener todos los registros de la tabla denuncia
-        $denunciasMasculino = Denuncia::where('sexo', 'MASCULINO')->get();
+        $denunciasMasculino = Denuncia::where('sexo', 'MASCULINO')
+                            ->whereYear('created_at', 2024)
+                            ->get();
 
         // Contar el número de registros
         $totalDenunciasMasculino = $denunciasMasculino->count();
 
         // Obtener todos los registros de la tabla denuncia
-        $denunciasFemenino = Denuncia::where('sexo', 'FEMENINO')->get();
+        $denunciasFemenino = Denuncia::where('sexo', 'FEMENINO')
+                            ->whereYear('created_at', 2024)
+                            ->get();
 
         // Contar el número de registros
         $totalDenunciasFemenino = $denunciasFemenino->count();
