@@ -46,7 +46,9 @@ class DenunciaController extends Controller
     public function nuevas()
     {
         // Obtener todos los registros de la tabla denuncia
-        $denuncias = Denuncia::where('status', 'NUEVO')->get();
+        $denuncias = Denuncia::where('status', 'NUEVO')
+                    ->whereYear('created_at', 2024)
+                    ->get();
         
         // Contar el número de registros
         $totalDenuncias = $denuncias->count();
