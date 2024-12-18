@@ -26,7 +26,9 @@ class HomeController extends Controller
     public function index()
     {
         // Obtener todos los registros de la tabla denuncia
-        $denunciasNuevas = Denuncia::where('status', 'NUEVO')->get();
+        $denunciasNuevas = Denuncia::where('status', 'NUEVO')
+                            ->whereYear('created_at', 2024)
+                            ->get();
 
         // Contar el número de registros
         $totalDenunciasNuevas = $denunciasNuevas->count();
