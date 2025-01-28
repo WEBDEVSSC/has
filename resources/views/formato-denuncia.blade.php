@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <title>Formato de Denuncia</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   </head>
   <body>
@@ -11,18 +11,28 @@
 
     <div class="container">
 
-        <h1>Formato de atención a casos de hostigamiento sexual y acoso sexual</h1>
+        <div class="row mt-3">
+            <center><h1>Formato de atención a casos de hostigamiento sexual y acoso sexual</h1></center>
+        </div>
 
-        <div class="row">
+    <!-- ----------------------------------------------- -->
+
+        <div class="row mt-3">
             <div class="col-md-12">
                 <div class="alert alert-success" role="alert">
 
-                    <p>Si has sido víctima de acoso sexual, queremos que sepas que estamos aquí para escucharte y apoyarte. Tu bienestar y seguridad son nuestra prioridad.</p>
+                    <p>La Secretaría de Salud en el Estado de Coahulla de Zaragoza, en cumplimiento a la Ley de Protección de Datos Personales en Posesión de Sujetos Obligados del Estado de Coahuila de Zaragoza; será la resguardante de los datos personales proporciandos por Usted para acceder a nuestros trámites y servicios. Sus datos personales se incorporarán a una base de datos denominada "Registro de atención a casos HyAs . A fin de cumplir con la atención a las quejas HyAs , por lo que existe la posibilidad de que los datos personales estrictamente necesarios, sean transferidos a otras Unidades de la  Fiscalía o de la Adminstración Pública
+                        Municipal, Estatal y Federal y organismos no gubernamentales, únicamente para la gestión de la atención victimológica integral que su caso requiera. Asi mismo, se informa que tiene derecho a
+                        ACCEDER, RECTIFICAR, CANCELAR y OPONERSE al tratamiento o transmisión de los mismos, ante  esta Unidad de Slaud  del Estado de Coahuila de Zaragoza</p>
 
-                    <p>No estás solo/a. Tu voz es importante, y estamos comprometidos con brindarte el apoyo necesario en todo momento. Si necesitas ayuda adicional o asistencia, no dudes en ponerte en contacto con nosotros.</p>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">Aceptar</label>
+                        </div>
 
-                    <p>Recuerda, denunciar es un paso hacia la justicia y hacia la creación de un entorno libre de acoso para todos.</p>
                   </div>
+
+                    
             </div>
         </div>
 
@@ -281,12 +291,12 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <input type="file" class="file-form-control" name="documento_uno">
+                        <input type="file" class="form-control form-control-sm" name="documento_uno">
                     </div>
                 </div>
                 <div class="row mt-2">
                     <div class="col-md-12">
-                        <input type="file" class="file-form-control" name="documento_dos">
+                        <input type="file" class="form-control form-control-sm" name="documento_dos">
                     </div>
                 </div>
                 
