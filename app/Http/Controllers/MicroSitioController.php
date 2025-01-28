@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\DenunciaNuevaMail;
 use App\Mail\DenunciaReincidenciaMail;
+use App\Models\Clue;
 use App\Models\Denuncia;
 use App\Models\DenunciaReincidencia;
 use App\Models\DenunciaSeguimiento;
@@ -16,6 +17,14 @@ use Illuminate\Support\Facades\Validator;
 class MicroSitioController extends Controller
 {
     //
+
+    public function formatoDenuncia()
+    {
+        // Consultamos todas las CLUES
+        $clues = Clue::all();
+        
+        return view('formato-denuncia', compact('clues'));
+    }
 
     public function inicio()
     {
