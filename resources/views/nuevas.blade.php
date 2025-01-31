@@ -49,12 +49,12 @@
                     @foreach ($denuncias as $denuncia)
                         <tr>
                             <td>SSC/HAS/{{ $denuncia->folio }}/2024</td>
-                            <td>{{ $denuncia->nombre }}</td>
-                            <td>{{ $denuncia->municipio }}</td>
+                            <td>{{ $denuncia->victima_nombre }}</td>
+                            <td>{{ $denuncia->clues_municipio_label }}</td>
                             <td>
                                 <!-- Aplica color rojo si tipo_solicitud es 'ACOSO LABORAL' -->
-                                <span class="badge badge-pill {{ $denuncia->tipo_solicitud === 'ACOSO SEXUAL' ? 'badge-danger' : 'badge-secondary' }}">
-                                    {{ $denuncia->tipo_solicitud }}
+                                <span class="badge badge-pill {{ $denuncia->tipo_denuncia === 'ACOSO SEXUAL' ? 'badge-danger' : 'badge-secondary' }}">
+                                    {{ $denuncia->tipo_denuncia }}
                                 </span>
                             </td>
                             <td>{{ $denuncia->created_at }}</td>

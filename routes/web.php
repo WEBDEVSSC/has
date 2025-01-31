@@ -29,6 +29,7 @@ use App\Models\DenunciaDocumentacion;
 // Ruta de bienvenida
 
 Route::get('/formato-denuncia',[MicroSitioController::class,'formatoDenuncia'])->name('formatoDenuncia');
+Route::post('/formato-denuncia-store',[MicroSitioController::class,'formatoDenunciaStore'])->name('formatoDenunciaStore');
 
 Route::get('/', [MicroSitioController::class, 'inicio'])->name('inicio');
 Route::get('/protocolo', [MicroSitioController::class, 'protocolo'])->name('protocolo');

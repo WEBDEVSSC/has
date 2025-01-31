@@ -26,6 +26,260 @@ class MicroSitioController extends Controller
         return view('formato-denuncia', compact('clues'));
     }
 
+    public function formatoDenunciaStore(Request $request)
+    {
+
+        // Validamos los datos
+        $request -> validate([
+            //0
+            'tipo_denuncia' => 'required',
+            //1
+            'victima_nombre' => 'required',
+            'victima_sexo' => 'required',
+            'victima_edad' => 'required',
+            'victima_email' => 'email|required',
+            'victima_telefono' => 'required|max:10|min:10',
+            'victima_tipo_contratacion' => 'required',
+            'victima_enformacion_escuela' => 'required_if:victima_tipo_contratacion,EN FORMACION',
+            'victima_condiciones_vulnerabilidad' => 'required',
+            'victima_condiciones_vulnerabilidad_otro' => 'string',
+            'victima_clues' => 'required',
+            'victima_area_adscripcion' => 'required',
+            'victima_puesto_desempena' => 'required',
+            'victima_jefe_inmediato' => 'required',
+            'victima_medidas_proteccion' => 'required',
+            
+            //2
+            'agresor_nombre' => 'required',
+            'agresor_sexo' => 'required',
+            'agresor_edad' => 'required',
+            'agresor_area' => 'required',
+            'agresor_puesto' => 'required',
+            'agresor_tipo_contratacion' => 'required',
+            'agresor_jefe_inmediato' => 'required',
+            
+            //3
+            'relacion_laboral' => 'required',
+            'relacion_laboral_si' => 'required_if:relacion_laboral,SI',
+            'relacion_laboral_no' => 'required_if:relacion_laboral,NO',
+
+            //4
+            'situacion' => 'required',
+            'como' => 'required',
+            'cuando' => 'required',
+            'donde' => 'required',
+
+            //5
+            'documento_uno' => 'nullable|file|mimes:jpg,jpeg,png,gif,mp4,mov,avi,mp3,wav,pdf,doc,docx|max:15240',
+            'documento_dos' => 'nullable|file|mimes:jpg,jpeg,png,gif,mp4,mov,avi,mp3,wav,pdf,doc,docx|max:15240',
+            
+            //6
+            'conducta_ocurrido' => 'required',
+            'conducta_ocurrido_fecha' => 'required',
+
+            //7
+            'persona_testigo' => 'required',
+            'persona_testigo_si' => 'required_if:persona_testigo,SI',
+            //8
+            'persona_relacion'=> 'required',
+            'persona_relacion_si' => 'required_if:persona_relacion,SI',
+            //9
+            'persona_trato' => 'required',
+            'persona_trato_si' => 'required_if:persona_trato,SI',
+            //10
+            'padecimiento_fisico' => 'required',
+            'padecimiento_fisico_si' => 'required_if:padecimiento_fisico,SI',
+            //11
+            'integridad' => 'required',
+            'integridad_si'  => 'required_if:integridad,SI',
+            //12
+            'amenazada' => 'required',
+            'amenazada_si' => 'required_if:amenazada,SI',
+            //13
+            'adicionales' => 'required',
+            'adicionales_si' => 'required_if:adicionales,SI',
+            //14
+            'denuncia' => 'required',
+            'denuncia_si' => 'required_if:denuncia,SI',
+        ],[
+            // Mensajes personalizados para cada campo
+            //0
+            'tipo_denuncia.required' => 'El campo tipo de denuncia es obligatorio.',
+            //1
+            'victima_nombre.required' => 'El campo nombre de la víctima es obligatorio.',
+            'victima_sexo.required' => 'El campo sexo de la víctima es obligatorio.',
+            'victima_edad.required' => 'El campo edad de la víctima es obligatorio.',
+            'victima_email.required' => 'El campo correo electrónico de la víctima es obligatorio.',
+            'victima_email.email' => 'El campo correo electrónico de la víctima debe ser una dirección de correo válida.',
+            'victima_telefono.required' => 'El campo teléfono de la víctima es obligatorio.',
+            'victima_telefono.max' => 'El campo teléfono de la víctima debe tener máximo 10 caracteres.',
+            'victima_telefono.min' => 'El campo teléfono de la víctima debe tener mínimo 10 caracteres.',
+            'victima_tipo_contratacion.required' => 'El campo tipo de contratación de la víctima es obligatorio.',
+            'victima_enformacion_escuela.required_if' => 'El campo información de la escuela es obligatorio cuando el tipo de contratación es "EN FORMACIÓN".',
+            'victima_condiciones_vulnerabilidad.required' => 'El campo condiciones de vulnerabilidad de la víctima es obligatorio.',
+            'victima_condiciones_vulnerabilidad_otro.string' => 'El campo otras condiciones de vulnerabilidad debe ser una cadena de texto.',
+            'victima_clues.required' => 'El campo CLUES de la víctima es obligatorio.',
+            'victima_area_adscripcion.required' => 'El campo área de adscripción de la víctima es obligatorio.',
+            'victima_puesto_desempena.required' => 'El campo puesto que desempeña la víctima es obligatorio.',
+            'victima_jefe_inmediato.required' => 'El campo jefe inmediato de la víctima es obligatorio.',
+            'victima_medidas_proteccion.required' => 'El campo medidas de protección de la víctima es obligatorio.',
+            //2
+            'agresor_nombre.required' => 'El campo nombre del agresor es obligatorio.',
+            'agresor_sexo.required' => 'El campo sexo del agresor es obligatorio.',
+            'agresor_edad.required' => 'El campo edad del agresor es obligatorio.',
+            'agresor_area.required' => 'El campo área del agresor es obligatorio.',
+            'agresor_puesto.required' => 'El campo puesto del agresor es obligatorio.',
+            'agresor_tipo_contratacion.required' => 'El campo tipo de contratación del agresor es obligatorio.',
+            'agresor_jefe_inmediato.required' => 'El campo jefe inmediato del agresor es obligatorio.',
+            //3
+            'relacion_laboral.required' => 'El campo relación laboral es obligatorio.',
+            'relacion_laboral_si.required_if' => 'El campo relación laboral (SI) es obligatorio cuando la relación laboral es "SI".',
+            'relacion_laboral_no.required_if' => 'El campo relación laboral (NO) es obligatorio cuando la relación laboral es "NO".',
+            //4
+            'situacion.required' => 'El campo situación es obligatorio.',
+            'como.required' => 'El campo cómo ocurrió es obligatorio.',
+            'cuando.required' => 'El campo cuándo ocurrió es obligatorio.',
+            'donde.required' => 'El campo dónde ocurrió es obligatorio.',
+            //5
+            'documento_uno.file' => 'El campo documento uno debe ser un archivo.',
+            'documento_uno.mimes' => 'El campo documento uno debe ser de tipo: jpg, jpeg, png, gif, mp4, mov, avi, mp3, wav, pdf, doc, docx.',
+            'documento_uno.max' => 'El campo documento uno no debe ser mayor a 10 MB.',
+            'documento_dos.file' => 'El campo documento dos debe ser un archivo.',
+            'documento_dos.mimes' => 'El campo documento dos debe ser de tipo: jpg, jpeg, png, gif, mp4, mov, avi, mp3, wav, pdf, doc, docx.',
+            'documento_dos.max' => 'El campo documento dos no debe ser mayor a 10 MB.',
+            //6
+            'conducta_ocurrido.required' => 'El campo conducta ocurrida es obligatorio.',
+            'conducta_ocurrido_fecha.required' => 'El campo fecha de la conducta ocurrida es obligatorio.',
+            //7
+            'persona_testigo.required' => 'El campo persona testigo es obligatorio.',
+            'persona_testigo_si.required_if' => 'El campo persona testigo (SI) es obligatorio cuando hay un testigo.',
+            //8
+            'persona_relacion.required' => 'El campo persona relacionada es obligatorio.',
+            'persona_relacion_si.required_if' => 'El campo persona relacionada (SI) es obligatorio cuando hay una relación.',
+            //9
+            'persona_trato.required' => 'El campo trato de la persona es obligatorio.',
+            'persona_trato_si.required_if' => 'El campo trato de la persona (SI) es obligatorio cuando hay un trato específico.',
+            //10
+            'padecimiento_fisico.required' => 'El campo padecimiento físico es obligatorio.',
+            'padecimiento_fisico_si.required_if' => 'El campo padecimiento físico (SI) es obligatorio cuando hay un padecimiento.',
+            //11
+            'integridad.required' => 'El campo integridad es obligatorio.',
+            'integridad_si.required_if' => 'El campo integridad (SI) es obligatorio cuando se afecta la integridad.',
+            //12
+            'amenazada.required' => 'El campo amenazada es obligatorio.',
+            'amenazada_si.required_if' => 'El campo amenazada (SI) es obligatorio cuando hay una amenaza.',
+            //13
+            'adicionales.required' => 'El campo adicionales es obligatorio.',
+            'adicionales_si.required_if' => 'El campo adicionales (SI) es obligatorio cuando hay información adicional.',
+            //14
+            'denuncia.required' => 'El campo denuncia es obligatorio.',
+            'denuncia_si.required_if' => 'El campo denuncia (SI) es obligatorio cuando se presenta una denuncia.',
+        ]);
+
+        // Generamos el status
+        $status = "NUEVO";
+
+        // Generamos el folio
+        //GENERAMOS EL RANDOM PARA FOLIO
+        $folio = '';
+
+        for ($i = 0; $i < 6; $i++) 
+        {
+            $folio .= mt_rand(0, 9); // Concatena un número aleatorio entre 0 y 9
+        }
+
+        // Consultamos los datos de la clues
+        $clues = Clue::findOrFail($request->victima_clues);
+
+        // Almacenar los archivos en la carpeta 'documents' en el almacenamiento local
+        $archivoPathUno = $request->hasFile('documento_uno') ? $request->file('documento_uno')->store('documents', 'local') : null;
+        $archivoPathDos = $request->hasFile('documento_dos') ? $request->file('documento_dos')->store('documents', 'local') : null;
+
+        // Creamos el objeto para almacenar
+        $denuncia = new Denuncia();
+
+        // Asignamos los campos
+        $denuncia->tipo_denuncia = $request->tipo_denuncia;
+        $denuncia->victima_nombre = $request->victima_nombre;
+        $denuncia->victima_sexo = $request->victima_sexo;
+        $denuncia->victima_edad = $request->victima_edad;
+        $denuncia->victima_email = $request->victima_email;
+        $denuncia->victima_telefono = $request->victima_telefono;
+        $denuncia->victima_tipo_contratacion = $request->victima_tipo_contratacion;
+        $denuncia->victima_enformacion_escuela = $request->victima_enformacion_escuela;
+        $denuncia->victima_condiciones_vulnerabilidad = $request->victima_condiciones_vulnerabilidad;
+        $denuncia->victima_condiciones_vulnerabilidad_otro = $request->victima_condiciones_vulnerabilidad_otro;
+        $denuncia->victima_clues = $request->victima_clues;
+        $denuncia->victima_area_adscripcion = $request->victima_area_adscripcion;
+        $denuncia->victima_puesto_desempena = $request->victima_puesto_desempena;
+        $denuncia->victima_jefe_inmediato = $request->victima_jefe_inmediato;
+        $denuncia->victima_medidas_proteccion = $request->victima_medidas_proteccion;
+
+        $denuncia->clues_nombre = $clues->nombre;
+        $denuncia->clues_municipio = "1";
+        $denuncia->clues_municipio_label = $clues->municipio;
+        $denuncia->clues_jurisdiccion = $clues->jurisdiccion;
+        $denuncia->clues_jurisdiccion_label = $clues->jurisdiccion_label;
+
+        $denuncia->agresor_nombre = $request->agresor_nombre;
+        $denuncia->agresor_sexo = $request->agresor_sexo;
+        $denuncia->agresor_edad = $request->agresor_edad;
+        $denuncia->agresor_area = $request->agresor_area;
+        $denuncia->agresor_puesto = $request->agresor_puesto;
+        $denuncia->agresor_tipo_contratacion = $request->agresor_tipo_contratacion;
+        $denuncia->agresor_jefe_inmediato = $request->	agresor_jefe_inmediato;
+
+        $denuncia->relacion_laboral = $request->relacion_laboral;
+        $denuncia->relacion_laboral_si = $request->relacion_laboral_si;
+        $denuncia->relacion_laboral_no = $request->relacion_laboral_no;
+
+        $denuncia->situacion = $request->situacion;
+        $denuncia->como = $request->como;
+        $denuncia->cuando = $request->cuando;
+        $denuncia->donde = $request->donde;
+
+        $denuncia->documento_uno = $archivoPathUno;
+        $denuncia->documento_dos = $archivoPathDos;
+
+        $denuncia->conducta_ocurrido = $request->conducta_ocurrido;
+        $denuncia->conducta_ocurrido_fecha = $request->conducta_ocurrido_fecha;
+
+        $denuncia->persona_testigo = $request->persona_testigo;
+        $denuncia->persona_testigo_si = $request->persona_testigo_si;
+
+        $denuncia->persona_relacion = $request->persona_relacion;
+        $denuncia->persona_relacion_si = $request->persona_relacion_si;
+
+        $denuncia->persona_trato = $request->persona_trato;
+        $denuncia->persona_trato_si = $request->persona_trato_si;
+
+        $denuncia->padecimiento_fisico = $request->padecimiento_fisico;
+        $denuncia->padecimiento_fisico_si = $request->padecimiento_fisico_si;
+
+        $denuncia->integridad = $request->integridad;
+        $denuncia->integridad_si = $request->integridad_si;
+
+        $denuncia->amenazada = $request->amenazada;
+        $denuncia->amenazada_si = $request->amenazada_si;
+
+        $denuncia->adicionales = $request->adicionales;
+        $denuncia->adicionales_si = $request->adicionales_si;
+
+        $denuncia->denuncia = $request->denuncia;
+        $denuncia->denuncia_si = $request->denuncia_si;
+
+        $denuncia->folio = $folio;
+        $denuncia->status = $status;
+
+        $denuncia->save();
+        
+        Mail::to(['cesartorres.1688@gmail.com'])->send(new DenunciaNuevaMail($folio));
+
+        // Redireccionamos al formulario con el mensaje de exito
+        return redirect()->route('formatoDenuncia')->with('success', 'La denuncia se registro correctamente con el folio : HAS/SSC/2025/'.$folio);      
+
+    }
+
     public function inicio()
     {
         // Aquí puedes agregar lógica adicional si la necesitas
@@ -195,10 +449,10 @@ class MicroSitioController extends Controller
         
          // Validar los datos del formulario
         $validator = Validator::make($request->all(), [
-            'folio' => 'required|digits:4',
+            'folio' => 'required|digits:6',
         ], [
             'folio.required' => 'El número de folio es obligatorio.',
-            'folio.digits' => 'El folio debe ser un número de exactamente 4 dígitos.',
+            'folio.digits' => 'El folio debe ser un número de exactamente 6 dígitos.',
         ]);
 
         // Si la validación falla, redirigir de vuelta con errores

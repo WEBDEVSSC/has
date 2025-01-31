@@ -1,63 +1,100 @@
 @include('micrositio.partials.header')
 
-<br>
+    <div class="container">
 
-<div class="container mx-auto p-4">
-    <center><h3 class="text-3xl font-bold dark:text-purple-600">Resultados de la Búsqueda SSC/HAS/{{ $denuncia->folio }}</h3></center>
-</div>
+        <center><h1 class="display-8 fw-bold text-black mt-3">Resultados de la Búsqueda SSC/HAS/{{ $denuncia->folio }}</h1></center>
+        
+        <div class="row">
+            <div class="col-md-6">
+                
+                <div class="p-5 mb-4 bg-body-tertiary rounded-3 mt-3">
+                    <div class="container-fluid py-8">
 
-<div class="container mx-auto p-4">
-<p class="text-black dark:text-black">
-    A continuación se enlistan todos los seguimientos que se le han dado a la denuncia realizada. Los registros están ordenados de acuerdo con la fecha de creación, mostrando primero los más recientes.
-</p>
-<br>
+                        <p>A continuación se enlistan todos los seguimientos que se le han dado a la denuncia realizada. Los registros están ordenados de acuerdo con la fecha de creación, mostrando primero los más recientes.</p>
 
-<p class="text-black dark:text-black">
-    Si, lamentablemente, has sido víctima de una reincidencia relacionada con esta denuncia, te pedimos que la reportes a través del siguiente enlace.
-</p>
+                        <p>Si, lamentablemente, has sido víctima de una reincidencia relacionada con esta denuncia, te pedimos que la reportes a través del siguiente enlace.</p>
 
-<br>
+                        <center><a href="{{ route('buzonReincidencia') }}" class="btn btn-purple">PRESENTAR REINCIDENCIA</a></center>
+                    
+                    </div>
+                </div>
+                
+            </div>
+            <div class="col-md-6">
 
-<a href="{{ route('buzonReincidencia') }}" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">PRESENTAR REINCIDENCIA</a>
-<br>
-<br>
+                
 
-    <div class="relative overflow-x-auto">
-    <table class="w-full text-sm text-left rtl:text-right text-black dark:text-black">
-        <thead class="text-xs text-white uppercase bg-purple-700 dark:bg-purple-700 dark:text-white">
-            <tr>
-                <th scope="col" class="px-6 py-3">
-                    Seguimiento
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Fecha
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse($seguimientos as $seguimiento)
-                <tr class="bg-white border-b dark:bg-gray-100 dark:border-gray-700">
-                    <td class="px-6 py-4">{{ $seguimiento->mensaje }}</td>
-                    <td class="px-6 py-4">{{ $seguimiento->created_at->format('d/m/Y H:i') }}</td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="2" class="px-6 py-4 text-center text-gray-500">No hay seguimientos registrados.</td>
-                </tr>
-            @endforelse
-        </tbody>
-    </table>
-</div>
+                        <table class="table table-striped">
+                            <thead >
+                                <tr>
+                                    <th scope="col">
+                                        Seguimiento
+                                    </th>
+                                    <th scope="col">
+                                        Fecha
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($seguimientos as $seguimiento)
+                                    <tr>
+                                        <td>{{ $seguimiento->mensaje }}</td>
+                                        <td>{{ $seguimiento->created_at->format('d/m/Y H:i') }}</td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="2" class="px-6 py-4 text-center text-gray-500">No hay seguimientos registrados.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                                            
+                            
+                    
+            </div>
+        </div>
+
+        
+
+    </div><!-- CONTAINER -->
+
+    @section('plugins.Sweetalert2', true)
+
+    @if(session('error'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                title: 'Error',
+                text: "{{ session('error') }}",
+                icon: 'error',
+                confirmButtonText: 'Ok'
+            });
+        });
+    </script>
+    @endif
+
+            <!-- Incluye jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Incluye Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6k3I4F+VppvIEnq0u5tkU7l1RZm5SaaPqC+78LUeF9v/8gV56N4FJP" crossorigin="anonymous"></script>
+
+    <!-- Incluye SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Incluye Select2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <!-- Incluye jQuery y Bootstrap JS 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>-->
+
+
+    <!-- ----------------------------------------------- -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
     
-</div>
-
-
-    
-
-
-
-
-<!-- -------------------------- -->
-
-</body>
+    <!-- -- -->
+  </body>
 </html>
+

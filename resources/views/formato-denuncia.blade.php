@@ -1,18 +1,10 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Formato de Denuncia</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  </head>
-  <body>
+@include('micrositio.partials.header')
     <!-- ----------------------------------------------- -->
 
     <div class="container">
 
         <div class="row mt-3">
-            <center><h1>Formato de atención a casos de hostigamiento sexual y acoso sexual</h1></center>
+            <center><h1 class="display-8 fw-bold text-black mt-3">Formato de atención a casos de hostigamiento sexual y acoso sexual</h1></center>
         </div>
 
     <!-- ----------------------------------------------- -->
@@ -23,12 +15,9 @@
 
                     <p>La Secretaría de Salud en el Estado de Coahulla de Zaragoza, en cumplimiento a la Ley de Protección de Datos Personales en Posesión de Sujetos Obligados del Estado de Coahuila de Zaragoza; será la resguardante de los datos personales proporciandos por Usted para acceder a nuestros trámites y servicios. Sus datos personales se incorporarán a una base de datos denominada "Registro de atención a casos HyAs . A fin de cumplir con la atención a las quejas HyAs , por lo que existe la posibilidad de que los datos personales estrictamente necesarios, sean transferidos a otras Unidades de la  Fiscalía o de la Adminstración Pública
                         Municipal, Estatal y Federal y organismos no gubernamentales, únicamente para la gestión de la atención victimológica integral que su caso requiera. Asi mismo, se informa que tiene derecho a
-                        ACCEDER, RECTIFICAR, CANCELAR y OPONERSE al tratamiento o transmisión de los mismos, ante  esta Unidad de Slaud  del Estado de Coahuila de Zaragoza</p>
+                        ACCEDER, RECTIFICAR, CANCELAR y OPONERSE al tratamiento o transmisión de los mismos, ante  esta Unidad de Salud del Estado de Coahuila de Zaragoza</p>
 
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault">Aceptar</label>
-                        </div>
+                        <p>Al momento de presentar una denuncia, se estan aceptando los terminos y condiciones.</p>
 
                   </div>
 
@@ -38,14 +27,23 @@
 
     <!-- ----------------------------------------------- -->
 
+    <form action="{{ route('formatoDenunciaStore') }}" method="POST" enctype="multipart/form-data">
+
+        @csrf
+    
+
+    <!-- ----------------------------------------------- -->
+
         <div class="card mt-3">
             <div class="card-body">
                 <p><strong>Tipo de denuncia</strong></p>
                 <select name="tipo_denuncia" id="tipo_denuncia" class="form-control">
                     <option value="" disabled selected>-- Seleccione una opción --</option>
-                    <option value="HS">HOSTIGAMIENTO SEXUAL</option>
-                    <option value="AS">ACOSO SEXUAL</option>                    
+                    <option value="HOSTIGAMIENTO SEXUAL" {{ old('tipo_denuncia') == 'HOSTIGAMIENTO SEXUAL' ? 'selected' : '' }}>HOSTIGAMIENTO SEXUAL</option>
+                    <option value="ACOSO SEXUAL" {{ old('tipo_denuncia') == 'ACOSO SEXUAL' ? 'selected' : '' }}>ACOSO SEXUAL</option>
                 </select>
+                @error('tipo_denuncia')<p class="text-danger mt-2">{{ $message }}</p>@enderror
+                
             </div>
             <div class="card-footer">
                 <ul>
@@ -68,23 +66,27 @@
                 <div class="row">
                     <div class="col-md-3">
                         <p>Nombre</p>
-                        <input type="text" name="" class="form-control">
+                        <input type="text" name="victima_nombre" id="victima_nombre" class="form-control" value="{{ old('victima_nombre') }}">
+                        @error('victima_nombre')<p class="text-danger mt-2">{{ $message }}</p>@enderror
                     </div>
                     <div class="col-md-3">
                         <p>Sexo</p>
-                        <select name="" id="" class="form-control">
+                        <select name="victima_sexo" id="victima_sexo" class="form-control">
                             <option value="" disabled selected>-- Seleccione una opción --</option>
-                            <option value="M">Masculino</option>
-                            <option value="F">Femenino</option>
+                            <option value="M" {{ old('victima_sexo') == 'M' ? 'selected' : '' }}>MASCULINO</option>
+                            <option value="F" {{ old('victima_sexo') == 'F' ? 'selected' : '' }}>FEMENINO</option>
                         </select>
+                        @error('victima_sexo')<p class="text-danger mt-2">{{ $message }}</p>@enderror
                     </div>
                     <div class="col-md-3">
                         <p>Edad</p>
-                        <input type="number" name="" class="form-control">
+                        <input type="number" name="victima_edad" id="victima_edad" class="form-control" value="{{ old('victima_edad') }}">
+                        @error('victima_edad')<p class="text-danger mt-2">{{ $message }}</p>@enderror
                     </div>
                     <div class="col-md-3">
                         <p>Correo electrónico</p>
-                        <input type="email" name="" class="form-control">
+                        <input type="email" name="victima_email" id="victima_email" class="form-control" value="{{ old('victima_email') }}">
+                        @error('victima_email')<p class="text-danger mt-2">{{ $message }}</p>@enderror
                     </div>
                 </div>
 
@@ -93,59 +95,91 @@
                 <div class="row mt-2">
                     <div class="col-md-3">
                         <p>Teléfono de contacto</p>
-                        <input type="number" name="" class="form-control" placeholder="10 Digitos">
+                        <input type="number" name="victima_telefono" id="victima_telefono" class="form-control" placeholder="10 Digitos" value="{{ old('victima_telefono') }}">
+                        @error('victima_telefono')<p class="text-danger mt-2">{{ $message }}</p>@enderror
                     </div>
                     <div class="col-md-3">
                         <p>Tipo de contratación</p>
-                        <select name="" id="" class="form-control">
+                        <select name="victima_tipo_contratacion" id="victima_tipo_contratacion" class="form-control" onchange="toggleEnFormacionField()">
                             <option value="" disabled selected>-- Seleccione una opción --</option>
-                            <option value="BASE">Base</option>
-                            <option value="CONTRATO">Contrato</option>
-                        </select>
-                    </div>
-                    <div class="col-md-3">
-                        <p>Condiciones de vulnerabilidad</p>
-                        <select name="condiciones_vulnerabilidad" id="condiciones_vulnerabilidad" class="form-control">
-                            <option value="" disabled selected>-- Seleccione una opción --</option>
-                            <option value="EMBARAZO">Embarazo</option>
-                            <option value="INDIGENA">Indígena</option>
-                            <option value="GRUPO LGBT">Grupo LGBT+</option>
-                            <option value="DISCAPACIDAD">Discapacidad</option>
-                            <option value="OTRO">Otro (Especifique)</option>
-                        </select>
+                            <option value="CONFIANZA" {{ old('victima_tipo_contratacion') == 'CONFIANZA' ? 'selected' : '' }}>CONFIANZA</option>
+                            <option value="BASE" {{ old('victima_tipo_contratacion') == 'BASE' ? 'selected' : '' }}>BASE</option>
+                            <option value="CONTRATO" {{ old('victima_tipo_contratacion') == 'CONTRATO' ? 'selected' : '' }}>CONTRATO</option>
+                            <option value="EN FORMACION" {{ old('victima_tipo_contratacion') == 'EN FORMACION' ? 'selected' : '' }}>EN FORMACION</option>                            
+                            <option value="OTRA" {{ old('victima_tipo_contratacion') == 'OTRA' ? 'selected' : '' }}>OTRA</option>
+                        </select>       
+                        @error('victima_tipo_contratacion')<p class="text-danger mt-2">{{ $message }}</p>@enderror               
                     </div>
                     
-                    <div class="col-md-3">
-                        <p>*Especifique</p>
-                        <input type="text" name="condiciones_vulnerabilidad_otro" id="condiciones_vulnerabilidad_otro" class="form-control" disabled>
+                    <div class="col-md-6">
+                        <p>Especifique el nombre de la escuela</p>
+                        <input type="text" name="victima_enformacion_escuela" id="victima_enformacion_escuela" class="form-control" value="{{ old('victima_enformacion_escuela') }}" disabled>
+                        @error('victima_enformacion_escuela')<p class="text-danger mt-2">{{ $message }}</p>@enderror
                     </div>
-                    
                 </div>
 
                 <!-- ---------------------------- -->
 
                 <div class="row mt-2">
                     <div class="col-md-3">
-                        <p>Unidad de adscripción</p>
-                        <select name="clues" id="clues" class="form-control">
+                        <p>Condiciones de vulnerabilidad</p>
+                        <select name="victima_condiciones_vulnerabilidad" id="victima_condiciones_vulnerabilidad" class="form-control" onchange="toggleVulnerabilidadField()">
                             <option value="" disabled selected>-- Seleccione una opción --</option>
-                            
+                            <option value="NINGUNA" {{ old('victima_condiciones_vulnerabilidad') == 'NINGUNA' ? 'selected' : '' }}>NINGUNA</option>
+                            <option value="EMBARAZO" {{ old('victima_condiciones_vulnerabilidad') == 'EMBARAZO' ? 'selected' : '' }}>EMBARAZO</option>
+                            <option value="INDIGENA" {{ old('victima_condiciones_vulnerabilidad') == 'INDIGENA' ? 'selected' : '' }}>INDIGENA</option>
+                            <option value="GRUPO LGBT" {{ old('victima_condiciones_vulnerabilidad') == 'GRUPO LGBT' ? 'selected' : '' }}>GRUPO LGBT</option>
+                            <option value="DISCAPACIDAD" {{ old('victima_condiciones_vulnerabilidad') == 'DISCAPACIDAD' ? 'selected' : '' }}>DISCAPACIDAD</option>
+                            <option value="OTRO" {{ old('victima_condiciones_vulnerabilidad') == 'OTRO' ? 'selected' : '' }}>OTRO (Especifique)</option>
+                        </select>     
+                        @error('victima_condiciones_vulnerabilidad')<p class="text-danger mt-2">{{ $message }}</p>@enderror                  
+                    </div>
+                    
+                    <div class="col-md-3">
+                        <p>*Especifique</p>
+                        <input type="text" name="victima_condiciones_vulnerabilidad_otro" id="victima_condiciones_vulnerabilidad_otro" class="form-control" disabled value="{{ old('victima_condiciones_vulnerabilidad_otro') }}">
+                        @error('victima_condiciones_vulnerabilidad_otro')<p class="text-danger mt-2">{{ $message }}</p>@enderror
+                    </div>
+
+                    <div class="col-md-3">
+                        <p>Unidad de adscripción</p>
+                        <select name="victima_clues" id="victima_clues" class="form-control">
+                            <option value="" disabled selected>-- Seleccione una opción --</option>
                             @foreach($clues as $clue)
-                                <option value="{{ $clue->id }}">{{ $clue->nombre }}</option>
+                                <option value="{{ $clue->id }}" {{ old('victima_clues') == $clue->id ? 'selected' : '' }}>
+                                    {{ $clue->nombre }}
+                                </option>
                             @endforeach
-                        </select>
+                        </select>          
+                        @error('victima_clues')<p class="text-danger mt-2">{{ $message }}</p>@enderror                               
                     </div>
                     <div class="col-md-3">
                         <p>Área de adscripción</p>
-                        <input type="text" name="" class="form-control">
+                        <input type="text" name="victima_area_adscripcion" id="victima_area_adscripcion" class="form-control" value="{{ old('victima_area_adscripcion') }}">
+                        @error('victima_area_adscripcion')<p class="text-danger mt-2">{{ $message }}</p>@enderror                  
                     </div>
+                    
+                </div>
+
+                <div class="row mt-2">
                     <div class="col-md-3">
                         <p>Puesto que desempeña</p>
-                        <input type="text" name="" class="form-control">
+                        <input type="text" name="victima_puesto_desempena" id="victima_puesto_desempena" class="form-control" value="{{ old('victima_puesto_desempena') }}">
+                        @error('victima_puesto_desempena')<p class="text-danger mt-2">{{ $message }}</p>@enderror                  
                     </div>
                     <div class="col-md-3">
                         <p>Jefe inmediato</p>
-                        <input type="text" name="" class="form-control">
+                        <input type="text" name="victima_jefe_inmediato" id="victima_jefe_inmediato" class="form-control" value="{{ old('victima_jefe_inmediato') }}">
+                        @error('victima_jefe_inmediato')<p class="text-danger mt-2">{{ $message }}</p>@enderror                  
+                    </div>
+                    <div class="col-md-3">
+                        <p>Se implementaron medidas de protección</p>
+                        <select name="victima_medidas_proteccion" id="victima_medidas_proteccion" class="form-control">
+                            <option value="" disabled selected>-- Seleccione una opción --</option>
+                            <option value="SI" {{ old('victima_medidas_proteccion') == 'SI' ? 'selected' : '' }}>SI</option>
+                            <option value="NO" {{ old('victima_medidas_proteccion') == 'NO' ? 'selected' : '' }}>NO</option>
+                        </select>
+                        @error('victima_medidas_proteccion')<p class="text-danger mt-2">{{ $message }}</p>@enderror
                     </div>
                 </div>
 
@@ -163,23 +197,27 @@
                 <div class="row mt-1">
                     <div class="col-md-3">
                         <p>Nombre</p>
-                        <input type="text" name="" class="form-control">
+                        <input type="text" name="agresor_nombre" class="form-control" value="{{ old('agresor_nombre') }}">
+                        @error('agresor_nombre')<p class="text-danger mt-2">{{ $message }}</p>@enderror  
                     </div>
                     <div class="col-md-3">
                         <p>Sexo</p>
-                        <select name="" id="" class="form-control">
+                        <select name="agresor_sexo" id="agresor_sexo" class="form-control">
                             <option value="" disabled selected>-- Seleccione una opción --</option>
-                            <option value="M">Masculino</option>
-                            <option value="F">Femenino</option>
-                        </select>
+                            <option value="M" {{ old('agresor_sexo') == 'M' ? 'selected' : '' }}>MASCULINO</option>
+                            <option value="F" {{ old('agresor_sexo') == 'F' ? 'selected' : '' }}>FEMENINO</option>
+                        </select>  
+                        @error('agresor_sexo')<p class="text-danger mt-2">{{ $message }}</p>@enderror                       
                     </div>
                     <div class="col-md-3">
                         <p>Edad</p>
-                        <input type="number" name="" class="form-control">
+                        <input type="number" name="agresor_edad" id="agresor_edad" class="form-control" value="{{ old('agresor_edad') }}">
+                        @error('agresor_edad')<p class="text-danger mt-2">{{ $message }}</p>@enderror  
                     </div>
                     <div class="col-md-3">
                         <p>Área de adscripción</p>
-                        <input type="text" name="" class="form-control">
+                        <input type="text" name="agresor_area" id="agresor_area" class="form-control" value="{{ old('agresor_area') }}">
+                        @error('agresor_area')<p class="text-danger mt-2">{{ $message }}</p>@enderror  
                     </div>
                 </div>
 
@@ -188,19 +226,24 @@
                 <div class="row mt-1">
                     <div class="col-md-3">
                         <p>Puesto que desempeña</p>
-                        <input type="text" name="" class="form-control">
+                        <input type="text" name="agresor_puesto" id="agresor_puesto" class="form-control" value="{{ old('agresor_puesto') }}">
+                        @error('agresor_puesto')<p class="text-danger mt-2">{{ $message }}</p>@enderror  
                     </div>
                     <div class="col-md-3">
                         <p>Tipo de contratación</p>
-                        <select name="" id="" class="form-control">
+                        <select name="agresor_tipo_contratacion" id="agresor_tipo_contratacion" class="form-control">
                             <option value="" disabled selected>-- Seleccione una opción --</option>
-                            <option value="BASE">Base</option>
-                            <option value="CONTRATO">Contrato</option>
+                            <option value="CONFIANZA" {{ old('agresor_tipo_contratacion') == 'CONFIANZA' ? 'selected' : '' }}>CONFIANZA</option>
+                            <option value="BASE" {{ old('agresor_tipo_contratacion') == 'BASE' ? 'selected' : '' }}>BASE</option>
+                            <option value="CONTRATO" {{ old('agresor_tipo_contratacion') == 'CONTRATO' ? 'selected' : '' }}>CONTRATO</option>
+                            <option value="EN FORMACION" {{ old('agresor_tipo_contratacion') == 'EN FORMACION' ? 'selected' : '' }}>EN FORMACION</option>
                         </select>
+                        @error('agresor_tipo_contratacion')<p class="text-danger mt-2">{{ $message }}</p>@enderror                        
                     </div>
                     <div class="col-md-6">
                         <p>Jefe inmediato</p>
-                        <input type="text" name="" class="form-control">
+                        <input type="text" name="agresor_jefe_inmediato" id="agresor_jefe_inmediato" class="form-control" value="{{ old('agresor_jefe_inmediato') }}">
+                        @error('agresor_jefe_inmediato')<p class="text-danger mt-2">{{ $message }}</p>@enderror  
                     </div>
                 </div>
 
@@ -221,22 +264,25 @@
                     <div class="col-md-3">
                         <select name="relacion_laboral" id="relacion_laboral" class="form-control" onchange="toggleFields()">
                             <option value="" disabled selected>-- Seleccione una opción --</option>
-                            <option value="SI">Si</option>
-                            <option value="NO">No</option>
-                        </select>
+                            <option value="SI" {{ old('relacion_laboral') == 'SI' ? 'selected' : '' }}>SI</option>
+                            <option value="NO" {{ old('relacion_laboral') == 'NO' ? 'selected' : '' }}>NO</option>
+                        </select> 
+                        @error('relacion_laboral')<p class="text-danger mt-2">{{ $message }}</p>@enderror                       
                     </div>
                 
                     <div class="col-md-3">
                         <select name="relacion_laboral_si" id="relacion_laboral_si" class="form-control" disabled>
                             <option value="" disabled selected>-- Seleccione una opción --</option>
-                            <option value="SI">Jefe inmediato</option>
-                            <option value="NO">Compañero/a de trabajo</option>
-                            <option value="NO">Personal externo</option>
-                        </select>
+                            <option value="JEFE INMEDIATO" {{ old('relacion_laboral_si') == 'JEFE INMEDIATO' ? 'selected' : '' }}>JEFE INMEDIATO</option>
+                            <option value="COMPAÑERO/A DE TRABAJO" {{ old('relacion_laboral_si') == 'COMPAÑERO/A DE TRABAJO' ? 'selected' : '' }}>COMPAÑERO/A DE TRABAJO</option>
+                            <option value="PERSONAL EXTERNO" {{ old('relacion_laboral_si') == 'PERSONAL EXTERNO' ? 'selected' : '' }}>PERSONAL EXTERNO</option>
+                        </select>    
+                        @error('relacion_laboral_si')<p class="text-danger mt-2">{{ $message }}</p>@enderror                      
                     </div>
                 
                     <div class="col-md-6">
-                        <textarea class="form-control" name="relacion_laboral_no" id="relacion_laboral_no" cols="30" rows="10" placeholder="Describa la relación o los motivos, en su caso, por los cuales trató con la(s) persona(s) presunta(s) agresora(s) en la o las ocasiones en que se presentarón las conductas de hostigamiento sexual o acoso sexual" disabled></textarea>
+                        <textarea class="form-control" name="relacion_laboral_no" id="relacion_laboral_no" cols="30" rows="10" placeholder="Describa la relación o los motivos, en su caso, por los cuales trató con la(s) persona(s) presunta(s) agresora(s) en la o las ocasiones en que se presentarón las conductas de hostigamiento sexual o acoso sexual" disabled>{{ old('relacion_laboral_no') }}</textarea>
+                        @error('relacion_laboral_no')<p class="text-danger mt-2">{{ $message }}</p>@enderror  
                     </div>
                 </div>
                 
@@ -255,28 +301,32 @@
                 <div class="row mt-1">
                     <div class="col-md-12">
                         <p>Situación</p>
-                        <textarea name="" id="" cols="30" rows="10" class="form-control"></textarea>
+                        <textarea name="situacion" id="situacion" cols="30" rows="10" class="form-control">{{ old('situacion') }}</textarea>
+                        @error('situacion')<p class="text-danger mt-2">{{ $message }}</p>@enderror  
                     </div>
                 </div>
 
                 <div class="row mt-1">
                     <div class="col-md-12">
                         <p>Como</p>
-                        <textarea name="" id="" cols="30" rows="10" class="form-control"></textarea>
+                        <textarea name="como" id="como" cols="30" rows="10" class="form-control">{{ old('como') }}</textarea>
+                        @error('como')<p class="text-danger mt-2">{{ $message }}</p>@enderror  
                     </div>
                 </div>
 
                 <div class="row mt-1">
                     <div class="col-md-12">
                         <p>Cuando</p>
-                        <textarea name="" id="" cols="30" rows="10" class="form-control"></textarea>
+                        <textarea name="cuando" id="cuando" cols="30" rows="10" class="form-control">{{ old('cuando') }}</textarea>
+                        @error('cuando')<p class="text-danger mt-2">{{ $message }}</p>@enderror  
                     </div>
                 </div>
 
                 <div class="row mt-1">
                     <div class="col-md-12">
                         <p>Donde</p>
-                        <textarea name="" id="" cols="30" rows="10" class="form-control"></textarea>
+                        <textarea name="donde" id="donde" cols="30" rows="10" class="form-control">{{ old('donde') }}</textarea>
+                        @error('donde')<p class="text-danger mt-2">{{ $message }}</p>@enderror  
                     </div>
                 </div>
             </div>
@@ -286,17 +336,19 @@
 
         <div class="card mt-3">
             <div class="card-header">
-                <p><strong>5.- Si cuenta con elementos que pudieran corroborar los hechos antes narrados, favor de adjuntarlos a continuación (Fotografías, testigos, historial de llamadas, notas en papel de invitaciones, correos electrónicos, mensajes, actividad en redes sociales u otros)</strong></p>
+                <p><strong>5.- Si cuenta con elementos que pudieran corroborar los hechos antes narrados, favor de adjuntarlos a continuación (Fotografías, testigos, historial de llamadas, notas en papel de invitaciones, correos electrónicos, mensajes, actividad en redes sociales u otros)</strong> <br> <small>(Archivos soportados : jpg,jpeg,png,gif,mp4,mov,avi,mp3,wav,pdf,doc,docx)</small></p>
             </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <input type="file" class="form-control form-control-sm" name="documento_uno">
+                        <input type="file" class="form-control form-control-sm" name="documento_uno" id="documento_uno">
+                        @error('documento_uno')<p class="text-danger mt-2">{{ $message }}</p>@enderror  
                     </div>
                 </div>
                 <div class="row mt-2">
                     <div class="col-md-12">
-                        <input type="file" class="form-control form-control-sm" name="documento_dos">
+                        <input type="file" class="form-control form-control-sm" name="documento_dos" id="documento_dos">
+                        @error('documento_dos')<p class="text-danger mt-2">{{ $message }}</p>@enderror  
                     </div>
                 </div>
                 
@@ -315,14 +367,16 @@
                         <p>.</p>
                         <select name="conducta_ocurrido" id="conducta_ocurrido" class="form-control">
                             <option value="" disabled selected>-- Seleccione una opción --</option>
-                            <option value="SI">En una ocasión</option>
-                            <option value="NO">En más de una ocasión</option>
-                        </select>
+                            <option value="EN UNA OCASION" {{ old('conducta_ocurrido') == 'EN UNA OCASION' ? 'selected' : '' }}>EN UNA OCASION</option>
+                            <option value="EN MAS DE UNA OCASION" {{ old('conducta_ocurrido') == 'EN MAS DE UNA OCASION' ? 'selected' : '' }}>EN MAS DE UNA OCASION</option>
+                        </select>    
+                        @error('conducta_ocurrido')<p class="text-danger mt-2">{{ $message }}</p>@enderror                    
                     </div>
 
                     <div class="col-md-6">
                         <p>Fecha aproximada en la que iniciarón las conductas</p>
-                        <input type="date" class="form-control">
+                        <input type="date" name="conducta_ocurrido_fecha" id="conducta_ocurrido_fecha" class="form-control" value="{{ old('conducta_ocurrido_fecha') }}">
+                        @error('conducta_ocurrido_fecha')<p class="text-danger mt-2">{{ $message }}</p>@enderror
                     </div>
                 </div>
                 
@@ -341,14 +395,16 @@
                     <div class="col-md-3">
                         <select name="persona_testigo" id="persona_testigo" class="form-control" onchange="toggleTestigoField()">
                             <option value="" disabled selected>-- Seleccione una opción --</option>
-                            <option value="NO">No</option>
-                            <option value="NO SE">No se</option>
-                            <option value="SI">Si</option>
-                        </select>
+                            <option value="NO" {{ old('persona_testigo') == 'NO' ? 'selected' : '' }}>NO</option>
+                            <option value="NO SE" {{ old('persona_testigo') == 'NO SE' ? 'selected' : '' }}>NO SE</option>
+                            <option value="SI" {{ old('persona_testigo') == 'SI' ? 'selected' : '' }}>SI</option>
+                        </select>   
+                        @error('persona_testigo')<p class="text-danger mt-2">{{ $message }}</p>@enderror                     
                     </div>
 
                     <div class="col-md-9">
-                        <textarea name="persona_testigo_si" id="persona_testigo_si" cols="30" rows="10" class="form-control" disabled placeholder="En este caso, proporcione sus datos de contacto (nombre, correo electrónico y/o su teléfono)"></textarea>
+                        <textarea name="persona_testigo_si" id="persona_testigo_si" cols="30" rows="10" class="form-control" disabled placeholder="En este caso, proporcione sus datos de contacto (nombre, correo electrónico y/o su teléfono)">{{ old('persona_testigo_si') }}</textarea>
+                        @error('persona_testigo_si')<p class="text-danger mt-2">{{ $message }}</p>@enderror
                     </div>
                 </div>
             </div>
@@ -364,15 +420,17 @@
 
                 <div class="row">
                     <div class="col-md-3">
-                        <select name="persona_relacion" id="persona_relacion" class="form-control"  onchange="toggleRelacionField()">
+                        <select name="persona_relacion" id="persona_relacion" class="form-control" onchange="toggleRelacionField()">
                             <option value="" disabled selected>-- Seleccione una opción --</option>
-                            <option value="NO">No</option>
-                            <option value="SI">Si</option>
-                        </select>
+                            <option value="NO" {{ old('persona_relacion') == 'NO' ? 'selected' : '' }}>NO</option>
+                            <option value="SI" {{ old('persona_relacion') == 'SI' ? 'selected' : '' }}>SI</option>
+                        </select>       
+                        @error('persona_relacion')<p class="text-danger mt-2">{{ $message }}</p>>@enderror                 
                     </div>
 
                     <div class="col-md-9">
-                        <textarea name="persona_relacion_si" id="persona_relacion_si" cols="30" rows="10" class="form-control" disabled placeholder="¿Qué tipo de relación?"></textarea>
+                        <textarea name="persona_relacion_si" id="persona_relacion_si" cols="30" rows="10" class="form-control" disabled placeholder="¿Qué tipo de relación?">{{ old('persona_relacion_si') }}</textarea>
+                        @error('persona_relacion_si')<p class="text-danger mt-2">{{ $message }}</p>@enderror       
                     </div>
                 </div>
             </div>
@@ -389,15 +447,17 @@
 
                 <div class="row">
                     <div class="col-md-3">
-                        <select name="persona_trato" id="persona_trato" class="form-control"  onchange="toggleTratoField()">
+                        <select name="persona_trato" id="persona_trato" class="form-control" onchange="toggleTratoField()">
                             <option value="" disabled selected>-- Seleccione una opción --</option>
-                            <option value="NO">No</option>
-                            <option value="SI">Si</option>
-                        </select>
+                            <option value="NO" {{ old('persona_trato') == 'NO' ? 'selected' : '' }}>NO</option>
+                            <option value="SI" {{ old('persona_trato') == 'SI' ? 'selected' : '' }}>SI</option>
+                        </select>     
+                        @error('persona_trato')<p class="text-danger mt-2">{{ $message }}</p>@enderror                         
                     </div>
 
                     <div class="col-md-9">
-                        <textarea name="persona_trato_si" id="persona_trato_si" cols="30" rows="10" class="form-control" disabled placeholder="En este caso, por favor descríbalo"></textarea>
+                        <textarea name="persona_trato_si" id="persona_trato_si" cols="30" rows="10" class="form-control" disabled placeholder="En este caso, por favor descríbalo">{{ old('persona_trato_si') }}</textarea>
+                        @error('persona_trato_si')<p class="text-danger mt-2">{{ $message }}</p>@enderror      
                     </div>
                 </div>
             </div>
@@ -414,15 +474,17 @@
 
                 <div class="row">
                     <div class="col-md-3">
-                        <select name="padecimiento_fisico" id="padecimiento_fisico" class="form-control"  onchange="togglePadecimientoField()">
+                        <select name="padecimiento_fisico" id="padecimiento_fisico" class="form-control" onchange="togglePadecimientoField()">
                             <option value="" disabled selected>-- Seleccione una opción --</option>
-                            <option value="NO">No</option>
-                            <option value="SI">Si</option>
-                        </select>
+                            <option value="NO" {{ old('padecimiento_fisico') == 'NO' ? 'selected' : '' }}>NO</option>
+                            <option value="SI" {{ old('padecimiento_fisico') == 'SI' ? 'selected' : '' }}>SI</option>
+                        </select>   
+                        @error('padecimiento_fisico')<p class="text-danger mt-2">{{ $message }}</p>@enderror                       
                     </div>
 
                     <div class="col-md-9">
-                        <textarea name="padecimiento_fisico_si" id="padecimiento_fisico_si" cols="30" rows="10" class="form-control" disabled placeholder="¿Cuáles?"></textarea>
+                        <textarea name="padecimiento_fisico_si" id="padecimiento_fisico_si" cols="30" rows="10" class="form-control" disabled placeholder="¿Cuáles?">{{ old('padecimiento_fisico_si') }}</textarea>
+                        @error('padecimiento_fisico_si')<p class="text-danger mt-2">{{ $message }}</p>@enderror  
                     </div>
                 </div>
             </div>
@@ -439,15 +501,17 @@
 
                 <div class="row">
                     <div class="col-md-3">
-                        <select name="integridad" id="integridad" class="form-control"  onchange="toggleIntegridadField()">
+                        <select name="integridad" id="integridad" class="form-control" onchange="toggleIntegridadField()">
                             <option value="" disabled selected>-- Seleccione una opción --</option>
-                            <option value="NO">No</option>
-                            <option value="SI">Si</option>
-                        </select>
+                            <option value="NO" {{ old('integridad') == 'NO' ? 'selected' : '' }}>NO</option>
+                            <option value="SI" {{ old('integridad') == 'SI' ? 'selected' : '' }}>SI</option>
+                        </select>      
+                        @error('integridad')<p class="text-danger mt-2">{{ $message }}</p>@enderror                    
                     </div>
 
                     <div class="col-md-9">
-                        <textarea name="integridad_si" id="integridad_si" cols="30" rows="10" class="form-control" disabled placeholder="En este caso, ¿Consideras que requiere medidas de protección?"></textarea>
+                        <textarea name="integridad_si" id="integridad_si" cols="30" rows="10" class="form-control" disabled placeholder="En este caso, ¿Consideras que requiere medidas de protección?">{{ old('integridad_si') }}</textarea>
+                        @error('integridad_si')<p class="text-danger mt-2">{{ $message }}</p>@enderror  
                     </div>
                 </div>
             </div>
@@ -464,15 +528,17 @@
 
                 <div class="row">
                     <div class="col-md-3">
-                        <select name="amenazada" id="amenazada" class="form-control"  onchange="toggleAmenazadaField()">
+                        <select name="amenazada" id="amenazada" class="form-control" onchange="toggleAmenazadaField()">
                             <option value="" disabled selected>-- Seleccione una opción --</option>
-                            <option value="NO">No</option>
-                            <option value="SI">Si</option>
+                            <option value="NO" {{ old('amenazada') == 'NO' ? 'selected' : '' }}>NO</option>
+                            <option value="SI" {{ old('amenazada') == 'SI' ? 'selected' : '' }}>SI</option>
                         </select>
+                        @error('amenazada')<p class="text-danger mt-2">{{ $message }}</p>@enderror  
                     </div>
 
                     <div class="col-md-9">
-                        <textarea name="amenazada_si" id="amenazada_si" cols="30" rows="10" class="form-control" disabled placeholder="Especifique"></textarea>
+                        <textarea name="amenazada_si" id="amenazada_si" cols="30" rows="10" class="form-control" disabled placeholder="Especifique">{{ old('amenazada_si') }}</textarea>
+                        @error('amenazada_si')<p class="text-danger mt-2">{{ $message }}</p>@enderror  
                     </div>
                 </div>
             </div>
@@ -489,15 +555,17 @@
 
                 <div class="row">
                     <div class="col-md-3">
-                        <select name="adicionales" id="adicionales" class="form-control"  onchange="toggleAdicionalesField()">
+                        <select name="adicionales" id="adicionales" class="form-control" onchange="toggleAdicionalesField()">
                             <option value="" disabled selected>-- Seleccione una opción --</option>
-                            <option value="NO">No</option>
-                            <option value="SI">Si</option>
-                        </select>
+                            <option value="NO" {{ old('adicionales') == 'NO' ? 'selected' : '' }}>NO</option>
+                            <option value="SI" {{ old('adicionales') == 'SI' ? 'selected' : '' }}>SI</option>
+                        </select>  
+                        @error('adicionales')<p class="text-danger mt-2">{{ $message }}</p>@enderror                            
                     </div>
 
                     <div class="col-md-9">
-                        <textarea name="adicionales_si" id="adicionales_si" cols="30" rows="10" class="form-control" disabled placeholder="Especifique"></textarea>
+                        <textarea name="adicionales_si" id="adicionales_si" cols="30" rows="10" class="form-control" disabled placeholder="Especifique">{{ old('adicionales_si') }}</textarea> 
+                        @error('adicionales_si')<p class="text-danger mt-2">{{ $message }}</p>@enderror       
                     </div>
                 </div>
             </div>
@@ -514,15 +582,17 @@
 
                 <div class="row">
                     <div class="col-md-3">
-                        <select name="denuncia" id="denuncia" class="form-control"  onchange="toggleDenunciaField()">
+                        <select name="denuncia" id="denuncia" class="form-control" onchange="toggleDenunciaField()">
                             <option value="" disabled selected>-- Seleccione una opción --</option>
-                            <option value="NO">No</option>
-                            <option value="SI">Si</option>
-                        </select>
+                            <option value="NO" {{ old('denuncia') == 'NO' ? 'selected' : '' }}>NO</option>
+                            <option value="SI" {{ old('denuncia') == 'SI' ? 'selected' : '' }}>SI</option>
+                        </select>     
+                        @error('denuncia')<p class="text-danger mt-2">{{ $message }}</p>@enderror                   
                     </div>
 
                     <div class="col-md-9">
-                        <textarea name="denuncia_si" id="denuncia_si" cols="30" rows="10" class="form-control" disabled placeholder="Especifique"></textarea>
+                        <textarea name="denuncia_si" id="denuncia_si" cols="30" rows="10" class="form-control" disabled placeholder="Especifique">{{ old('denuncia_si') }}</textarea>
+                        @error('denuncia_si')<p class="text-danger mt-2">{{ $message }}</p>@enderror 
                     </div>
                 </div>
             </div>
@@ -538,11 +608,44 @@
        
     </div><!-- CONTAINER -->
 
+</form>
+
     <br>
     <br>
     <br>
     <br>
     <br>
+
+    @section('plugins.Sweetalert2', true)
+
+    @if(session('success'))
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    Swal.fire({
+                        title: 'Registro Correcto',
+                        text: "{{ session('success') }}",
+                        icon: 'success',
+                        confirmButtonText: 'Ok'
+                    });
+                });
+            </script>
+        @endif
+
+            <!-- Incluye jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Incluye Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6k3I4F+VppvIEnq0u5tkU7l1RZm5SaaPqC+78LUeF9v/8gV56N4FJP" crossorigin="anonymous"></script>
+
+    <!-- Incluye SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Incluye Select2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <!-- Incluye jQuery y Bootstrap JS 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>-->
 
     <!-- ----------------------------------------------- -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -560,6 +663,11 @@
                 inputOtro.disabled = true;  // Deshabilitar el campo si no se selecciona "OTRO"
                 inputOtro.value = ''; // Limpiar el valor del campo
             }
+        });
+
+        // Llamada inicial para configurar el estado del campo al cargar la página, en caso de que se haya enviado previamente el formulario
+        document.addEventListener('DOMContentLoaded', function() {
+            getElementById(); // Ajusta el estado del campo al cargar la página
         });
     </script>
 
@@ -584,6 +692,11 @@
                 campoNo.disabled = true;
             }
         }
+
+        // Llamada inicial para configurar el estado del campo al cargar la página, en caso de que se haya enviado previamente el formulario
+        document.addEventListener('DOMContentLoaded', function() {
+            toggleFields(); // Ajusta el estado del campo al cargar la página
+        });
     </script>
 
     <!-- SCRIPT PUNTO 7 -->
@@ -599,6 +712,11 @@
                 personaTestigoSi.disabled = true;   // Deshabilitar el campo "persona_testigo_si"
             }
         }
+
+        // Llamada inicial para configurar el estado del campo al cargar la página, en caso de que se haya enviado previamente el formulario
+        document.addEventListener('DOMContentLoaded', function() {
+            toggleTestigoField(); // Ajusta el estado del campo al cargar la página
+        });
     </script>
 
     <!-- -- -->
@@ -616,6 +734,11 @@
                 personaRelacionSi.disabled = true;   // Deshabilitar el campo "persona_testigo_si"
             }
         }
+
+        // Llamada inicial para configurar el estado del campo al cargar la página, en caso de que se haya enviado previamente el formulario
+        document.addEventListener('DOMContentLoaded', function() {
+            toggleRelacionField(); // Ajusta el estado del campo al cargar la página
+        });
     </script>
 
     <!-- -- -->
@@ -632,6 +755,11 @@
                 personaTratoSi.disabled = true;   // Deshabilitar el campo "persona_testigo_si"
             }
         }
+
+        // Llamada inicial para configurar el estado del campo al cargar la página, en caso de que se haya enviado previamente el formulario
+        document.addEventListener('DOMContentLoaded', function() {
+            toggleTratoField(); // Ajusta el estado del campo al cargar la página
+        });
     </script>
 
     <!-- -- -->
@@ -648,6 +776,11 @@
                 padecimientoFisicoSi.disabled = true;   // Deshabilitar el campo "persona_testigo_si"
             }
         }
+
+        // Llamada inicial para configurar el estado del campo al cargar la página, en caso de que se haya enviado previamente el formulario
+        document.addEventListener('DOMContentLoaded', function() {
+            togglePadecimientoField(); // Ajusta el estado del campo al cargar la página
+        });
     </script>
 
     <!-- -- -->
@@ -664,6 +797,11 @@
                 integridadSi.disabled = true;   // Deshabilitar el campo "persona_testigo_si"
             }
         }
+
+        // Llamada inicial para configurar el estado del campo al cargar la página, en caso de que se haya enviado previamente el formulario
+        document.addEventListener('DOMContentLoaded', function() {
+            toggleIntegridadField(); // Ajusta el estado del campo al cargar la página
+        });
     </script>
 
     <!-- -- -->
@@ -680,6 +818,11 @@
                 amenazadaSi.disabled = true;   // Deshabilitar el campo "persona_testigo_si"
             }
         }
+
+        // Llamada inicial para configurar el estado del campo al cargar la página, en caso de que se haya enviado previamente el formulario
+        document.addEventListener('DOMContentLoaded', function() {
+            toggleAmenazadaField(); // Ajusta el estado del campo al cargar la página
+        });
     </script>
 
     <!-- -- -->
@@ -696,6 +839,11 @@
                 adicionalesSi.disabled = true;   // Deshabilitar el campo "persona_testigo_si"
             }
         }
+
+        // Llamada inicial para configurar el estado del campo al cargar la página, en caso de que se haya enviado previamente el formulario
+        document.addEventListener('DOMContentLoaded', function() {
+            toggleAdicionalesField(); // Ajusta el estado del campo al cargar la página
+        });
     </script>
 
     <!-- -- -->
@@ -712,8 +860,55 @@
                 denunciaSi.disabled = true;   // Deshabilitar el campo "persona_testigo_si"
             }
         }
+
+        // Llamada inicial para configurar el estado del campo al cargar la página, en caso de que se haya enviado previamente el formulario
+        document.addEventListener('DOMContentLoaded', function() {
+            toggleDenunciaField(); // Ajusta el estado del campo al cargar la página
+        });
     </script>
 
+    <!-- -- -->
+     <!-- CONDICIONES DE VULNERABILIDAD -->
+
+     <script>
+        function toggleVulnerabilidadField() {
+            var vulnerabilidad = document.getElementById('victima_condiciones_vulnerabilidad').value;
+            var vulnerabilidadSi = document.getElementById('victima_condiciones_vulnerabilidad_otro');
+            
+            if (vulnerabilidad === 'OTRO') {
+                vulnerabilidadSi.disabled = false;  // Habilitar el campo "persona_testigo_si"
+            } else {
+                vulnerabilidadSi.disabled = true;   // Deshabilitar el campo "persona_testigo_si"
+            }
+        }
+
+        // Llamada inicial para configurar el estado del campo al cargar la página, en caso de que se haya enviado previamente el formulario
+        document.addEventListener('DOMContentLoaded', function() {
+            toggleVulnerabilidadField(); // Ajusta el estado del campo al cargar la página
+        });
+    </script>
+
+    <!-- -- -->
+
+    <!-- TIPO DE CONTRATACION EN FORMACION ABRE ESPACIO NOMBRE ESCUELA -->
+
+    <script>
+        function toggleEnFormacionField() {
+            var tipoContratacion = document.getElementById('victima_tipo_contratacion').value;
+            var escuelaField = document.getElementById('victima_enformacion_escuela');
+            
+            if (tipoContratacion === 'EN FORMACION') {
+                escuelaField.disabled = false;  // Habilitar el campo "Especifique el nombre de la escuela"
+            } else {
+                escuelaField.disabled = true;   // Deshabilitar el campo "Especifique el nombre de la escuela"
+            }
+        }
+        
+        // Llamada inicial para configurar el estado del campo al cargar la página, en caso de que se haya enviado previamente el formulario
+        document.addEventListener('DOMContentLoaded', function() {
+            toggleEnFormacionField(); // Ajusta el estado del campo al cargar la página
+        });
+    </script>
     <!-- -- -->
   </body>
 </html>

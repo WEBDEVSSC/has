@@ -509,18 +509,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 label: 'Número de votos',
                 data: [
                     {{$totaldenunciasAcosoSexual}}, 
-                    {{$totaldenunciasHostigamiento}},
-                    {{$totaldenunciasOtro}}
+                    {{$totaldenunciasHostigamiento}}
                 ],
                 backgroundColor: [
                     'rgba(236, 112, 99, 0.2)', // Azul claro
                     'rgba(245, 176, 65, 0.2)', // Amarillo suave
-                    'rgba(187, 143, 206, 0.2)'    // Rojo coral claro
                 ],
                 borderColor: [
                     'rgba(236, 112, 99, 1)',   // Azul claro
                     'rgba(245, 176, 65, 1)',   // Amarillo suave
-                    'rgba(187, 143, 206, 1)'      // Rojo coral claro
                 ],
                 borderWidth: 1
             }]

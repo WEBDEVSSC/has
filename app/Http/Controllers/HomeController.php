@@ -25,7 +25,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $anio = "2024";
+        $anio = "2025";
         
         // Obtener todos los registros de la tabla denuncia
         $denunciasNuevas = Denuncia::where('status', 'NUEVO')
@@ -60,9 +60,9 @@ class HomeController extends Controller
         */
         
         // Obtener el id_municipio que más veces se repite usando Eloquent
-        $resultado = Denuncia::select('id_municipio')
+        $resultado = Denuncia::select('clues_municipio')
             ->selectRaw('COUNT(*) as count')
-            ->groupBy('id_municipio')
+            ->groupBy('clues_municipio')
             ->orderBy('count', 'desc')
             ->whereYear('created_at', $anio)
             ->first();
@@ -74,7 +74,7 @@ class HomeController extends Controller
 
         // Verificar si se encontró algún resultado
         if ($resultado) {
-            $idMunicipio = $resultado->id_municipio;
+            $idMunicipio = $resultado->clues_municipio;
             $cantidadRepeticiones = $resultado->count;
 
             // Buscar el nombre del municipio
@@ -87,9 +87,9 @@ class HomeController extends Controller
         //RESULTADO DE 2 CON MAS REGISTROS
 
         // Obtener el id_municipio que más veces se repite usando Eloquent
-        $resultado_dos = Denuncia::select('id_municipio')
+        $resultado_dos = Denuncia::select('clues_municipio')
             ->selectRaw('COUNT(*) as count')
-            ->groupBy('id_municipio')
+            ->groupBy('clues_municipio')
             ->orderBy('count', 'desc')
             ->whereYear('created_at', $anio)
             ->skip(1)->take(1)->first();
@@ -101,7 +101,7 @@ class HomeController extends Controller
 
         // Verificar si se encontró algún resultado
         if ($resultado_dos) {
-            $idMunicipio_dos = $resultado_dos->id_municipio;
+            $idMunicipio_dos = $resultado_dos->clues_municipio;
             $cantidadRepeticiones_dos = $resultado_dos->count;
 
             // Buscar el nombre del municipio
@@ -114,9 +114,9 @@ class HomeController extends Controller
         //RESULTADO DE 3 CON MAS REGISTROS
 
         // Obtener el id_municipio que más veces se repite usando Eloquent
-        $resultado_tres = Denuncia::select('id_municipio')
+        $resultado_tres = Denuncia::select('clues_municipio')
             ->selectRaw('COUNT(*) as count')
-            ->groupBy('id_municipio')
+            ->groupBy('clues_municipio')
             ->orderBy('count', 'desc')
             ->whereYear('created_at', $anio)
             ->skip(2)->take(2)->first();
@@ -128,7 +128,7 @@ class HomeController extends Controller
 
         // Verificar si se encontró algún resultado
         if ($resultado_tres) {
-            $idMunicipio_tres = $resultado_tres->id_municipio;
+            $idMunicipio_tres = $resultado_tres->clues_municipio;
             $cantidadRepeticiones_tres = $resultado_tres->count;
 
             // Buscar el nombre del municipio
@@ -141,9 +141,9 @@ class HomeController extends Controller
         //RESULTADO DE 4 CON MAS REGISTROS
 
         // Obtener el id_municipio que más veces se repite usando Eloquent
-        $resultado_cuatro = Denuncia::select('id_municipio')
+        $resultado_cuatro = Denuncia::select('clues_municipio')
             ->selectRaw('COUNT(*) as count')
-            ->groupBy('id_municipio')
+            ->groupBy('clues_municipio')
             ->orderBy('count', 'desc')
             ->whereYear('created_at', $anio)
             ->skip(3)->take(3)->first();
@@ -155,7 +155,7 @@ class HomeController extends Controller
 
         // Verificar si se encontró algún resultado
         if ($resultado_cuatro) {
-            $idMunicipio_cuatro = $resultado_cuatro->id_municipio;
+            $idMunicipio_cuatro = $resultado_cuatro->clues_municipio;
             $cantidadRepeticiones_cuatro = $resultado_cuatro->count;
 
             // Buscar el nombre del municipio
@@ -168,9 +168,9 @@ class HomeController extends Controller
         //RESULTADO DE 5 CON MAS REGISTROS
 
         // Obtener el id_municipio que más veces se repite usando Eloquent
-        $resultado_cinco = Denuncia::select('id_municipio')
+        $resultado_cinco = Denuncia::select('clues_municipio')
             ->selectRaw('COUNT(*) as count')
-            ->groupBy('id_municipio')
+            ->groupBy('clues_municipio')
             ->orderBy('count', 'desc')
             ->whereYear('created_at', $anio)
             ->skip(4)->take(4)->first();
@@ -182,7 +182,7 @@ class HomeController extends Controller
 
         // Verificar si se encontró algún resultado
         if ($resultado_cinco) {
-            $idMunicipio_cinco = $resultado_cinco->id_municipio;
+            $idMunicipio_cinco = $resultado_cinco->clues_municipio;
             $cantidadRepeticiones_cinco = $resultado_cinco->count;
 
             // Buscar el nombre del municipio
@@ -305,7 +305,7 @@ class HomeController extends Controller
         */
 
         // Obtener todos los registros de la tabla denuncia
-        $denunciasMasculino = Denuncia::where('sexo', 'MASCULINO')
+        $denunciasMasculino = Denuncia::where('victima_sexo', 'M')
                             ->whereYear('created_at', $anio)
                             ->get();
 
@@ -313,7 +313,7 @@ class HomeController extends Controller
         $totalDenunciasMasculino = $denunciasMasculino->count();
 
         // Obtener todos los registros de la tabla denuncia
-        $denunciasFemenino = Denuncia::where('sexo', 'FEMENINO')
+        $denunciasFemenino = Denuncia::where('victima_sexo', 'F')
                             ->whereYear('created_at', $anio)
                             ->get();
 
@@ -331,7 +331,7 @@ class HomeController extends Controller
         //JURISDICCION 1
 
         // Obtener todos los registros de la tabla denuncia
-        $denunciasJurisdiccionUno = Denuncia::where('jurisdiccion', '1')
+        $denunciasJurisdiccionUno = Denuncia::where('clues_jurisdiccion', '1')
         ->whereYear('created_at', $anio)
         ->get();
 
@@ -341,7 +341,7 @@ class HomeController extends Controller
         //JURISDICCION 2
 
         // Obtener todos los registros de la tabla denuncia
-        $denunciasJurisdiccionDos = Denuncia::where('jurisdiccion', '2')
+        $denunciasJurisdiccionDos = Denuncia::where('clues_jurisdiccion', '2')
         ->whereYear('created_at', $anio)
         ->get();
 
@@ -351,7 +351,7 @@ class HomeController extends Controller
         //JURISDICCION 3
 
         // Obtener todos los registros de la tabla denuncia
-        $denunciasJurisdiccionTres = Denuncia::where('jurisdiccion', '3')
+        $denunciasJurisdiccionTres = Denuncia::where('clues_jurisdiccion', '3')
         ->whereYear('created_at', $anio)
         ->get();
 
@@ -361,7 +361,7 @@ class HomeController extends Controller
         //JURISDICCION 4
 
         // Obtener todos los registros de la tabla denuncia
-        $denunciasJurisdiccionCuatro = Denuncia::where('jurisdiccion', '4')
+        $denunciasJurisdiccionCuatro = Denuncia::where('clues_jurisdiccion', '4')
         ->whereYear('created_at', $anio)
         ->get();
 
@@ -371,7 +371,7 @@ class HomeController extends Controller
         //JURISDICCION 5
 
         // Obtener todos los registros de la tabla denuncia
-        $denunciasJurisdiccionCinco = Denuncia::where('jurisdiccion', '5')
+        $denunciasJurisdiccionCinco = Denuncia::where('clues_jurisdiccion', '5')
         ->whereYear('created_at', $anio)
         ->get();
 
@@ -381,7 +381,7 @@ class HomeController extends Controller
         //JURISDICCION 6
 
         // Obtener todos los registros de la tabla denuncia
-        $denunciasJurisdiccionSeis = Denuncia::where('jurisdiccion', '6')
+        $denunciasJurisdiccionSeis = Denuncia::where('clues_jurisdiccion', '6')
         ->whereYear('created_at', $anio)
         ->get();
 
@@ -391,7 +391,7 @@ class HomeController extends Controller
         //JURISDICCION 7
 
         // Obtener todos los registros de la tabla denuncia
-        $denunciasJurisdiccionSiete = Denuncia::where('jurisdiccion', '7')
+        $denunciasJurisdiccionSiete = Denuncia::where('clues_jurisdiccion', '7')
         ->whereYear('created_at', $anio)
         ->get();
 
@@ -401,7 +401,7 @@ class HomeController extends Controller
         //JURISDICCION 8
 
         // Obtener todos los registros de la tabla denuncia
-        $denunciasJurisdiccionOcho = Denuncia::where('jurisdiccion', '8')
+        $denunciasJurisdiccionOcho = Denuncia::where('clues_jurisdiccion', '8')
         ->whereYear('created_at', $anio)
         ->get();
 
@@ -419,7 +419,7 @@ class HomeController extends Controller
         // ACOSO SEXUAL
 
         // Obtener todos los registros de la tabla denuncia
-        $denunciasAcosoSexual = Denuncia::where('tipo_solicitud', 'ACOSO SEXUAL')
+        $denunciasAcosoSexual = Denuncia::where('tipo_denuncia', 'ACOSO SEXUAL')
         ->whereYear('created_at', $anio)
         ->get();
 
@@ -429,22 +429,12 @@ class HomeController extends Controller
         // HOSTIGAMIENTO
 
         // Obtener todos los registros de la tabla denuncia
-        $denunciasHostigamiento = Denuncia::where('tipo_solicitud', 'HOSTIGAMIENTO SEXUAL')
+        $denunciasHostigamiento = Denuncia::where('tipo_denuncia', 'HOSTIGAMIENTO SEXUAL')
         ->whereYear('created_at', $anio)
         ->get();
 
         // Contar el número de registros
         $totaldenunciasHostigamiento = $denunciasHostigamiento->count();
-
-        // OTRO
-
-        // Obtener todos los registros de la tabla denuncia
-        $denunciasOtro = Denuncia::where('tipo_solicitud', 'OTRO')
-        ->whereYear('created_at', $anio)
-        ->get();
-
-        // Contar el número de registros
-        $totaldenunciasOtro = $denunciasOtro->count();
 
         /*
         *
@@ -457,7 +447,7 @@ class HomeController extends Controller
         // CONFIANZA
 
         // Obtener todos los registros de la tabla denuncia
-        $denunciasConfianza = Denuncia::where('tipo_contratacion', 'CONFIANZA')
+        $denunciasConfianza = Denuncia::where('victima_tipo_contratacion', 'CONFIANZA')
         ->whereYear('created_at', $anio)
         ->get();
 
@@ -467,7 +457,7 @@ class HomeController extends Controller
         // BASE
 
         // Obtener todos los registros de la tabla denuncia
-        $denunciasBase = Denuncia::where('tipo_contratacion', 'BASE')
+        $denunciasBase = Denuncia::where('victima_tipo_contratacion', 'BASE')
         ->whereYear('created_at', $anio)
         ->get();
 
@@ -477,7 +467,7 @@ class HomeController extends Controller
         // CONTRATO
 
         // Obtener todos los registros de la tabla denuncia
-        $denunciasContrato = Denuncia::where('tipo_contratacion', 'CONTRATO')
+        $denunciasContrato = Denuncia::where('victima_tipo_contratacion', 'CONTRATO')
         ->whereYear('created_at', $anio)
         ->get();
 
@@ -487,7 +477,7 @@ class HomeController extends Controller
         // EN FORMACION
 
         // Obtener todos los registros de la tabla denuncia
-        $denunciasEnFormacion = Denuncia::where('tipo_contratacion', 'EN FORMACION')
+        $denunciasEnFormacion = Denuncia::where('victima_tipo_contratacion', 'EN FORMACION')
         ->whereYear('created_at', $anio)
         ->get();
 
@@ -497,7 +487,7 @@ class HomeController extends Controller
         // OTRA
 
         // Obtener todos los registros de la tabla denuncia
-        $denunciasOtra = Denuncia::where('tipo_contratacion', 'OTRA')
+        $denunciasOtra = Denuncia::where('victima_tipo_contratacion', 'OTRO')
         ->whereYear('created_at', $anio)
         ->get();
 
@@ -507,22 +497,22 @@ class HomeController extends Controller
         // Rangos de edad
 
         // Primera infancia: De 0 a 5 años
-        $primeraInfancia = Denuncia::whereBetween('edad', [0, 5])->count();
+        $primeraInfancia = Denuncia::whereBetween('victima_edad', [0, 5])->count();
 
         // Infancia: De 6 a 11 años
-        $infancia = Denuncia::whereBetween('edad', [6, 11])->count();
+        $infancia = Denuncia::whereBetween('victima_edad', [6, 11])->count();
         
         // Adolescencia: De 12 a 18 años
-        $adolescencia = Denuncia::whereBetween('edad', [12, 18])->count();
+        $adolescencia = Denuncia::whereBetween('victima_edad', [12, 18])->count();
 
         // Juventud: De 14 a 26 años
-        $juventud = Denuncia::whereBetween('edad', [14, 26])->count();
+        $juventud = Denuncia::whereBetween('victima_edad', [14, 26])->count();
 
         // Adultez: De 27 a 59 años
-        $adultez = Denuncia::whereBetween('edad', [27, 50])->count();
+        $adultez = Denuncia::whereBetween('victima_edad', [27, 50])->count();
 
         // Persona mayor: De 60 años o más
-        $personaMayor = Denuncia::whereBetween('edad', [60, 100])->count();
+        $personaMayor = Denuncia::whereBetween('victima_edad', [60, 100])->count();
 
         return view('home', compact(
             'totalDenunciasNuevas',
@@ -563,7 +553,6 @@ class HomeController extends Controller
             'totaldenunciasJurisdiccionOcho',
             'totaldenunciasAcosoSexual',
             'totaldenunciasHostigamiento',
-            'totaldenunciasOtro',
             'totaldenunciasConfianza',
             'totaldenunciasBase',
             'totaldenunciasContrato',

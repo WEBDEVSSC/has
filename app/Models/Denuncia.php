@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Denuncia extends Model
 {
     // Si el nombre de la tabla no es el plural del nombre del modelo, especifica el nombre de la tabla aquí
-    protected $table = 'denuncia';
+    protected $table = 'denuncias';
 
     // Si tu tabla tiene una clave primaria diferente a 'id', puedes especificarla aquí
     protected $primaryKey = 'id';

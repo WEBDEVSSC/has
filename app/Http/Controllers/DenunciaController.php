@@ -47,17 +47,11 @@ class DenunciaController extends Controller
     {
         // Obtener todos los registros de la tabla denuncia
         $denuncias = Denuncia::where('status', 'NUEVO')
-                    ->whereYear('created_at', 2024)
+                    ->whereYear('created_at', 2025)
                     ->get();
         
         // Contar el número de registros
         $totalDenuncias = $denuncias->count();
-
-        // Desencriptar el valor "nombre" para cada denuncia
-        $denuncias->transform(function ($denuncia) {
-            $denuncia->nombre = Crypt::decryptString($denuncia->nombre);
-            return $denuncia;
-        });
 
         // Pasar los registros a una vista para mostrarlos
         return view('nuevas', compact('denuncias', 'totalDenuncias'));
@@ -389,13 +383,6 @@ class DenunciaController extends Controller
     {
         // Consulta la denuncia por ID
         $denuncia = Denuncia::findOrFail($id);
-
-         // Desencriptar los campos
-        $denuncia->nombre = Crypt::decryptString($denuncia->nombre);
-        $denuncia->correo = Crypt::decryptString($denuncia->correo);
-        $denuncia->celular = Crypt::decryptString($denuncia->celular);
-        $denuncia->denunciado_nombre = Crypt::decryptString($denuncia->denunciado_nombre);
-        $denuncia->testigos = Crypt::decryptString($denuncia->testigos);
 
         //Consultamos todos los seguimientos que tiene esa denuncia
         $seguimientos = DenunciaSeguimiento::where('relacion',$id)->orderBy('id','desc')->get();

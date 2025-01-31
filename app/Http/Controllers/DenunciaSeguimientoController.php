@@ -15,7 +15,7 @@ class DenunciaSeguimientoController extends Controller
      * Update the specified resource in storage.
      */
     public function create($id)
-    {
+    {        
         // Encuentra la denuncia por ID
         $denuncia = Denuncia::findOrFail($id);
 
@@ -33,14 +33,12 @@ class DenunciaSeguimientoController extends Controller
 
     public function store(Request $request)
     {
+
         // Consultamos el correo de esa denuncia
         $correo = Denuncia::find($request->id_registro)->correo;
         
         // Consultamos el folio de esa denuncia
         $folio = Denuncia::find($request->id_registro)->folio;
-
-        // Descodificamos el correo
-        $correoDeCrypt = Crypt::decryptString($correo);
 
         $seguimiento = new DenunciaSeguimiento();
 
@@ -53,7 +51,6 @@ class DenunciaSeguimientoController extends Controller
         $seguimiento->save();
 
         return redirect()->route('denuncias.nuevas')->with('success', 'Mensaje registrado exitosamente.');
-        
         
     }
 }

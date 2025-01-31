@@ -58,7 +58,7 @@
         <div class="card card-purple">
 
     <div class="card-header">
-        <h3 class="card-title">Expediente completo de la denuncia :  SSC/HAS/{{ $denuncia->folio}}/2024</h3>
+        <h3 class="card-title">Expediente completo de la denuncia :  SSC/HAS/2025/{{ $denuncia->folio}}</h3>
     </div>
 
    
@@ -71,7 +71,7 @@
 
         <div class="col-md-6">
             <p><strong>Tipo de solicitud</strong></p>
-            <p>{{ $denuncia->tipo_solicitud }}</p>
+            <p>{{ $denuncia->tipo_denuncia }}</p>
         </div>
 
         <div class="col-md-6">
@@ -103,22 +103,22 @@
 
     <hr>
 
-    <center><p><strong>Datos generales de contacto</strong></p></center>
+    <center><p><strong>Datos de la presunta victima o de la persona que narra los hechos</strong></p></center>
 
     <hr>
 
     <div class="row">
 
         <div class="col-md-4">
-            <p><strong>Nombre completo</strong><br>{{ $denuncia->nombre }}</p>
+            <p><strong>Nombre completo</strong><br>{{ $denuncia->victima_nombre }}</p>
         </div>
 
         <div class="col-md-4">
-            <p><strong>Edad</strong><br>{{ $denuncia->edad }} años cumplidos</p>
+            <p><strong>Sexo</strong><br>{{ $denuncia->victima_sexo }}</p>
         </div>
 
         <div class="col-md-4">
-            <p><strong>Sexo</strong><br>{{ $denuncia->sexo }}</p>
+            <p><strong>Edad</strong><br>{{ $denuncia->victima_edad }}</p>
         </div>
 
     </div>
@@ -126,11 +126,22 @@
     <div class="row">
 
         <div class="col-md-4">
-            <p><strong>Email</strong><br>{{ $denuncia->correo }}</p>
+            <p><strong>Email</strong><br>{{ $denuncia->victima_email }}</p>
         </div>
 
         <div class="col-md-4">
-            <p><strong>Celular</strong><br>{{ $denuncia->celular }}</p>
+            <p><strong>Celular</strong><br>{{ $denuncia->victima_telefono }}</p>
+        </div>
+
+        <div class="col-md-4">
+            <p><strong>Tipo de Contratación</strong><br>{{ $denuncia->victima_tipo_contratacion }}</p>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-12">
+            <p><strong>Condiciones de vulnerabilidad</strong><br>{{ $denuncia->victima_condiciones_vulnerabilidad }} {{ $denuncia->victima_condiciones_vulnerabilidad_otro }}</p>
         </div>
     </div>
 
@@ -145,85 +156,115 @@
     <div class="row">
 
         <div class="col-md-4">
-            <p><strong>Área de adscripción</strong><br>{{ $denuncia->adscripcion }}</p>
+            <p><strong>CLUES</strong><br>{{ $denuncia->victima_clues }} - {{ $denuncia->clues_nombre }}</p>
         </div>
         <div class="col-md-4">
-            <p><strong>Unidad responsable</strong><br>{{ $denuncia->unidad_resposable }}</p>
+            <p><strong>Municipio</strong><br>{{ $denuncia->clues_municipio_label }}</p>
         </div>
         <div class="col-md-4">
-            <p><strong>Municipio</strong><br>{{ $denuncia->municipio }}</p>
+            <p><strong>Jurisdiccion</strong><br>{{ $denuncia->clues_jurisdiccion_label }}</p>
         </div>
         
     </div>
 
-    <div class="row">
-
+    <div class="row mt-2">
         <div class="col-md-4">
-            <p><strong>Tipo de contratación</strong><br>{{ $denuncia->tipo_contratacion }}</p>
+            <p><strong>Área</strong><br>{{ $denuncia->victima_area_adscripcion }}</p>
         </div>
-
         <div class="col-md-4">
-            <p><strong>Cargo</strong><br>{{ $denuncia->cargo }}</p>
+            <p><strong>Puesto</strong><br>{{ $denuncia->victima_puesto_desempena }}</p>
         </div>
-
         <div class="col-md-4">
-            <p><strong>Situación de vulnerabilidad</strong><br>{{ $denuncia->vulnerabilidad }}</p>
+            <p><strong>Jefe inmediato</strong><br>{{ $denuncia->victima_jefe_inmediato }}</p>
         </div>
-
     </div>
 
-    <div class="row">
-
-        <div class="col-md-4">
-            <p><strong>Cual</strong><br>{{ $denuncia->cual }}</p>
+    <div class="row mt-2">
+        <div class="col-md-12">
+            <p><strong>Se establecierón médidas de protección</strong><br>{{ $denuncia->victima_medidas_proteccion }}</p>
         </div>
-
     </div>
 
     <!-- ------------------------------------------------------------------------------------ -->
 
     <hr>
 
-    <center><p><strong>Datos del denunciado</strong></p></center>
+    <center><p><strong>Datos de la persona presunta agresora (en caso de contar con ellos )</strong></p></center>
 
     <hr>
 
     <div class="row">
 
         <div class="col-md-4">
-            <p><strong>Nombre</strong><br>{{ $denuncia->denunciado_nombre }}</p>
+            <p><strong>Nombre</strong><br>{{ $denuncia->agresor_nombre }}</p>
         </div>
 
         <div class="col-md-4">
-            <p><strong>Cargo</strong><br>{{ $denuncia->denunciado_cargo }}</p>
+            <p><strong>Sexo</strong><br>{{ $denuncia->agresor_sexo }}</p>
         </div>
 
         <div class="col-md-4">
-            <p><strong>Puesto</strong><br>{{ $denuncia->denunciado_puesto }}</p>
+            <p><strong>Edad</strong><br>{{ $denuncia->agresor_edad }}</p>
         </div>
 
     </div> 
 
-    <div class="row">
+    <div class="row mt-2">
 
-        <div class="col-md-12">
-            <p><strong>Antecedentes</strong></p>
-            {{ $denuncia->denunciado_antecedentes }}
+        <div class="col-md-4">
+            <p><strong>Área de adscripción</strong><br>{{ $denuncia->agresor_area }}</p>
+        </div>
+
+        <div class="col-md-4">
+            <p><strong>Puesto</strong></p>
+            {{ $denuncia->agresor_puesto }}
+        </div>
+
+        <div class="col-md-4">
+            <p><strong>Tipo de contratación</strong></p>
+            {{ $denuncia->agresor_tipo_contratacion }}
         </div>
 
     </div>
 
+    <div class="row mt-2">
+
+        <div class="col-md-12">
+            <p><strong>Jefe inmediato</strong></p>
+            {{ $denuncia->agresor_jefe_inmediato }}
+        </div>
+
+    </div>
+
+
+    <!-- ------------------------------------------------------------------------------------ -->
+
+    
+
+    <hr>
+
+    <center><p><strong>¿Existe alguna relación laboral con la persona que está siendo señalada como presunta agresora?</strong></p></center>
+
+    <hr>
+
+    <div class="row mt-2">
+        <p><strong>Relacion laboral</strong><br>
+        {{$denuncia->relacion_laboral}} <br> {{$denuncia->relacion_laboral_si}} <br> {{ $denuncia->relacion_laboral_no }}</p>
+    </div>
 
     <!-- ------------------------------------------------------------------------------------ -->
     
     <hr>
 
-    <center><p><strong>Hechos</strong></p></center>
+    <center><p><strong>Narre todo lo relacionado con los hechos ocurridos sobre el hostigamiento sexual y/o acoso sexual en su contra o en contra de otra persona (describa la situación considerando aspectos como tipo de conducta(s), miradas lascivas, tocamientos, comentarios, propuestas sexuales, etcétera, temporalidad, por ejemplo, momento en el que ocurre, circunstancias como horarios, dentro o fuera del trabajo, lugares, ambiente; trate de describir circunstancias de tiempo (¿cuándo?), lugar (¿dónde?) y modo (¿cómo?) lo más claro posible:</strong></p></center>
 
     <hr>
 
     <div class="row">
         <div class="col-md-12">
+            <p><strong>Situación</strong></p>
+            <p>{{ $denuncia->situacion }}</p>
+
             <p><strong>Como</strong></p>
             <p>{{ $denuncia->como }}</p>
             
@@ -233,9 +274,6 @@
             <p><strong>Donde</strong></p>
             <p>{{ $denuncia->donde }}</p>
 
-            <p><strong>Testigos</strong></p>
-            <p>{{ $denuncia->testigos }}</p>
-
         </div>
     </div>
 
@@ -243,17 +281,212 @@
     
     <hr>
 
-    <center><p><strong>Evidencia digital</strong></p></center>
+    <center><p><strong>Si cuenta con elementos que pudieran corroborar los hechos antes narrados, favor de adjuntarlos a continuación (Fotografías, testigos, historial de llamadas, notas en papel de invitaciones, correos electrónicos, mensajes, actividad en redes sociales u otros)</strong></p></center>
 
     <hr>
 
-    @if($denuncia->imagenuno !== null)
-        <a class="btn btn-dark btn-sm btn-block" href="{{ route('file.detalles', basename($denuncia->imagenuno)) }}">Descargar archivo</a>
+    @if($denuncia->documento_uno !== null)
+        <a class="btn btn-dark btn-sm btn-block" href="{{ route('file.detalles', basename($denuncia->documento_uno)) }}">Descargar archivo</a>
     @endif
 
-    @if($denuncia->imagendos !== null)
-        <a class="btn btn-dark btn-sm btn-block" href="{{ route('file.detalles', basename($denuncia->imagendos)) }}">Descargar archivo</a>
+    @if($denuncia->documento_dos !== null)
+        <a class="btn btn-dark btn-sm btn-block" href="{{ route('file.detalles', basename($denuncia->documento_dos)) }}">Descargar archivo</a>
     @endif
+
+    <!-- ------------------------------------------------------------------------------------ -->
+    
+    
+    <hr>
+
+    <center><p><strong>¿La conducta ha ocurrido?</strong></p></center>
+
+    <hr>
+
+    <div class="row">
+
+        <div class="col-md-6">
+            <p>.</p>
+            {{ $denuncia->conducta_ocurrido }}
+        </div>
+
+        <div class="col-md-6">
+            <p><strong>Fecha aproximada en la que iniciarón las conductas</strong></p>
+            {{ $denuncia->conducta_ocurrido_fecha }}
+        </div>
+
+
+    </div>
+
+    <!-- ------------------------------------------------------------------------------------ -->
+    
+    
+    <hr>
+
+    <center><p><strong>¿Alguna persona o personas presenciaron los hechos narrados</strong></p></center>
+
+    <hr>
+
+    <div class="row">
+
+        <div class="col-md-6">
+            {{ $denuncia->persona_testigo }}
+        </div>
+
+        <div class="col-md-6">
+            {{ $denuncia->persona_testigo_si }}
+        </div>
+
+
+    </div>
+
+    <!-- ------------------------------------------------------------------------------------ -->
+    
+    
+    <hr>
+
+    <center><p><strong>Las personas que han presenciado los hechos narrados, guardan alguna relación con la persona presunta agresora</strong></p></center>
+
+    <hr>
+
+    <div class="row">
+
+        <div class="col-md-6">
+            {{ $denuncia->persona_relacion }}
+        </div>
+
+        <div class="col-md-6">
+            {{ $denuncia->persona_relacion_si }}
+        </div>
+
+
+    </div>
+
+    <!-- ------------------------------------------------------------------------------------ -->
+    
+    
+    <hr>
+
+    <center><p><strong>Identifica un trato diferenciado hacia usted por parte de la persona presunta agresora, antes y después de los hechos narrados (Ha cambiado la relación laboral)</strong></p></center>
+
+    <hr>
+
+    <div class="row">
+
+        <div class="col-md-6">
+            {{ $denuncia->persona_trato }}
+        </div>
+
+        <div class="col-md-6">
+            {{ $denuncia->persona_trato_si }}
+        </div>
+
+
+    </div>
+
+    <!-- ------------------------------------------------------------------------------------ -->
+    
+    
+    <hr>
+
+    <center><p><strong>A partir de lo que ha sucedido con la conducta narrada, ¿usted ha presentado algún tipo de padecimiento físico, como dolor de cabeza, dificultades gástricas u otras enfermedades reiterativas?; ¿Problemas de orden emocional, como miedo, angustia, inseguridad, dificultades para dormir o concentrarse, desánimo, tristeza, entre otras? o ¿Problemas de tipo social que afecten sus relaciones cotidianas?</strong></p></center>
+
+    <hr>
+
+    <div class="row">
+
+        <div class="col-md-6">
+            {{ $denuncia->padecimiento_fisico }}
+        </div>
+
+        <div class="col-md-6">
+            {{ $denuncia->padecimiento_fisico_si }}
+        </div>
+
+    </div>
+
+    <!-- ------------------------------------------------------------------------------------ -->
+    
+    
+    <hr>
+
+    <center><p><strong>¿Considera que su integridad física o emocional se encuentra en riesgo?</strong></p></center>
+
+    <hr>
+
+    <div class="row">
+
+        <div class="col-md-6">
+            {{ $denuncia->integridad }}
+        </div>
+
+        <div class="col-md-6">
+            {{ $denuncia->integridad_si }}
+        </div>
+
+    </div>
+
+    <!-- ------------------------------------------------------------------------------------ -->
+    
+    
+    <hr>
+
+    <center><p><strong>¿Ha sido amenazada, advertida, coaccionada o intimidada de alguna manera con posibles represalias por negarse a las propuestas o por tratar de detener la situación?</strong></p></center>
+
+    <hr>
+
+    <div class="row">
+
+        <div class="col-md-6">
+            {{ $denuncia->amenazada }}
+        </div>
+
+        <div class="col-md-6">
+            {{ $denuncia->amenazada_si }}
+        </div>
+
+    </div>
+
+    <!-- ------------------------------------------------------------------------------------ -->
+    
+    
+    <hr>
+
+    <center><p><strong>¿Hay datos adicionales que puede proporcionar para fortalecer los hechos narrados?</strong></p></center>
+
+    <hr>
+
+    <div class="row">
+
+        <div class="col-md-6">
+            {{ $denuncia->adicionales }}
+        </div>
+
+        <div class="col-md-6">
+            {{ $denuncia->adicionales_si }}
+        </div>
+
+    </div>
+
+    <!-- ------------------------------------------------------------------------------------ -->
+    
+    
+    <hr>
+
+    <center><p><strong>¿Ha presentado alguna denuncia formal ante alguna instancia (Comité de ética, Órgano Interno de Control o Ministerio Público)?</strong></p></center>
+
+    <hr>
+
+    <div class="row">
+
+        <div class="col-md-6">
+            {{ $denuncia->denuncia }}
+        </div>
+
+        <div class="col-md-6">
+            {{ $denuncia->denuncia_si }}
+        </div>
+
+    </div>
 
     <!-- ------------------------------------------------------------------------------------ -->
 
@@ -267,7 +500,7 @@
             <div class="card card-purple">
 
                 <div class="card-header">
-                    <h3 class="card-title">Seguimiento</h3>
+                    <h3 class="card-title">Seguimiento <small><a href="{{ route('seguimiento.create', $denuncia->id)}} ">Nuevo registro</a></small></h3>
                 </div>
 
                 <div class="card-body">
@@ -295,7 +528,7 @@
             <div class="card card-purple">
 
                 <div class="card-header">
-                    <h3 class="card-title">Reincidencias</h3>
+                    <h3 class="card-title">Reincidencias <small><a href="{{ route('reincidencia.create', $denuncia->id)}} ">Nuevo registro</a></small></h3>
                 </div>
 
                 <div class="card-body">
@@ -323,7 +556,7 @@
             <div class="card card-purple">
 
                 <div class="card-header">
-                    <h3 class="card-title">Documentación</h3>
+                    <h3 class="card-title">Documentación <small><a href="{{ route('documento.create', $denuncia->id)}} ">Nuevo registro</a></small></h3>
                 </div>
 
                 <div class="card-body">
