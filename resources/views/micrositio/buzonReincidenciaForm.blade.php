@@ -1,8 +1,68 @@
 @include('micrositio.partials.header')
 
-@section('plugins.Sweetalert2', true)
+    <div class="container">
 
-@if(session('error'))
+        <center><h1 class="display-8 fw-bold text-black mt-3">Reincidencia de denuncia SSC/HAS/2025/{{ $denuncia->folio}}</h1></center>
+        
+        <div class="row">
+           
+            <div class="col-md-12">
+
+                <div class="p-5 mb-4 bg-body-tertiary rounded-3 mt-3">
+                    <div class="container-fluid py-8">
+
+                        
+                        
+                            <div class="col">
+                                <div class="mb-5">
+                                    <p>Descripción del evento.</p>
+                                    
+                                    <form action="{{ route('buzonReincidenciaStore') }}" method="POST" enctype="multipart/form-data">
+
+                                    @csrf
+
+                                    <input type="hidden" name="id_denuncia" id="id_denuncia" value={{ $denuncia->id }}>
+                                    <input type="hidden" name="folio" id="folio" value={{ $denuncia->folio }}>
+                                    
+                                    <textarea name="descripcion" id="descripcion" rows="10" class="form-control"></textarea>
+                                    <!-- MOSTRAMOS EL ERROR EN CASO DE QUE EXISTA -->
+                                    @error('descripcion')
+                                        <p><strong><div class="text-danger">{{ $message }}</div></strong></p>
+                                    @enderror
+
+                                    <p>En caso de tener alguna prueba, favor de anexarla</p>
+                                    <input type="file" name="archivo" id="archivo" class="form-contro-input">
+                                    @error('archivo')
+                                        <div class="text-red-500 text-sm mt-2">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                        
+                            <div class="col">
+                                <div class="mb-2">
+                                    <center><button type="submit" class="btn btn-purple">REGISTRAR REINCIDENCIA</button></center> 
+                                </div>
+                            </div>
+                            </div>
+                        
+                        </div>
+                            
+                            </form>
+                        
+                            
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        
+
+    </div><!-- CONTAINER -->
+
+    @section('plugins.Sweetalert2', true)
+
+    @if(session('error'))
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             Swal.fire({
@@ -13,66 +73,30 @@
             });
         });
     </script>
-@endif
+    @endif
 
-<br>
+            <!-- Incluye jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<div class="container mx-auto p-4">
-    <center><h3 class="text-3xl font-bold dark:text-purple-600">Reincidencia de denuncia SSC/HAS/{{ $folio }}</h3></center>
-</div>
+    <!-- Incluye Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6k3I4F+VppvIEnq0u5tkU7l1RZm5SaaPqC+78LUeF9v/8gV56N4FJP" crossorigin="anonymous"></script>
 
-<div class="container mx-auto p-4">
+    <!-- Incluye SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<form action="{{ route('buzonReincidenciaStore') }}" method="POST" enctype="multipart/form-data">
+    <!-- Incluye Select2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-    @csrf
+    <!-- Incluye jQuery y Bootstrap JS 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>-->
 
-    <input type="hidden" name="id_denuncia" value="{{ $id_denuncia }}">
-    <input type="hidden" name="folio" value="{{ $folio }}">
 
-    <div class="col">
-        <div class="mb-5">
-            <label for="descripcion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">Descripción del evento.</label>
-            <textarea id="descripcion" name="descripcion" rows="5" required class="bg-white border border-white text-black text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-white dark:border-purple-600 dark:placeholder-purple-400 dark:text-black dark:focus:ring-purple-500 dark:focus:border-purple-500">{{ old('descripcion') }}</textarea>
+    <!-- ----------------------------------------------- -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
-            <!-- MOSTRAMOS EL ERROR EN CASO DE QUE EXISTA -->
-            @error('descripcion')
-                <div class="text-red-500 text-sm mt-2">{{ $message }}</div>
-            @enderror
-        </div>
-    </div>
-
-    <div class="col">
-    <div class="mb-5">
-        <label for="archivo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">En caso de tener alguna prueba, favor de anexarla</label>
-        <input 
-            id="archivo" 
-            name="archivo" 
-            type="file" 
-            class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
-        <p class="mt-1 text-sm text-gray-500 dark:text-black">JPG, JPEG, PNG, DOC, PDF, TXT (MAX. 10 MB).</p>
-        @error('archivo')
-            <div class="text-red-500 text-sm mt-2">{{ $message }}</div>
-        @enderror
-    </div>
-</div>
-
-    <div class="grid grid-cols-1 gap-1">
-
-    <div class="col">
-        <div class="mb-5">
-            <button type="submit" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">REGISTRAR REINCIDENCIA</button>
-        </div>
-    </div>
-    </div>
-
-</div>
     
-    </form>
-
-</div><!-- ---------------------------- container mx-auto p-4 -->
-
-<!-- -------------------------- -->
-
-</body>
+    <!-- -- -->
+  </body>
 </html>
+

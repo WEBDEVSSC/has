@@ -192,8 +192,38 @@ class MicroSitioController extends Controller
         $clues = Clue::findOrFail($request->victima_clues);
 
         // Almacenar los archivos en la carpeta 'documents' en el almacenamiento local
-        $archivoPathUno = $request->hasFile('documento_uno') ? $request->file('documento_uno')->store('documents', 'local') : null;
-        $archivoPathDos = $request->hasFile('documento_dos') ? $request->file('documento_dos')->store('documents', 'local') : null;
+        //$archivoPathUno = $request->hasFile('documento_uno') ? $request->file('documento_uno')->store('documents', 'local') : null;
+        //$archivoPathDos = $request->hasFile('documento_dos') ? $request->file('documento_dos')->store('documents', 'local') : null;
+
+        /**
+         * 
+         * 
+         * 
+         * 
+         */
+
+         // Obtener la fecha y hora actual en el formato deseado
+        $timestamp = now()->format('Ymd_His');
+
+        // Crear el nombre del archivo con la fecha y hora
+        $archivoNombre = $folio . '_E1_' . $timestamp . '.' . $request->documento_uno->extension();
+
+        // Almacenar el archivo en la carpeta 'documents' en el almacenamiento local
+        $archivoPathUno = $request->documento_uno->storeAs('documents/denuncia', $archivoNombre, 'local');
+
+        // Crear el nombre del archivo con la fecha y hora
+        $archivoNombreDos = $folio . '_E2_' . $timestamp . '.' . $request->documento_dos->extension();
+
+        // Almacenar el archivo en la carpeta 'documents' en el almacenamiento local
+        $archivoPathDos = $request->documento_dos->storeAs('documents/denuncia', $archivoNombreDos, 'local');
+
+        /**
+         * 
+         * 
+         * 
+         * 
+         * 
+         */
 
         // Creamos el objeto para almacenar
         $denuncia = new Denuncia();
@@ -508,32 +538,32 @@ class MicroSitioController extends Controller
 
     public function buzonReincidenciaCreate(Request $request)
     {
+        
+        // Validamos los datos ingresados
+        $validatedData = $request->validate([
+            'folio' => 'required|numeric|digits:6'
+        ],[
+            'folio.required' => 'El folio es necesario',
+            'folio.numeric' => 'El folio debe ser numerico',
+            'folio.digits' => 'El folio debe ser de 6 digitos',
+            
+        ]);
+
         // Buscamos el id que corresponda a ese folio y lo almacenamos en id_denuncia
+        $denuncia = Denuncia::where('folio', $request->folio)->first();
 
-        $denuncia = Denuncia::where('folio', $request->folio)->first();   
-
-        $id_denuncia = $denuncia->id;
+        // Si no se encuentra la denuncia, redirigimos con un mensaje de error
+        if (!$denuncia) 
+        {
+            return redirect()->back()->withErrors(['folio' => 'No se encontró una denuncia con el folio proporcionado.']);
+        }
         
-        // Pasamos el id_denuncia al formulario para realizar un registro
-        
-        return view('micrositio.buzonReincidenciaForm',['id_denuncia'=>$id_denuncia,'folio'=>$request->folio]);
+        // Pasamos el id_denuncia al formulario para realizar un registro    
+        return view('micrositio.buzonReincidenciaForm',compact('denuncia'));
     }
 
     public function buzonReincidenciaStore(Request $request)
     {
-        // Traemos las variables ocultas en el codigo
-        $folio = $request->input('folio');
-        $id_denuncia = $request->input('id_denuncia');
-
-        // Asignamos el valor cuando la reincidencia viene desde el formulario
-        $responsable = 9999;
-
-        // Consultamos los datos con el numero de id de la denuncia
-        $datosDenuncia = Denuncia::where('id', $id_denuncia)->first();   
-
-        // Traemos el correo y lo desencriptamos
-        $correoDeCrypt = Crypt::decryptString($datosDenuncia->correo);        
-
         // Validamos los datos que vienen desde el formulario
         $request->validate([
             'descripcion'=>'required|string',
@@ -542,12 +572,22 @@ class MicroSitioController extends Controller
             'archivo.mimes' => 'El archivo debe ser de tipo jpg,jpeg,png,mp4,mp3,pdf,doc,docx,.',
             'archivo.max' => 'El tamaño máximo permitido para el archivo es de 10MB.',
         ]);
+        
+        // Traemos las variables ocultas en el codigo
+        $id_denuncia = $request->input('id_denuncia');
+        $folio = $request->input('folio');
+
+        // Asignamos el valor cuando la reincidencia viene desde el formulario
+        $responsable = 9999;
 
         // Obtener la fecha y hora actual en el formato deseado
         $timestamp = now()->format('Ymd_His');
 
-        // Creamos el pad para guardar el archivo y renombrarlo
-        $archivoPath = $request->hasFile('archivo') ? $request->file('archivo')->store('documents', 'local') : null;
+        // Crear el nombre del archivo con la fecha y hora
+        $archivoNombre = $folio . '_R_' . $timestamp . '.' . $request->archivo->extension();
+
+        // Almacenar el archivo en la carpeta 'documents' en el almacenamiento local
+        $archivoPath = $request->archivo->storeAs('documents/reincidencia', $archivoNombre, 'local');
 
         // Creamos el objeto y vamos asignando valores a cada campo de la tabla
         $reincidencia=new DenunciaReincidencia();
@@ -560,10 +600,10 @@ class MicroSitioController extends Controller
         $reincidencia->save();
 
         // Enviamos email de notificacion
-        Mail::to(['cesartorres.1688@gmail.com','igualdadcoahuila.gob.mx',$correoDeCrypt])->send(new DenunciaReincidenciaMail($folio));
+        Mail::to('cesartorres.1688@gmail.com')->send(new DenunciaReincidenciaMail($folio));
 
         // Redireccionamos al formulario con el mensaje de exito
-        return redirect()->route('buzonReincidencia')->with('reincidencia', 'La reincidencia se registro correctamente en el folio : HAS/SSC/'.$folio);         
+        return redirect()->route('buzonReincidencia')->with('reincidencia', 'La reincidencia se registro correctamente en el folio : HAS/SSC/2025/'.$folio);         
     }
 
 }

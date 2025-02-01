@@ -41,7 +41,7 @@
                         <p class="card-text">La reincidencia de un caso de acoso o hostigamiento es una grave situación que debe ser abordada con urgencia.</p>
                       </div>
                       <div class="card-footer">
-                        <small class="text-body-secondary">Ver formato</small>
+                        <a href="{{ route('buzonReincidencia') }}"><small class="text-body-secondary">Ver formato</small></a>
                       </div>
                     </div>
                   </div>

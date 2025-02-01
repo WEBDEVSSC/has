@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\DenunciaNuevaMail;
+use App\Models\Clue;
 use App\Models\Denuncia;
 use App\Models\DenunciaDocumentacion;
 use App\Models\DenunciaReincidencia;
@@ -110,12 +111,6 @@ class DenunciaController extends Controller
         // Contar el número de registros
         $totalDenuncias = $denuncias->count();
 
-        // Desencriptar el valor "nombre" para cada denuncia
-        $denuncias->transform(function ($denuncia) {
-            $denuncia->nombre = Crypt::decryptString($denuncia->nombre);
-            return $denuncia;
-        });
-
         // Pasar los registros a una vista para mostrarlos
         return view('total', compact('denuncias', 'totalDenuncias'));
     }
@@ -125,17 +120,14 @@ class DenunciaController extends Controller
      */
     public function formulario()
     {
-         // Obtén todos los registros de la tabla entidad
-         $municipios = Municipio::all();
+         // Consultamos todas las CLUES
+        $clues = Clue::all();
 
          // Pasa los datos a la vista
          //return view('formulario', compact('entidades'));
 
          // Pasar los datos a la vista
-        return view('formulario', [
-            'municipios' => $municipios,
-            'selectedMunicipio' => old('municipio')
-        ]);
+        return view('formulario', compact('clues'));
     }
 
     public function formularioPublico()

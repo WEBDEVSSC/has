@@ -541,6 +541,14 @@
                             <strong>{{ $reincidencia->created_at->format('d/m/Y') }}</strong>
                             <br>
                             {{ $reincidencia->descripcion }}
+
+                            <hr>
+
+                            @if($reincidencia->archivo)
+                                <a class="btn btn-info btn-sm btn-block" href="{{ route('file.download', basename($reincidencia->archivo)) }}">Descargar archivo</a>
+                            @else
+                                
+                            @endif
                         </li>
                     
                     @endforeach
@@ -569,6 +577,14 @@
                             <strong>{{ $documentacion->created_at->format('d/m/Y') }}</strong>
                             <br>
                             {{ $documentacion->descripcion }}
+
+                            <hr>
+
+                            @if($documentacion->archivo)
+                                <a class="btn btn-info btn-sm btn-block" href="{{ route('file.download', basename($documentacion->archivo)) }}">Descargar archivo</a>
+                            @else
+                                
+                            @endif
                         </li>
                     
                     @endforeach

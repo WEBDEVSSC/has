@@ -1,20 +1,22 @@
 @extends('adminlte::page')
 
-@section('title', 'Denuncias total')
+@section('title', 'Denuncias nuevas')
 
 @section('plugins.Sweetalert2', true)
+
 @section('plugins.Datatables', true)
 
 @section('content_header')
-<h1><strong>Hostigamiento y Acoso Sexual</strong></h1>
+<h1>Hostigamiento y Acoso Sexual</h1>
 @stop
 
 @section('content')
+
 <div class="row">
     <div class="col-md-12">
         <div class="card card card-purple">
         <div class="card-header">
-        <h3 class="card-title"><strong>Total de registros</strong> <span class="badge badge-secondary">{{ $totalDenuncias }}</span></h3>
+        <h3 class="card-title">Nuevas denuncias <span class="badge badge-secondary">{{ $totalDenuncias }}</span></h3>
 @if(session('success'))
         <script>
             document.addEventListener('DOMContentLoaded', function() {
@@ -35,45 +37,25 @@
             <table id="table_id"  class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th>Folio</th>
-                        <th>Denunciante</th>
-                        <th>Municipio</th>
-                        <th>Tipo</th>
-                        <th>Registro</th>
-                        <th>Acciones</th>
+                        <th>Responsable</th>
+                        <th>E-mail</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($denuncias as $denuncia)
+                    @foreach ($notificaciones as $notificacion)
                         <tr>
-                            <td>SSC/HAS/{{ $denuncia->folio }}/2024</td>
-                            <td>{{ $denuncia->nombre }}</td>
-                            <td>{{ $denuncia->entidad }}</td>
+                            <td>{{ $notificacion->responsable }}</td>
+                            <td>{{ $notificacion->email }}</td>
+                            <td>{{ $notificacion->created_at }}</td>
                             <td>
-                                <!-- Aplica color rojo si tipo_solicitud es 'ACOSO LABORAL' -->
-                                <span class="badge badge-pill {{ $denuncia->tipo_solicitud === 'ACOSO SEXUAL' ? 'badge-danger' : 'badge-secondary' }}">
-                                    {{ $denuncia->tipo_solicitud }}
-                                </span>
-                            </td>
-                            <td>{{ $denuncia->created_at }}</td>
-                            <td>
-                                <!-- -------------------------------------- -->
-
-                            <div class="btn-group" role="group">
-                                <button id="btnGroupDrop1" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Opciones
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                <a class="dropdown-item" href="{{ route('denuncias.detalles', $denuncia->id) }}">Detalles</a>
-                                <a class="dropdown-item" href="{{ route('denuncias.status', $denuncia->id) }}">Actualizar Status</a>
-                                <a class="dropdown-item" href="{{ route('seguimiento.create', $denuncia->id) }}">Seguimiento (NOSOTROS)</a>
-                                <a class="dropdown-item" href="#">Reincidencia (VICTIMA)</a>
-                                <a class="dropdown-item" href="{{ route('documento.create', $denuncia->id) }}">Documentación</a>
-                                <a class="dropdown-item" href="#">Imprimir PDF</a>
-                                </div>
-                            </div>
 
                             <!-- -------------------------------------- -->
+
+
+
+                            <!-- -------------------------------------- -->
+                            
                             </td>
                         </tr>
                     @endforeach

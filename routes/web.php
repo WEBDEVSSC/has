@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MicroSitioController;
+use App\Http\Controllers\NotificacionController;
 use App\Models\DenunciaDocumentacion;
 
 /**
@@ -168,5 +169,15 @@ Route::middleware(['auth'])->group(function ()
      */
 
     Route::get('admin/{id}/generar-pdf', [DenunciaController::class, 'generarPDF'])->name('generar.pdf');
+
+    /**
+     * 
+     * 
+     *  RUTAS PARA NOTIFICACION DE CORREO
+     * 
+     * 
+     */
+
+    Route::get('admin/notificaciones/index',[NotificacionController::class,'index'])->name('notificacionesIndex');
 
 });

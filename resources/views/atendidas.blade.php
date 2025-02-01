@@ -3,7 +3,7 @@
 @section('title', 'Denuncias atendidas')
 
 @section('content_header')
-<h1>Hostigamiento y Acoso Sexual</h1>
+<h1><strong>Hostigamiento y Acoso Sexual</strong></h1>
 @stop
 
 @section('content')
@@ -11,7 +11,7 @@
 
 <div class="card card card-purple">
 <div class="card-header">
-<h3 class="card-title">Atendidas <span class="badge badge-secondary">{{ $totalDenuncias }}</span></h3>
+<h3 class="card-title"><strong>Atendidas</strong> <span class="badge badge-secondary">{{ $totalDenuncias }}</span></h3>
 
     </div>
     <div class="card-body">

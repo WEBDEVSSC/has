@@ -7,7 +7,7 @@
 @section('plugins.Datatables', true)
 
 @section('content_header')
-<h1>Hostigamiento y Acoso Sexual</h1>
+<h1><strong>Hostigamiento y Acoso Sexual</strong></h1>
 @stop
 
 @section('content')
@@ -16,7 +16,7 @@
     <div class="col-md-12">
         <div class="card card card-purple">
         <div class="card-header">
-        <h3 class="card-title">Nuevas denuncias <span class="badge badge-secondary">{{ $totalDenuncias }}</span></h3>
+        <h3 class="card-title"><strong>Nuevas denuncias</strong> <span class="badge badge-secondary">{{ $totalDenuncias }}</span></h3>
 @if(session('success'))
         <script>
             document.addEventListener('DOMContentLoaded', function() {

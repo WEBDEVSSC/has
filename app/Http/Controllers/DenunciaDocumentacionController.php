@@ -61,14 +61,14 @@ class DenunciaDocumentacionController extends Controller
         $request->validate([
             'nombre' => 'required|string',
             'descripcion' => 'required|string',
-            'archivo' => 'required|file|mimes:pdf,doc,docx|max:2048', // Ejemplo de validación para archivos PDF, DOC y DOCX de hasta 2MB
+            'archivo' => 'required|file|mimes:pdf,doc,docx|max:10248', // Ejemplo de validación para archivos PDF, DOC y DOCX de hasta 2MB
             'responsable' => 'required|integer|max:255',
         ], [
             'nombre.required' => 'El campo nombre es obligatorio.',
             'descripcion.required' => 'El campo descripción es obligatorio.',
             'archivo.required' => 'Debe seleccionar un archivo para subir.',
             'archivo.mimes' => 'El archivo debe ser de tipo PDF, DOC o DOCX.',
-            'archivo.max' => 'El tamaño máximo permitido para el archivo es de 2MB.',
+            'archivo.max' => 'El tamaño máximo permitido para el archivo es de 10MB.',
         ]);
 
         $denuncia = $id;
@@ -77,16 +77,17 @@ class DenunciaDocumentacionController extends Controller
         $archivo = $request->file('archivo');
         $responsable =$request->input('responsable');
 
-        // Consultamos el folio para enviarlo a la vista 
+        // Consultamos el folio para renombrar el archivo
+        $folio = Denuncia::findOrFail($denuncia);
 
         // Obtener la fecha y hora actual en el formato deseado
         $timestamp = now()->format('Ymd_His');
 
         // Crear el nombre del archivo con la fecha y hora
-        $archivoNombre = $denuncia . '_D_' . $timestamp . '.' . $archivo->extension();
+        $archivoNombre = $folio->folio . '_D_' . $timestamp . '.' . $archivo->extension();
 
         // Almacenar el archivo en la carpeta 'documents' en el almacenamiento local
-        $archivoPath = $archivo->storeAs('documents', $archivoNombre, 'local');
+        $archivoPath = $archivo->storeAs('documents/documentacion', $archivoNombre, 'local');
 
         //CREAMOS
 
