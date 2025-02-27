@@ -56,9 +56,9 @@
     </div>
 
     <div class="col-span-1">
-        <iframe src="{{ asset('storage/pronunciamiento.pdf') }}" width="100%" height="600px">
+        <iframe src="{{ asset('docs/PRONUNCIAMIENTO_12-09-2024.pdf') }}" width="100%" height="1200px">
             Este navegador no soporta PDFs. Por favor descarga el PDF para verlo: 
-            <a href="{{ asset('storage/pronunciamiento.pdf') }}">Descargar PDF</a>.
+            <a href="{{ asset('docs/PRONUNCIAMIENTO_12-09-2024.pdf') }}">Descargar PDF</a>.
         </iframe>
     </div>
 

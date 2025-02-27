@@ -35,7 +35,7 @@ Route::post('/formato-denuncia-store',[MicroSitioController::class,'formatoDenun
 Route::get('/', [MicroSitioController::class, 'inicio'])->name('inicio');
 Route::get('/protocolo', [MicroSitioController::class, 'protocolo'])->name('protocolo');
 Route::get('/pronunciamiento', [MicroSitioController::class, 'pronunciamiento'])->name('pronunciamiento');
-Route::get('/directorio', [MicroSitioController::class, 'directorio'])->name('directorio');
+Route::get('/queEs', [MicroSitioController::class, 'QueEs'])->name('queEs');
 Route::get('/buzonDenuncia', [MicroSitioController::class, 'buzon'])->name('buzonDenuncia');
 Route::post('/buzonDenuncia', [MicroSitioController::class, 'buzonStore'])->name('buzonStore');
 

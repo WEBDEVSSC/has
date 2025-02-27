@@ -39,14 +39,15 @@
           <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link text-white" href="#">Protocolo</a>
+                <a class="nav-link text-white" href="{{ route('queEs') }}">¿Qué es?</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link text-white" href="#">Pronunciamiento Cero Tolerancia</a>
+                <a class="nav-link text-white" href="{{ route('protocolo') }}">Protocolo</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link text-white" href="#">Directorio de Consejeros</a>
+                <a class="nav-link text-white" href="{{ route('pronunciamiento') }}">Pronunciamiento Cero Tolerancia</a>
               </li>
+
             </ul>
           </div>
         </div>

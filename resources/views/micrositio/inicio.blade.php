@@ -15,33 +15,35 @@
             <div class="row">
                 <div class="card-group">
                     <div class="card">
-                      <img src="..." class="card-img-top" alt="...">
+                      <a href="{{ route('formatoDenuncia')}}"><img src="{{ asset('img/HAS_NUEVA.png') }}" class="card-img-top" alt="..."></a>                      
                       <div class="card-body">
-                        <h5 class="card-title">PRESENTAR DENUNCIA</h5>
+                        <h5 class="card-title"><center>PRESENTAR DENUNCIA</center></h5>
                         <p class="card-text">Presentar una denuncia es un paso importante para garantizar la seguridad y el bienestar de las personas. En nuestra plataforma, te ofrecemos un espacio seguro y confidencial para que puedas reportar cualquier acto de acoso sexual.</p>
                       </div>
                       <div class="card-footer">
-                        <a href="{{ route('formatoDenuncia')}}"><small class="text-body-secondary">Ver formato</small></a>
+                        <center><a href="{{ route('formatoDenuncia') }}" class="btn btn-purple">Ver formato</a></center>
+
                       </div>
                     </div>
                     <div class="card">
-                      <img src="..." class="card-img-top" alt="...">
+                      <a href="{{ route('buzonSeguimiento') }}"><img src="{{ asset('img/HAS_SEGUIMIENTO.png') }}" class="card-img-top" alt="..."></a>                      
                       <div class="card-body">
-                        <h5 class="card-title">SEGUIMIENTO</h5>
+                        <h5 class="card-title"><center>SEGUIMIENTO</center></h5>
                         <p class="card-text">A través de nuestra plataforma, podrás estar informado sobre el progreso de tu caso, recibir actualizaciones y saber que tu denuncia está siendo tratada con la seriedad y urgencia que merece</p>
                       </div>
                       <div class="card-footer">
-                        <a href="{{ route('buzonSeguimiento') }}"><small class="text-body-secondary">Ver formato</small></a>
+                        <center><a href="{{ route('buzonSeguimiento') }}" class="btn btn-purple">Ver formato</a></center>
                       </div>
                     </div>
                     <div class="card">
-                      <img src="..." class="card-img-top" alt="...">
+                      <a href="{{ route('buzonReincidencia') }}"><img src="{{ asset('img/HAS_REINCIDENCIA.png') }}" class="card-img-top" alt="..."></a>                      
                       <div class="card-body">
-                        <h5 class="card-title">REINCIDENCIA</h5>
+                        <h5 class="card-title"><center>REINCIDENCIA</center></h5>
                         <p class="card-text">La reincidencia de un caso de acoso o hostigamiento es una grave situación que debe ser abordada con urgencia.</p>
                       </div>
                       <div class="card-footer">
-                        <a href="{{ route('buzonReincidencia') }}"><small class="text-body-secondary">Ver formato</small></a>
+                        <center><a href="{{ route('buzonReincidencia') }}" class="btn btn-purple">Ver formato</a></center>
+
                       </div>
                     </div>
                   </div>

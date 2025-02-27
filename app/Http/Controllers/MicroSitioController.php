@@ -328,10 +328,10 @@ class MicroSitioController extends Controller
         return view('micrositio.pronunciamiento');
     }
 
-    public function directorio()
+    public function queEs()
     {
         // Aquí puedes agregar lógica adicional si la necesitas
-        return view('micrositio.directorio');
+        return view('micrositio.queEs');
     }
 
     /*
