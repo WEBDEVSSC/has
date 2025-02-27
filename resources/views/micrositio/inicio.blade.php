@@ -38,7 +38,7 @@
                     <div class="card">
                       <a href="{{ route('buzonReincidencia') }}"><img src="{{ asset('img/HAS_REINCIDENCIA.png') }}" class="card-img-top" alt="..."></a>                      
                       <div class="card-body">
-                        <h5 class="card-title"><center>REINCIDENCIA</center></h5>
+                        <h5 class="card-title"><center>NUEVA INCIDENCIA</center></h5>
                         <p class="card-text">La reincidencia de un caso de acoso o hostigamiento es una grave situación que debe ser abordada con urgencia.</p>
                       </div>
                       <div class="card-footer">
