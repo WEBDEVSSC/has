@@ -21,7 +21,7 @@ class MicroSitioController extends Controller
     public function formatoDenuncia()
     {
         // Consultamos todas las CLUES
-        $clues = Clue::all();
+        $clues = Clue::orderBy('jurisdiccion', 'asc')->orderBy('nombre', 'asc')->get();
         
         return view('formato-denuncia', compact('clues'));
     }
@@ -48,6 +48,7 @@ class MicroSitioController extends Controller
             'victima_puesto_desempena' => 'required',
             'victima_jefe_inmediato' => 'required',
             'victima_medidas_proteccion' => 'required',
+            'victima_medidas_proteccion_solicita' => 'required',
             
             //2
             'agresor_nombre' => 'required',
@@ -123,6 +124,7 @@ class MicroSitioController extends Controller
             'victima_puesto_desempena.required' => 'El campo puesto que desempeña la víctima es obligatorio.',
             'victima_jefe_inmediato.required' => 'El campo jefe inmediato de la víctima es obligatorio.',
             'victima_medidas_proteccion.required' => 'El campo medidas de protección de la víctima es obligatorio.',
+            'victima_medidas_proteccion_solicita.required' => 'El campo medidas de protección de la víctima es obligatorio.',
             //2
             'agresor_nombre.required' => 'El campo nombre del agresor es obligatorio.',
             'agresor_sexo.required' => 'El campo sexo del agresor es obligatorio.',
@@ -244,6 +246,7 @@ class MicroSitioController extends Controller
         $denuncia->victima_puesto_desempena = $request->victima_puesto_desempena;
         $denuncia->victima_jefe_inmediato = $request->victima_jefe_inmediato;
         $denuncia->victima_medidas_proteccion = $request->victima_medidas_proteccion;
+        $denuncia->victima_medidas_proteccion_solicita = $request->victima_medidas_proteccion_solicita;
 
         $denuncia->clues_nombre = $clues->nombre;
         $denuncia->clues_municipio = "1";

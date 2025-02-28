@@ -147,7 +147,7 @@
                             <option value="" disabled selected>-- Seleccione una opción --</option>
                             @foreach($clues as $clue)
                                 <option value="{{ $clue->id }}" {{ old('victima_clues') == $clue->id ? 'selected' : '' }}>
-                                    {{ $clue->nombre }}
+                                    J{{ $clue->jurisdiccion }} - {{ $clue->nombre }} ( {{ $clue->clues }} )
                                 </option>
                             @endforeach
                         </select>          
@@ -180,6 +180,15 @@
                             <option value="NO" {{ old('victima_medidas_proteccion') == 'NO' ? 'selected' : '' }}>NO</option>
                         </select>
                         @error('victima_medidas_proteccion')<p class="text-danger mt-2">{{ $message }}</p>@enderror
+                    </div>
+                    <div class="col-md-3">
+                        <p>Solicita medidas de protección</p>
+                        <select name="victima_medidas_proteccion_solicita" id="victima_medidas_proteccion_solicita" class="form-control">
+                            <option value="" disabled selected>-- Seleccione una opción --</option>
+                            <option value="SI" {{ old('victima_medidas_proteccion_solicita') == 'SI' ? 'selected' : '' }}>SI</option>
+                            <option value="NO" {{ old('victima_medidas_proteccion_solicita') == 'NO' ? 'selected' : '' }}>NO</option>
+                        </select>
+                        @error('victima_medidas_proteccion_solicita')<p class="text-danger mt-2">{{ $message }}</p>@enderror
                     </div>
                 </div>
 
