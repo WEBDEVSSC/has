@@ -31,6 +31,7 @@ class MicroSitioController extends Controller
 
         // Validamos los datos
         $request -> validate([
+            'captcha' => 'required|captcha',
             //0
             'tipo_denuncia' => 'required',
             //1
@@ -103,6 +104,8 @@ class MicroSitioController extends Controller
             'denuncia' => 'required',
             'denuncia_si' => 'required_if:denuncia,SI',
         ],[
+            'captcha.required' => 'Por favor, resuelve el captcha.',
+            'captcha.captcha' => 'El captcha ingresado es incorrecto.',
             // Mensajes personalizados para cada campo
             //0
             'tipo_denuncia.required' => 'El campo tipo de denuncia es obligatorio.',

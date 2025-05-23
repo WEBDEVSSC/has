@@ -610,8 +610,35 @@
         <!-- ---------------------------------- -->
 
         <div class="row mt-3">
+          <div class="col-md-4"></div>
+          <div class="col-md-4">
+
+            <center>
+            <div>
+              <img src="{{ captcha_src('flat') }}" onclick="this.src='{{ captcha_src('flat') }}'+Math.random()" style="cursor:pointer;">
+              @error('denuncia_si')<p class="text-danger mt-2">{{ $message }}</p>@enderror 
+              <br>
+              <small>Clic sobre la imagen para recargarla</small>
+            </div>
+            </center>
+
+            <br>
+
+            <input type="text" name="captcha" class="form-control" placeholder="CAPTURE CÓDIGO">
+
+            @error('captcha')
+                <div style="color:red">{{ $message }}</div>
+            @enderror
+
+          </div>
+          <div class="col-md-4"></div>
+        </div>
+
+        <!-- ---------------------------------- -->
+
+        <div class="row mt-3">
             <div class="col-md-12">
-                <button type="submit" class="btn btn-success btn-block btn-sm">PRESENTAR DENUNCIA</button>
+                <center><button type="submit" class="btn btn-success btn-block">PRESENTAR DENUNCIA</button></center>
             </div>
         </div>
        
@@ -619,11 +646,11 @@
 
 </form>
 
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
+        <footer class="bg-dark text-white text-center py-4 mt-5">
+            <div class="container">
+                <p>&copy; <?php echo date('Y'); ?> Secretaría de Salud de Coahuila. Todos los derechos reservados.</p> 
+            </div>
+        </footer>
 
     @section('plugins.Sweetalert2', true)
 
@@ -651,6 +678,10 @@
 
     <!-- Incluye Select2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<!-- Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 
     <!-- Incluye jQuery y Bootstrap JS 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -919,6 +950,16 @@
         });
     </script>
     <!-- -- -->
+
+    <script>
+        $(document).ready(function() {
+            $('#victima_clues').select2({
+                placeholder: "Seleccione una unidad",
+                allowClear: true,
+                theme: "bootstrap4"
+            });
+        });
+    </script>
   </body>
 </html>
 

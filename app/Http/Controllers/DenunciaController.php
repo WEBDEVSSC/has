@@ -55,7 +55,7 @@ class DenunciaController extends Controller
         $totalDenuncias = $denuncias->count();
 
         // Pasar los registros a una vista para mostrarlos
-        return view('nuevas', compact('denuncias', 'totalDenuncias'));
+        return view('nuevas', compact('denuncias', 'totalDenuncias',));
     }
 
     /**

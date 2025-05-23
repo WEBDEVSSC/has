@@ -1,0 +1,25 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+
+class UserSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        //
+        User::create([
+            'name' => 'WEBMASTER SSC',
+            'email' => 'soportewebssc@gmail.com',
+            'password' => Hash::make('HasCoah1159$'), // ¡Nunca uses contraseñas simples en producción!
+            'role' => 'admin', // ¡Nunca uses contraseñas simples en producción!
+        ]);
+    }
+}
