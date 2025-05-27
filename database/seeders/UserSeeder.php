@@ -18,8 +18,8 @@ class UserSeeder extends Seeder
         User::create([
             'name' => 'WEBMASTER SSC',
             'email' => 'soportewebssc@gmail.com',
-            'password' => Hash::make('HasCoah1159$'), // ¡Nunca uses contraseñas simples en producción!
-            'role' => 'admin', // ¡Nunca uses contraseñas simples en producción!
+            'password' => Hash::make('HasCoah1159$'),
+            'role' => 'admin', 
         ]);
     }
 }

@@ -11,6 +11,7 @@ use App\Models\DenunciaSeguimiento;
 use App\Models\Municipio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
@@ -28,7 +29,7 @@ class MicroSitioController extends Controller
 
     public function formatoDenunciaStore(Request $request)
     {
-
+        //dd($request->documento_dos);
         // Validamos los datos
         $request -> validate([
             'captcha' => 'required|captcha',
@@ -146,12 +147,13 @@ class MicroSitioController extends Controller
             'cuando.required' => 'El campo cuándo ocurrió es obligatorio.',
             'donde.required' => 'El campo dónde ocurrió es obligatorio.',
             //5
-            'documento_uno.file' => 'El campo documento uno debe ser un archivo.',
-            'documento_uno.mimes' => 'El campo documento uno debe ser de tipo: jpg, jpeg, png, gif, mp4, mov, avi, mp3, wav, pdf, doc, docx.',
-            'documento_uno.max' => 'El campo documento uno no debe ser mayor a 10 MB.',
-            'documento_dos.file' => 'El campo documento dos debe ser un archivo.',
-            'documento_dos.mimes' => 'El campo documento dos debe ser de tipo: jpg, jpeg, png, gif, mp4, mov, avi, mp3, wav, pdf, doc, docx.',
-            'documento_dos.max' => 'El campo documento dos no debe ser mayor a 10 MB.',
+            'documento_uno.file' => 'El documento uno debe ser un archivo válido.',
+            'documento_uno.mimes' => 'El documento uno debe ser un tipo de archivo permitido (jpg, jpeg, png, gif, mp4, mov, avi, mp3, wav, pdf, doc, docx).',
+            'documento_uno.max' => 'El documento uno no debe superar los 15 MB.',
+
+            'documento_dos.file' => 'El documento dos debe ser un archivo válido.',
+            'documento_dos.mimes' => 'El documento dos debe ser un tipo de archivo permitido (jpg, jpeg, png, gif, mp4, mov, avi, mp3, wav, pdf, doc, docx).',
+            'documento_dos.max' => 'El documento dos no debe superar los 15 MB.',
             //6
             'conducta_ocurrido.required' => 'El campo conducta ocurrida es obligatorio.',
             'conducta_ocurrido_fecha.required' => 'El campo fecha de la conducta ocurrida es obligatorio.',
@@ -181,6 +183,8 @@ class MicroSitioController extends Controller
             'denuncia_si.required_if' => 'El campo denuncia (SI) es obligatorio cuando se presenta una denuncia.',
         ]);
 
+        
+
         // Generamos el status
         $status = "NUEVO";
 
@@ -207,20 +211,21 @@ class MicroSitioController extends Controller
          * 
          */
 
+        $archivoPathUno = null;
+        $archivoPathDos = null;
+
          // Obtener la fecha y hora actual en el formato deseado
         $timestamp = now()->format('Ymd_His');
 
-        // Crear el nombre del archivo con la fecha y hora
-        $archivoNombre = $folio . '_E1_' . $timestamp . '.' . $request->documento_uno->extension();
+        if ($request->hasFile('documento_uno') && $request->file('documento_uno')->isValid()) {
+            $archivoNombre = $folio . '_E1_' . $timestamp . '.' . $request->file('documento_uno')->extension();
+            $archivoPathUno = $request->file('documento_uno')->storeAs('documents/denuncia', $archivoNombre, 'local');
+        }
 
-        // Almacenar el archivo en la carpeta 'documents' en el almacenamiento local
-        $archivoPathUno = $request->documento_uno->storeAs('documents/denuncia', $archivoNombre, 'local');
-
-        // Crear el nombre del archivo con la fecha y hora
-        $archivoNombreDos = $folio . '_E2_' . $timestamp . '.' . $request->documento_dos->extension();
-
-        // Almacenar el archivo en la carpeta 'documents' en el almacenamiento local
-        $archivoPathDos = $request->documento_dos->storeAs('documents/denuncia', $archivoNombreDos, 'local');
+        if ($request->hasFile('documento_dos') && $request->file('documento_dos')->isValid()) {
+            $archivoNombreDos = $folio . '_E2_' . $timestamp . '.' . $request->file('documento_dos')->extension();
+            $archivoPathDos = $request->file('documento_dos')->storeAs('documents/denuncia', $archivoNombreDos, 'local');
+        }
 
         /**
          * 
@@ -309,7 +314,42 @@ class MicroSitioController extends Controller
 
         $denuncia->save();
         
+        // Enviamos el correo de notificacion
         Mail::to(['cesartorres.1688@gmail.com'])->send(new DenunciaNuevaMail($folio));
+
+        //-----------------------------------------------------------------------------------------------------------
+
+            // Enviamos mensajes por TELEGRAM
+            $token = env('TELEGRAM_BOT_TOKEN');
+            $chat_ids = ['13673422'];
+            $mensaje = '👥 Programa de Igualdad de Género' . "\n" .
+                        "\n" .
+                        '🚨 Se ha registrado una nueva denuncia' . "\n" .
+                        '📝 Folio: HAS/SSC/2025/' . $folio . "\n" .
+                        '🏥 Unidad: ' . $clues->nombre . "\n";
+
+            foreach ($chat_ids as $chat_id) 
+            {
+                $response = Http::withOptions([
+                    'verify' => false, // Desactiva verificación SSL (útil para pruebas locales)
+                ])->post("https://api.telegram.org/bot{$token}/sendMessage", [
+                    'chat_id' => $chat_id,
+                    'text' => $mensaje,
+                    'reply_markup' => json_encode([
+                        'inline_keyboard' => [[
+                            [
+                                'text' => '🔗 Ver denuncia',
+                                'url' => 'https://educacion.saludcoahuila.gob.mx/apps/has/public/login/' . $folio
+                            ]
+                        ]]
+                    ]),
+                ]);
+
+                // Puedes revisar cada respuesta si gustas
+                //dump("Mensaje enviado a {$chat_id}", $response->json());
+            }
+
+             //-----------------------------------------------------------------------------------------------------------
 
         // Redireccionamos al formulario con el mensaje de exito
         return redirect()->route('formatoDenuncia')->with('success', 'La denuncia se registro correctamente con el folio : HAS/SSC/2025/'.$folio);      

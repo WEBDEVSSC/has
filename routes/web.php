@@ -47,6 +47,10 @@ Route::post('/buzonSeguimientoResultados', [MicroSitioController::class, 'buzonS
 Route::get('/buzonReincidencia', [MicroSitioController::class, 'buzonReincidencia'])->name('buzonReincidencia');
 Route::post('/buzonReincidenciaCreate', [MicroSitioController::class, 'buzonReincidenciaCreate'])->name('buzonReincidenciaCreate');
 Route::post('/buzonReincidenciaStore', [MicroSitioController::class, 'buzonReincidenciaStore'])->name('buzonReincidenciaStore');
+
+Route::get('/phpinfo', function () {
+    phpinfo();
+});
     
     //DECLARAMOS LA VARIABLE A LA CUAL LE CARGAMOS EL METODO LOAD Y LA RUTA DE LA VISTA
     //$pdf = PDF::loadView('pdf.pdf');
