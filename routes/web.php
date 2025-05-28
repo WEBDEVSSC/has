@@ -29,10 +29,11 @@ use App\Models\DenunciaDocumentacion;
 
 // Ruta de bienvenida
 
+Route::get('/', [MicroSitioController::class, 'inicio'])->name('inicio');
+
 Route::get('/formato-denuncia',[MicroSitioController::class,'formatoDenuncia'])->name('formatoDenuncia');
 Route::post('/formato-denuncia-store',[MicroSitioController::class,'formatoDenunciaStore'])->name('formatoDenunciaStore');
 
-Route::get('/', [MicroSitioController::class, 'inicio'])->name('inicio');
 Route::get('/protocolo', [MicroSitioController::class, 'protocolo'])->name('protocolo');
 Route::get('/pronunciamiento', [MicroSitioController::class, 'pronunciamiento'])->name('pronunciamiento');
 Route::get('/queEs', [MicroSitioController::class, 'QueEs'])->name('queEs');
@@ -48,9 +49,9 @@ Route::get('/buzonReincidencia', [MicroSitioController::class, 'buzonReincidenci
 Route::post('/buzonReincidenciaCreate', [MicroSitioController::class, 'buzonReincidenciaCreate'])->name('buzonReincidenciaCreate');
 Route::post('/buzonReincidenciaStore', [MicroSitioController::class, 'buzonReincidenciaStore'])->name('buzonReincidenciaStore');
 
-Route::get('/phpinfo', function () {
+/*Route::get('/phpinfo', function () {
     phpinfo();
-});
+});*/
     
     //DECLARAMOS LA VARIABLE A LA CUAL LE CARGAMOS EL METODO LOAD Y LA RUTA DE LA VISTA
     //$pdf = PDF::loadView('pdf.pdf');
@@ -83,12 +84,6 @@ Route::middleware(['auth'])->group(function ()
     * DENUNCIA CONTROLLER
     *
     */
-
-    //RUTA PARA MOSTRAR EL FORMULARIO PRIVADO DE REGISTRO DE DENUNCIA
-    Route::get('admin/formulario', [DenunciaController::class, 'formulario'])->name('formulario');
-
-    //RUTA PARA ALMACENAR DATOS EL FORMULARIO PRIVADO DE REGISTRO DE DENUNCIA
-    Route::post('admin/formulario', [DenunciaController::class, 'formularioregistra'])->name('formulario.registra');
 
     //RUTA PARA MOSTRAR EL PANEL DE NUEVAS DENUNCIAS
     Route::get('admin/nuevas', [DenunciaController::class, 'nuevas'])->name('denuncias.nuevas');

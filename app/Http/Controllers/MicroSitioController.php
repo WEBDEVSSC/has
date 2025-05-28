@@ -9,6 +9,7 @@ use App\Models\Denuncia;
 use App\Models\DenunciaReincidencia;
 use App\Models\DenunciaSeguimiento;
 use App\Models\Municipio;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Http;
@@ -314,20 +315,43 @@ class MicroSitioController extends Controller
 
         $denuncia->save();
         
+        // Consultamos el ID
+        $id = $denuncia->id;
+
         // Enviamos el correo de notificacion
-        Mail::to(['cesartorres.1688@gmail.com'])->send(new DenunciaNuevaMail($folio));
+        $emails = User::where('notificacion', 1)
+              ->pluck('email')
+              ->toArray();
+
+        // Agregar el correo del request, si no está vacío
+        if (!empty($request->victima_email)) {
+            $emails[] = $request->victima_email;
+        }
+
+        // Eliminar duplicados por si acaso
+        $emails = array_unique($emails);
+
+        // Enviamos el email
+        Mail::to($emails)->send(new DenunciaNuevaMail($folio, $id));
 
         //-----------------------------------------------------------------------------------------------------------
 
             // Enviamos mensajes por TELEGRAM
             $token = env('TELEGRAM_BOT_TOKEN');
-            $chat_ids = ['13673422'];
+
+            // Buscamos los registros que tengan el campo chat_id lleno
+            $chat_ids = User::whereNotNull('chat_id')
+                ->pluck('chat_id')
+                ->toArray();
+
+            // Creamos el mensaje
             $mensaje = '👥 Programa de Igualdad de Género' . "\n" .
                         "\n" .
                         '🚨 Se ha registrado una nueva denuncia' . "\n" .
                         '📝 Folio: HAS/SSC/2025/' . $folio . "\n" .
                         '🏥 Unidad: ' . $clues->nombre . "\n";
 
+            // Recorrimos el arreglo y mandamos los mensajes
             foreach ($chat_ids as $chat_id) 
             {
                 $response = Http::withOptions([
@@ -338,9 +362,10 @@ class MicroSitioController extends Controller
                     'reply_markup' => json_encode([
                         'inline_keyboard' => [[
                             [
-                                'text' => '🔗 Ver denuncia',
-                                'url' => 'https://educacion.saludcoahuila.gob.mx/apps/has/public/login/' . $folio
+                                'text' => '🔗 Ver denuncia',                                
+                                'url' => url('admin/'.$id.'/detalles')
                             ]
+                            
                         ]]
                     ]),
                 ]);
@@ -379,133 +404,6 @@ class MicroSitioController extends Controller
         // Aquí puedes agregar lógica adicional si la necesitas
         return view('micrositio.queEs');
     }
-
-    /*
-    *
-    *
-    * BUZON DE DENUNCIAS
-    *
-    */
-
-    public function buzon()
-    {
-        // Obtén todos los registros de la tabla entidad
-        $municipios = Municipio::orderBy('nombre', 'asc')->get();
-
-        return view('micrositio.buzonDenuncia', [
-        'municipios' => $municipios,
-        'selectedMunicipio' => old('municipio')
-        ]);
-    }    
-
-    public function buzonStore(Request $request)
-    {
-        $municipio = Municipio::find($request->id_municipio)->nombre;
-        $jurisdiccion = Municipio::find($request->id_municipio)->jurisdiccion;
-        
-        // Validar los datos del formulario
-        $request->validate([
-            'nombre' => 'required|string|max:255',
-            'edad' => 'required|numeric|max:60',
-            'sexo' => 'required|string',
-            'correo' => 'required|email',
-            'celular' => 'required|string|max:10|min:10',
-            'adscripcion' => 'required|string|max:255',
-            'unidad_responsable' => 'required|string|max:255',
-            'id_municipio' => 'required|integer',
-            'tipo_contratacion' => 'required|string|max:255',
-            'cargo' => 'required|string|max:255',
-            'vulnerabilidad' => 'required|string|max:255',
-            'cual' => 'string|max:255',
-            'tipo_solicitud' => 'required|string|max:255',
-            'como' => 'required|string|max:10000',
-            'cuando' => 'required|string|max:10000',
-            'donde' => 'required|string|max:10000',
-            'denunciado_nombre' => 'required|string|max:255',
-            'denunciado_cargo' => 'required|string|max:255',
-            'denunciado_puesto' => 'required|string|max:255',
-            'denunciado_antecedentes' => 'required|string|max:10000',
-            'testigos' => 'required|string|max:10000',
-            'evidencia_uno' => 'file|mimes:jpg,jpeg,png,mp4,mp3,pdf,doc,docx,|max:10240',
-            'evidencia_dos' => 'file|mimes:jpg,jpeg,png,mp4,mp3,pdf,doc,docx,|max:10240',
-        ], [
-            'evidencia_uno.required' => 'Debe seleccionar un archivo para la primera evidencia.',
-            'evidencia_uno.mimes' => 'El archivo de la primera evidencia debe ser de tipo: jpg, jpeg, png, mp4, mp3, pdf, doc, docx.',
-            'evidencia_uno.max' => 'El tamaño máximo permitido para la primera evidencia es de 10MB.',
-            'evidencia_dos.required' => 'Debe seleccionar un archivo para la segunda evidencia.',
-            'evidencia_dos.mimes' => 'El archivo de la segunda evidencia debe ser de tipo: jpg, jpeg, png, mp4, mp3, pdf, doc, docx.',
-            'evidencia_dos.max' => 'El tamaño máximo permitido para la segunda evidencia es de 10MB.',
-        ]);
-
-        //GENERAMOS EL RANDOM PARA FOLIO
-        $folio = '';
-
-        for ($i = 0; $i < 4; $i++) 
-        {
-            $folio .= mt_rand(0, 9); // Concatena un número aleatorio entre 0 y 9
-        }
-        
-        // Configuracion para manipular el archivo
-
-        // Obtener la fecha y hora actual en el formato deseado
-        $timestamp = now()->format('Ymd_His');
-
-         // Cifra el los datos sensibles
-        $encryptedNombre = Crypt::encryptString($request->input('nombre'));
-        $encryptedCelular = Crypt::encryptString($request->input('celular'));
-        $encryptedCorreo = Crypt::encryptString($request->input('correo'));
-        $encryptedDenunciadoNombre = Crypt::encryptString($request->input('denunciado_nombre'));
-        $encryptedTestigos = Crypt::encryptString($request->input('testigos'));
-
-        // Crear el nombre del archivo con la fecha y hora
-        //$archivoNombre = $denuncia . '_R_' . $timestamp . '.' . $archivo->extension();
-
-        // Almacenar los archivos en la carpeta 'documents' en el almacenamiento local
-        $archivoPathUno = $request->hasFile('evidencia_uno') ? $request->file('evidencia_uno')->store('documents', 'local') : null;
-        $archivoPathDos = $request->hasFile('evidencia_dos') ? $request->file('evidencia_dos')->store('documents', 'local') : null;
-
-        // Crear una nueva instancia del modelo Denuncia y asignar los valores
-        $denuncia = new Denuncia();
-        $denuncia->nombre = $encryptedNombre;
-        $denuncia->edad = $request->edad;
-        $denuncia->sexo = $request->sexo;
-        $denuncia->correo = $encryptedCorreo;
-        $denuncia->celular =  $encryptedCelular;
-        $denuncia->adscripcion = $request->adscripcion;
-        $denuncia->unidad_resposable = $request->unidad_responsable;
-        $denuncia->id_municipio = $request->id_municipio;
-        $denuncia->municipio = $municipio;
-        $denuncia->tipo_contratacion = $request->tipo_contratacion;
-        $denuncia->cargo = $request->cargo;
-        $denuncia->vulnerabilidad = $request->vulnerabilidad;
-        $denuncia->cual = $request->cual;
-        $denuncia->tipo_solicitud = $request->tipo_solicitud;
-        $denuncia->como = $request->como;
-        $denuncia->cuando = $request->cuando;
-        $denuncia->donde = $request->donde;
-        $denuncia->tipo_solicitud = $request->tipo_solicitud;
-        $denuncia->denunciado_nombre = $encryptedDenunciadoNombre;
-        $denuncia->denunciado_cargo = $request->denunciado_cargo;
-        $denuncia->denunciado_puesto = $request->denunciado_puesto;
-        $denuncia->denunciado_antecedentes = $request->denunciado_antecedentes;
-        $denuncia->testigos = $encryptedTestigos;
-        $denuncia->imagenuno = $archivoPathUno;
-        $denuncia->imagendos = $archivoPathDos;
-
-        $denuncia->status = 'NUEVO';
-        $denuncia->folio = $folio;  
-        $denuncia->jurisdiccion = $jurisdiccion;
-
-        // Guardar la denuncia en la base de datos
-        $denuncia->save();
-
-        // Enviamos el correo de confirmacion
-        Mail::to(['cesartorres.1688@gmail.com','igualdadcoahuila@gmail.com',$request->correo])->send(new DenunciaNuevaMail($folio));
-
-        // Redirigir a la vista de detalles con los datos recién registrados
-        return redirect()->route('buzonDenuncia')->with('success', 'La denuncia se registro correctamente con el folio : HAS/SSC/'.$folio);         
-
-        }
 
     /*
     *

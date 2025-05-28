@@ -309,12 +309,6 @@ return [
         ],
 
         ['header' => 'DENUNCIAS'],
-
-        [
-            'text' => 'Registro',
-            'url' => 'admin/formulario',
-            'icon' => 'fas fa-fw fa-keyboard',
-        ],
         [
             'text' => 'Nuevas',
             'url' => 'admin/nuevas',

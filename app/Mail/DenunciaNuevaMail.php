@@ -14,14 +14,16 @@ class DenunciaNuevaMail extends Mailable
     use Queueable, SerializesModels;
 
     public $folio; // Hacemos la variable accesible en la vista
+    public $id; // Hacemos la variable accesible en la vista
 
     /**
      * Create a new message instance.
      */
-    public function __construct($folio)
+    public function __construct($folio,$id)
     {
         //
         $this->folio = $folio;
+        $this->id = $id;
     }
 
     /**
@@ -36,8 +38,8 @@ class DenunciaNuevaMail extends Mailable
 
     public function build()
     {
-        return $this->view('emails.denuncia-nueva') // la vista del correo
-                    ->subject('Nueva denuncia')
+        return $this->markdown('emails.denuncia-nueva') // la vista del correo
+                    ->subject('Nueva denuncia recibida - Folio: ' . $this->folio)
                     ->from('soportewebssc@gmail.com', 'H.A.S. Coah'); // Correo y nombre del remitente
     }
 }

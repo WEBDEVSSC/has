@@ -1,17 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Se ha registrado una nueva denuncia con folio : SSC/HAS/{{ $folio }}</h1>
+<x-mail::message>
 
-    <p>Hostigamiento y Acoso Sexual</p>
-    <p>Secretaría de Salud de Coahuila</p>
+<x-mail::panel>
 
-    <hr>
-    <p><strong>Aviso</strong>: Este correo tiene únicamente fines informativos. Por favor, no responder a este mensaje.</p>
-</body>
-</html>
+<p>Se ha registrado una nueva denuncia</p>
+<p>Folio : SSC/HAS/2025/{{$folio}}</p>
+
+<x-mail::button :url="url('admin/' . $id . '/detalles')">
+Ver denuncia
+</x-mail::button>
+
+</x-mail::panel>
+
+<x-mail::subcopy>
+  <p><small>Programa de Igualdad de Genero</small></p>
+</x-mail::subcopy>
+
+</x-mail::message>
