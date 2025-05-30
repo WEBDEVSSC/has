@@ -1,14 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Se ha registrado una nueva reincidencia en el Folio SSC/HAS/{{ $folio }}</h1>
+<x-mail::message>
 
-    <p>Hostigamiento y Acoso Sexual</p>
-    <p>Secretaría de Salud de Coahuila</p>
-</body>
-</html>
+<x-mail::panel>
+
+<p>Se ha registrado una reincidencia</p>
+<p>Folio : SSC/HAS/2025/{{$folio}}</p>
+
+<x-mail::button :url="url('admin/' . $id . '/detalles')">
+Ver denuncia
+</x-mail::button>
+
+</x-mail::panel>
+
+<x-mail::subcopy>
+  <p><small>Programa de Igualdad de Genero</small></p>
+</x-mail::subcopy>
+
+</x-mail::message>

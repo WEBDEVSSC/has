@@ -37,8 +37,37 @@
                                     @enderror
                                 </div>
                             </div>
+
+                            <!-- ---------------------------------- -->
+
+                            <div class="row mt-3">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-4">
+
+                                <center>
+                                <div>
+                                <img src="{{ captcha_src('flat') }}" onclick="this.src='{{ captcha_src('flat') }}'+Math.random()" style="cursor:pointer;">
+                                @error('denuncia_si')<p class="text-danger mt-2">{{ $message }}</p>@enderror 
+                                <br>
+                                <small>Clic sobre la imagen para recargarla</small>
+                                </div>
+                                </center>
+
+                                <br>
+
+                                <input type="text" name="captcha" class="form-control" placeholder="CAPTURE CÓDIGO">
+
+                                @error('captcha')
+                                    <div style="color:red">{{ $message }}</div>
+                                @enderror
+
+                            </div>
+                            <div class="col-md-4"></div>
+                            </div>
+
+                            <!-- ---------------------------------- -->
                         
-                            <div class="col">
+                            <div class="row mt-3">
                                 <div class="mb-2">
                                     <center><button type="submit" class="btn btn-purple">REGISTRAR REINCIDENCIA</button></center> 
                                 </div>

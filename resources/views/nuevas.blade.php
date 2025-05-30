@@ -48,7 +48,7 @@
                 <tbody>
                     @foreach ($denuncias as $denuncia)
                         <tr>
-                            <td>SSC/HAS/{{ $denuncia->folio }}/2024</td>
+                            <td>SSC/HAS/{{ $denuncia->created_at->format('Y') }}/{{ $denuncia->folio }}</td>
                             <td>{{ $denuncia->victima_nombre }}</td>
                             <td>{{ $denuncia->clues_municipio_label }}</td>
                             <td>
@@ -57,7 +57,7 @@
                                     {{ $denuncia->tipo_denuncia }}
                                 </span>
                             </td>
-                            <td>{{ $denuncia->created_at }}</td>
+                            <td>{{ $denuncia->created_at->format('d/m/Y') }}</td>
                             <td>
 
                             <!-- -------------------------------------- -->

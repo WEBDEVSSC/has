@@ -41,13 +41,13 @@ Route::get('/buzonDenuncia', [MicroSitioController::class, 'buzon'])->name('buzo
 Route::post('/buzonDenuncia', [MicroSitioController::class, 'buzonStore'])->name('buzonStore');
 
 // Ruta para mostrar el formulario de Seguimiento
-Route::get('/buzonSeguimiento', [MicroSitioController::class, 'buzonSeguimiento'])->name('buzonSeguimiento');
-Route::post('/buzonSeguimientoResultados', [MicroSitioController::class, 'buzonSeguimientoShow'])->name('buzonSeguimientoShow');
+Route::get('/buzon-seguimiento', [MicroSitioController::class, 'buzonSeguimiento'])->name('buzonSeguimiento');
+Route::post('/buzon-seguimiento-resultados', [MicroSitioController::class, 'buzonSeguimientoShow'])->name('buzonSeguimientoShow');
 
 // Ruta para mostrar el formulario de Reincidencia
-Route::get('/buzonReincidencia', [MicroSitioController::class, 'buzonReincidencia'])->name('buzonReincidencia');
-Route::post('/buzonReincidenciaCreate', [MicroSitioController::class, 'buzonReincidenciaCreate'])->name('buzonReincidenciaCreate');
-Route::post('/buzonReincidenciaStore', [MicroSitioController::class, 'buzonReincidenciaStore'])->name('buzonReincidenciaStore');
+Route::get('/buzon-reincidencia', [MicroSitioController::class, 'buzonReincidencia'])->name('buzonReincidencia');
+Route::post('/buzon-reincidencia-create', [MicroSitioController::class, 'buzonReincidenciaCreate'])->name('buzonReincidenciaCreate');
+Route::post('/buzon-reincidencia-store', [MicroSitioController::class, 'buzonReincidenciaStore'])->name('buzonReincidenciaStore');
 
 /*Route::get('/phpinfo', function () {
     phpinfo();

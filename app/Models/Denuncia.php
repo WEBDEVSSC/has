@@ -20,4 +20,10 @@ class Denuncia extends Model
 
     // Si tu tabla tiene timestamps (created_at y updated_at), puedes desactivar la administración automática de timestamps aquí
     public $timestamps = true;
+
+    // Relación: una denuncia tiene muchos seguimientos
+    public function seguimientos()
+    {
+        return $this->hasMany(DenunciaSeguimiento::class, 'relacion', 'id');
+    }
 }

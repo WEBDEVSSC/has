@@ -14,14 +14,16 @@ class DenunciaReincidenciaMail extends Mailable
     use Queueable, SerializesModels;
 
     public $folio;
+    public $id;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($folio)
+    public function __construct($folio,$id)
     {
         //
         $this->folio = $folio;
+        $this->id = $id;
     }
 
     /**
@@ -36,8 +38,8 @@ class DenunciaReincidenciaMail extends Mailable
 
     public function build()
     {
-        return $this->view('emails.denuncia-reincidencia') // la vista del correo
-                    ->subject('Reincidencia de Denuncia')
+        return $this->markdown('emails.denuncia-reincidencia') // la vista del correo
+                    ->subject('Folio:'.$this->folio. ' | Reincidencia de denuncia')
                     ->from('soportewebssc@gmail.com', 'H.A.S. Coah'); // Correo y nombre del remitente
     }
 }

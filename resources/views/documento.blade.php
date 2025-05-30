@@ -10,9 +10,9 @@
 
 
 
-<div class="card card card-purple">
+<div class="card card-purple">
     <div class="card-header">
-        <h3 class="card-title">Denuncia <span class="badge badge-secondary">SSC/HAS/{{ $denuncia->folio}}2024</span></h3>
+        <h3 class="card-title">Denuncia <span class="badge badge-secondary">SSC/HAS/2025/{{ $denuncia->folio}}</span></h3>
     </div>
     <div class="card-body">
 
@@ -77,7 +77,7 @@
     </div>
     <div class="card-footer">
         <!-- Contenido del pie de la tarjeta -->
-        <button type="submit" class="btn btn-info float-right">Registrar datos</button>
+        <button type="submit" class="btn btn-sm btn-dark float-right">Registrar datos</button>
     </div>
 </div>
 
@@ -87,7 +87,7 @@
 <!--                           LISTADO DE SEGUIMIENTO                        -->
 <!-- ----------------------------------------------------------------------- -->
 
-<div class="card card card-info">
+<div class="card card-purple">
     <div class="card-header">
         <h3 class="card-title">Listado de documentos </h3>
     </div>

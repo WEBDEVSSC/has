@@ -32,21 +32,20 @@ class DenunciaSeguimientoController extends Controller
     }
 
     public function store(Request $request)
-    {
+    {  
+        // Consultamos el registro relacionado
+        $denuncia = Denuncia::find($request->id_registro);
+        $folio = $denuncia->folio;
 
-        // Consultamos el correo de esa denuncia
-        $correo = Denuncia::find($request->id_registro)->correo;
-        
-        // Consultamos el folio de esa denuncia
-        $folio = Denuncia::find($request->id_registro)->folio;
+        //dd($denuncia->victima_email);
 
         $seguimiento = new DenunciaSeguimiento();
 
-        $seguimiento->relacion = $request->id_registro;
+        $seguimiento->relacion = $denuncia->id;
         $seguimiento->mensaje = $request->mensaje;
 
         // Enviamos el correo de confirmacion
-        //Mail::to(['cesartorres.1688@gmail.com',$correoDeCrypt])->send(new DenunciaSeguimientoMail($folio));
+        Mail::to([$denuncia->victima_email])->send(new DenunciaSeguimientoMail($folio));
 
         $seguimiento->save();
 

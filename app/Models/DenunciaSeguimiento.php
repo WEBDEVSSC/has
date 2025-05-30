@@ -13,8 +13,14 @@ class DenunciaSeguimiento extends Model
     protected $table = 'denuncia_seguimiento';
 
     // Indica los campos que pueden ser llenados masivamente
-    protected $fillable = ['relacion', 'mensaje']; // Ajusta según tus campos
+    protected $fillable = ['relacion', 'mensaje']; 
 
     // Indica si el modelo debe usar las columnas de timestamps
     public $timestamps = true;
+
+    // Relación: un seguimiento pertenece a una denuncia
+    public function denuncia()
+    {
+        return $this->belongsTo(Denuncia::class, 'relacion', 'id');
+    }
 }

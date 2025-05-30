@@ -107,7 +107,7 @@ class MicroSitioController extends Controller
             'denuncia_si' => 'required_if:denuncia,SI',
         ],[
             'captcha.required' => 'Por favor, resuelve el captcha.',
-            'captcha.captcha' => 'El captcha ingresado es incorrecto.',
+            'captcha.captcha' => 'El captcha ingresado es incorrecto, favor de seleccionar de nuevos los archivos .',
             // Mensajes personalizados para cada campo
             //0
             'tipo_denuncia.required' => 'El campo tipo de denuncia es obligatorio.',
@@ -190,7 +190,6 @@ class MicroSitioController extends Controller
         $status = "NUEVO";
 
         // Generamos el folio
-        //GENERAMOS EL RANDOM PARA FOLIO
         $folio = '';
 
         for ($i = 0; $i < 6; $i++) 
@@ -200,10 +199,6 @@ class MicroSitioController extends Controller
 
         // Consultamos los datos de la clues
         $clues = Clue::findOrFail($request->victima_clues);
-
-        // Almacenar los archivos en la carpeta 'documents' en el almacenamiento local
-        //$archivoPathUno = $request->hasFile('documento_uno') ? $request->file('documento_uno')->store('documents', 'local') : null;
-        //$archivoPathDos = $request->hasFile('documento_dos') ? $request->file('documento_dos')->store('documents', 'local') : null;
 
         /**
          * 
@@ -375,9 +370,11 @@ class MicroSitioController extends Controller
             }
 
              //-----------------------------------------------------------------------------------------------------------
+        
+        $anio = date('Y');
 
         // Redireccionamos al formulario con el mensaje de exito
-        return redirect()->route('formatoDenuncia')->with('success', 'La denuncia se registro correctamente con el folio : HAS/SSC/2025/'.$folio);      
+        return redirect()->route('formatoDenuncia')->with('success', 'La denuncia se registro correctamente con el folio : HAS/SSC/'.$anio.'/'.$folio);      
 
     }
 
@@ -421,27 +418,19 @@ class MicroSitioController extends Controller
     public function buzonSeguimientoShow(Request $request)
     {
         
-         // Validar los datos del formulario
-        $validator = Validator::make($request->all(), [
-            'folio' => 'required|digits:6',
-        ], [
-            'folio.required' => 'El número de folio es obligatorio.',
-            'folio.digits' => 'El folio debe ser un número de exactamente 6 dígitos.',
-        ]);
-
-        // Si la validación falla, redirigir de vuelta con errores
-        if ($validator->fails()) 
-        {
-            return redirect()->route('buzonSeguimiento')
-                            ->withErrors($validator)
-                            ->withInput();
-        }
-
-        // Capturamos el folio
-        $folio = $request->input('folio');
+        // Validamos los datos
+        $request->validate([
+                'captcha' => 'required|captcha',
+                'folio' => 'required|digits:6',
+            ], [
+                'captcha.required' => 'El captcha es obligatorio.',
+                'captcha.captcha' => 'El captcha ingresado es incorrecto.',
+                'folio.required' => 'El folio es obligatorio.',
+                'folio.digits' => 'El folio debe tener exactamente 6 dígitos.',
+            ]);
 
         // Busca la denuncia por el folio
-        $denuncia = Denuncia::where('folio', $folio)->first();   
+        $denuncia = Denuncia::where('folio', $request->folio)->first();   
         
         // Verificamos si se encontro la denuncia
         if ($denuncia) 
@@ -485,12 +474,14 @@ class MicroSitioController extends Controller
         
         // Validamos los datos ingresados
         $validatedData = $request->validate([
-            'folio' => 'required|numeric|digits:6'
+            'folio' => 'required|numeric|digits:6',
+            'captcha' => 'required|captcha',
         ],[
             'folio.required' => 'El folio es necesario',
             'folio.numeric' => 'El folio debe ser numerico',
             'folio.digits' => 'El folio debe ser de 6 digitos',
-            
+            'captcha.required' => 'El captcha es obligatorio.',
+            'captcha.captcha' => 'El captcha ingresado es incorrecto.',
         ]);
 
         // Buscamos el id que corresponda a ese folio y lo almacenamos en id_denuncia
@@ -510,15 +501,20 @@ class MicroSitioController extends Controller
     {
         // Validamos los datos que vienen desde el formulario
         $request->validate([
+            'captcha' => 'required|captcha',
             'descripcion'=>'required|string',
             'archivo' => 'file|mimes:jpg,jpeg,png,mp4,mp3,pdf,doc,docx,|max:10240',
         ],[
             'archivo.mimes' => 'El archivo debe ser de tipo jpg,jpeg,png,mp4,mp3,pdf,doc,docx,.',
             'archivo.max' => 'El tamaño máximo permitido para el archivo es de 10MB.',
+            'captcha.required' => 'El captcha es obligatorio.',
+            'captcha.captcha' => 'El captcha ingresado es incorrecto.',
         ]);
         
         // Traemos las variables ocultas en el codigo
         $id_denuncia = $request->input('id_denuncia');
+        $id = $id_denuncia;
+
         $folio = $request->input('folio');
 
         // Asignamos el valor cuando la reincidencia viene desde el formulario
@@ -535,6 +531,7 @@ class MicroSitioController extends Controller
 
         // Creamos el objeto y vamos asignando valores a cada campo de la tabla
         $reincidencia=new DenunciaReincidencia();
+
         $reincidencia->id_denuncia = $id_denuncia;
         $reincidencia->descripcion = $request->descripcion;
         $reincidencia->responsable = $responsable;
@@ -544,7 +541,60 @@ class MicroSitioController extends Controller
         $reincidencia->save();
 
         // Enviamos email de notificacion
-        Mail::to('cesartorres.1688@gmail.com')->send(new DenunciaReincidenciaMail($folio));
+        //Mail::to('cesartorres.1688@gmail.com')->send(new DenunciaReincidenciaMail($folio));
+
+        // Consultamos los datos de la denuncia principal
+        $denuncia = Denuncia::find($id_denuncia);
+
+        // Enviamos el correo de notificacion
+        $emails = User::where('notificacion', 1)
+              ->pluck('email')
+              ->toArray();
+
+        // Eliminar duplicados por si acaso
+        $emails = array_unique($emails);
+
+        // Enviamos el email
+        Mail::to($emails)->send(new DenunciaReincidenciaMail($folio, $id));
+
+        //-----------------------------------------------------------------------------------------------------------
+
+            // Enviamos mensajes por TELEGRAM
+            $token = env('TELEGRAM_BOT_TOKEN');
+
+            // Buscamos los registros que tengan el campo chat_id lleno
+            $chat_ids = User::whereNotNull('chat_id')
+                ->pluck('chat_id')
+                ->toArray();
+
+            // Creamos el mensaje
+            $mensaje = '👥 Programa de Igualdad de Género' . "\n" .
+                        "\n" .
+                        '🚨 Se ha registrado una reincidencia' . "\n" .
+                        '📝 Folio: HAS/SSC/2025/' . $folio . "\n";
+
+            // Recorrimos el arreglo y mandamos los mensajes
+            foreach ($chat_ids as $chat_id) 
+            {
+                $response = Http::withOptions([
+                    'verify' => false, // Desactiva verificación SSL (útil para pruebas locales)
+                ])->post("https://api.telegram.org/bot{$token}/sendMessage", [
+                    'chat_id' => $chat_id,
+                    'text' => $mensaje,
+                    'reply_markup' => json_encode([
+                        'inline_keyboard' => [[
+                            [
+                                'text' => '🔗 Ver denuncia',                                
+                                'url' => url('admin/'.$id.'/detalles')
+                            ]
+                            
+                        ]]
+                    ]),
+                ]);
+
+                // Puedes revisar cada respuesta si gustas
+                //dump("Mensaje enviado a {$chat_id}", $response->json());
+            }
 
         // Redireccionamos al formulario con el mensaje de exito
         return redirect()->route('buzonReincidencia')->with('reincidencia', 'La reincidencia se registro correctamente en el folio : HAS/SSC/2025/'.$folio);         

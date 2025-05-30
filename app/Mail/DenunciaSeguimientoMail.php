@@ -36,8 +36,8 @@ class DenunciaSeguimientoMail extends Mailable
 
     public function build()
     {
-        return $this->view('emails.denuncia-seguimiento') // la vista del correo
-                    ->subject('Seguimiento de Denuncia')
+        return $this->markdown('emails.denuncia-seguimiento') // la vista del correo
+                    ->subject('Folio:'.$this->folio. ' | Seguimiento de denuncia')
                     ->from('soportewebssc@gmail.com', 'H.A.S. Coah'); // Correo y nombre del remitente
     }
 }

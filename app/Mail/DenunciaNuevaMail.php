@@ -39,7 +39,7 @@ class DenunciaNuevaMail extends Mailable
     public function build()
     {
         return $this->markdown('emails.denuncia-nueva') // la vista del correo
-                    ->subject('Nueva denuncia recibida - Folio: ' . $this->folio)
+                    ->subject('Folio:'.$this->folio. ' | Nueva denuncia recibida')
                     ->from('soportewebssc@gmail.com', 'H.A.S. Coah'); // Correo y nombre del remitente
     }
 }

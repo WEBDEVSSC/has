@@ -545,7 +545,7 @@
                             <hr>
 
                             @if($reincidencia->archivo)
-                                <a class="btn btn-info btn-sm btn-block" href="{{ route('file.download', basename($reincidencia->archivo)) }}">Descargar archivo</a>
+                                <a class="btn btn-dark btn-sm btn-block" href="{{ route('file.download', basename($reincidencia->archivo)) }}">Descargar archivo</a>
                             @else
                                 
                             @endif
@@ -576,12 +576,12 @@
                         <li class="list-group-item">
                             <strong>{{ $documentacion->created_at->format('d/m/Y') }}</strong>
                             <br>
-                            {{ $documentacion->descripcion }}
+                            <strong>{{ $documentacion->nombre }}</strong> | {{ $documentacion->descripcion }}
 
                             <hr>
 
                             @if($documentacion->archivo)
-                                <a class="btn btn-info btn-sm btn-block" href="{{ route('file.download', basename($documentacion->archivo)) }}">Descargar archivo</a>
+                                <a class="btn btn-dark btn-sm btn-block" href="{{ route('file.download', basename($documentacion->archivo)) }}">Descargar archivo</a>
                             @else
                                 
                             @endif
