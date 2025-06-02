@@ -103,6 +103,7 @@
                         <select name="victima_tipo_contratacion" id="victima_tipo_contratacion" class="form-control" onchange="toggleEnFormacionField()">
                             <option value="" disabled selected>-- Seleccione una opción --</option>
                             <option value="CONFIANZA" {{ old('victima_tipo_contratacion') == 'CONFIANZA' ? 'selected' : '' }}>CONFIANZA</option>
+                            <option value="EVENTUAL" {{ old('victima_tipo_contratacion') == 'EVENTUAL' ? 'selected' : '' }}>EVENTUAL</option>
                             <option value="BASE" {{ old('victima_tipo_contratacion') == 'BASE' ? 'selected' : '' }}>BASE</option>
                             <option value="CONTRATO" {{ old('victima_tipo_contratacion') == 'CONTRATO' ? 'selected' : '' }}>CONTRATO</option>
                             <option value="EN FORMACION" {{ old('victima_tipo_contratacion') == 'EN FORMACION' ? 'selected' : '' }}>EN FORMACION</option>                            
