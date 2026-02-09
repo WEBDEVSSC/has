@@ -25,7 +25,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $anio = "2025";
+        $anio = date('Y');
         
         // Obtener todos los registros de la tabla denuncia
         $denunciasNuevas = Denuncia::where('status', 'NUEVO')

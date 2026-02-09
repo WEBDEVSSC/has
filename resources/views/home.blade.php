@@ -5,7 +5,7 @@
 @section('plugins.Chartjs', true)
 
 @section('content_header')
-    <h1>Dashboard 2024</h1>
+    <h1>Dashboard {{ now()->year }}</h1>
 @stop
 
 @section('content')
