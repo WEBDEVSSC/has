@@ -27,11 +27,11 @@ class DenunciaController extends Controller
         $denuncia = Denuncia::find($id);
 
         // Decodificamos los campos
-        $denuncia->nombre = Crypt::decryptString($denuncia->nombre);
-        $denuncia->correo = Crypt::decryptString($denuncia->correo);
-        $denuncia->celular = Crypt::decryptString($denuncia->celular);
-        $denuncia->denunciado_nombre = Crypt::decryptString($denuncia->denunciado_nombre);
-        $denuncia->testigos = Crypt::decryptString($denuncia->testigos);
+        $denuncia->nombre = $denuncia->nombre;
+        $denuncia->correo = $denuncia->correo;
+        $denuncia->celular = $denuncia->celular;
+        $denuncia->denunciado_nombre = $denuncia->denunciado_nombre;
+        $denuncia->testigos = $denuncia->testigos;
 
         // Renderizar la vista y generar el PDF
         $pdf = PDF::loadView('pdf.reporte', ['denuncia' => $denuncia])->setPaper('a4', 'landscape');;

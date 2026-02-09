@@ -56,7 +56,7 @@
             <td style="border: 1px solid black;"><strong>Nombre</strong></td>
         </tr>
         <tr>
-            <td style="border: 1px solid black;">SSC/HAS/{{ $denuncia->folio }}</td>
+            <td style="border: 1px solid black;">SSC/HAS/{{ $denuncia->created_at->year }}/{{ $denuncia->folio }}</td>
             <td style="border: 1px solid black;">{{ $denuncia->status }}</td>
             <td style="border: 1px solid black;">{{ $denuncia->created_at }}</td>
             <td style="border: 1px solid black;">{{ $denuncia->nombre }}</td>
