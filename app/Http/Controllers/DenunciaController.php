@@ -49,7 +49,7 @@ class DenunciaController extends Controller
         
         // Obtener todos los registros de la tabla denuncia
         $denuncias = Denuncia::where('status', 'NUEVO')
-                    ->whereYear('created_at', 2025)
+                    ->whereYear('created_at', now()->year)
                     ->get();
         
         // Contar el número de registros
@@ -65,7 +65,9 @@ class DenunciaController extends Controller
     public function enproceso()
     {
         // Obtener todos los registros de la tabla denuncia
-        $denuncias = Denuncia::where('status', 'EN PROCESO')->get();
+        $denuncias = Denuncia::where('status', 'EN PROCESO')
+                    ->whereYear('created_at', now()->year)
+                    ->get();
 
         // Contar el número de registros
         $totalDenuncias = $denuncias->count();
