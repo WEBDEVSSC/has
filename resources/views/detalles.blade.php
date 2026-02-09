@@ -58,7 +58,7 @@
         <div class="card card-purple">
 
     <div class="card-header">
-        <h3 class="card-title">Expediente completo de la denuncia :  SSC/HAS/2025/{{ $denuncia->folio}}</h3>
+        <h3 class="card-title">Expediente completo de la denuncia :  SSC/HAS/{{ $denuncia->created_at->year }}/{{ $denuncia->folio}}</h3>
     </div>
 
    
