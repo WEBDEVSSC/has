@@ -10,7 +10,7 @@
 
 <div class="card card card-purple">
     <div class="card-header">
-        <h3 class="card-title"><strong>Denuncia</strong> <span class="badge badge-secondary">SSC/HAS/2025/{{ $denuncia->folio}}</span></h3>
+        <h3 class="card-title"><strong>Denuncia</strong> <span class="badge badge-secondary">SSC/HAS/{{ $denuncia->created_at->year }}/{{ $denuncia->folio}}</span></h3>
     </div>
 
     <div class="card-body">
