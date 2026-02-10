@@ -2,25 +2,92 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>Reporte de Denuncia</title>
+
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
+        @page {
+            size: A4 portrait;
+            margin: 20mm 15mm;
         }
-        h1 {
+
+        body {
+            font-family: "Helvetica", Arial, sans-serif;
+            font-size: 12px;
             color: #333;
         }
+
+        h1, h2, h3 {
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            width: 100%;
+            border-bottom: 2px solid #000;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+        }
+
+        .header table {
+            width: 100%;
+        }
+
+        .header-left {
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .header-right {
+            text-align: right;
+            font-size: 13px;
+        }
+
+        .section {
+            margin-bottom: 18px;
+        }
+
+        .section-title {
+            background-color: #FFFFFF;   /* azul institucional */
+            color: #000000;
+            font-weight: bold;
+            padding: 6px 10px;
+            border-left: 6px solid #AD46FF;
+            margin: 15px 0 6px;
+            text-transform: uppercase;
+        }
+
+        table.data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table.data-table td {
+            border: 1px solid #000;
+            padding: 6px 8px;
+            vertical-align: top;
+        }
+
+        table.data-table td.label {
+            font-weight: bold;
+            width: 25%;
+            background-color: #f8f9f9;
+        }
+
+        .text-block {
+            border: 1px solid #000;
+            padding: 8px;
+            min-height: 50px;
+        }
+
         .footer {
             position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 50px;
+            bottom: 10mm;
+            left: 15mm;
+            right: 15mm;
+            font-size: 10px;
             text-align: center;
-            font-size: 12px;
-            border-top: 1px solid black;
-            padding-top: 10px;
+            border-top: 1px solid #000;
+            padding-top: 5px;
         }
 
         .pagenum:before {
@@ -28,170 +95,374 @@
         }
     </style>
 </head>
+
 <body>
-    <div class="content">
 
-    <table style="width: 100%;">
-        <tr>
-            <td style="text-align: left;">
-                <h4>Servicios de Salud de Coahuila de Zaragoza</h4>
-            </td>
-            <td style="text-align: right;">
-                <h4>Hostigamiento y Acoso Sexual</h4>
-            </td>
-        </tr>
-    </table>
-
-    <table style="width: 100%; border: 1px solid black; border-collapse: collapse;">
-        <tr>
-            <td style="border: 1px solid black; background-color: #e5e7e9;"><strong>Datos Generales</strong></td>
-        </tr>
-    </table>
-
-    <table style="width: 100%; border: 1px solid black; border-collapse: collapse;">
-        <tr>
-            <td style="border: 1px solid black;"><strong>Folio</strong></td>
-            <td style="border: 1px solid black;"><strong>Status</strong></td>
-            <td style="border: 1px solid black;"><strong>Fecha de registro</strong></td>
-            <td style="border: 1px solid black;"><strong>Nombre</strong></td>
-        </tr>
-        <tr>
-            <td style="border: 1px solid black;">SSC/HAS/{{ $denuncia->created_at->year }}/{{ $denuncia->folio }}</td>
-            <td style="border: 1px solid black;">{{ $denuncia->status }}</td>
-            <td style="border: 1px solid black;">{{ $denuncia->created_at }}</td>
-            <td style="border: 1px solid black;">{{ $denuncia->nombre }}</td>
-        </tr>
-        <tr>
-            <td style="border: 1px solid black;"><strong>Edad</strong></td>
-            <td style="border: 1px solid black;"><strong>Sexo</strong></td>
-            <td style="border: 1px solid black;"><strong>Correo</strong></td>
-            <td style="border: 1px solid black;"><strong>Contacto</strong></td>
-        </tr>
-        <tr>
-            <td style="border: 1px solid black;">{{ $denuncia->edad }}</td>
-            <td style="border: 1px solid black;">{{ $denuncia->sexo }}</td>
-            <td style="border: 1px solid black;">{{ $denuncia->correo }}</td>
-            <td style="border: 1px solid black;">{{ $denuncia->celular }}</td>
-        </tr>
-    </table>
-
-    <br>
-
-    <table style="width: 100%; border: 1px solid black; border-collapse: collapse;">
-        <tr>
-            <td style="border: 1px solid black; background-color: #e5e7e9;"><strong>Adscripción</strong></td>
-        </tr>
-    </table>
-
-    <table style="width: 100%; border: 1px solid black; border-collapse: collapse;">
-        <tr>
-            <td style="border: 1px solid black;"><strong>Area</strong></td>
-            <td style="border: 1px solid black;"><strong>Unidad responsable</strong></td>
-            <td style="border: 1px solid black;"><strong>Municipio</strong></td>
-            <td style="border: 1px solid black;"><strong>Tipo de contratación</strong></td>
-        </tr>
-        <tr>
-            <td style="border: 1px solid black;">{{ $denuncia->adscripcion }}</td>
-            <td style="border: 1px solid black;">{{ $denuncia->unidad_resposable }}</td>
-            <td style="border: 1px solid black;">{{ $denuncia->municipio }}</td>
-            <td style="border: 1px solid black;">{{ $denuncia->tipo_contratacion }}</td>
-        </tr>
-    </table>
-
-    <table style="width: 100%; border: 1px solid black; border-collapse: collapse;">
-        <tr>
-            <td style="border: 1px solid black;"><strong>Cargo</strong></td>
-            <td style="border: 1px solid black;"><strong>Situación de vulnerabilidad</strong></td>
-            <td style="border: 1px solid black;"><strong>Cual</strong></td>
-        </tr>
-        <tr>
-            <td style="border: 1px solid black;">{{ $denuncia->cargo }}</td>
-            <td style="border: 1px solid black;">{{ $denuncia->vulnerabilidad }}</td>
-            <td style="border: 1px solid black;">{{ $denuncia->cual }}</td>
-        </tr>
-    </table>
-
-    <br>
-
-    <table style="width: 100%; border: 1px solid black; border-collapse: collapse;">
-        <tr>
-            <td style="border: 1px solid black; background-color: #e5e7e9;"><strong>Datos del denunciado</strong></td>
-        </tr>
-    </table>
-
-    <table style="width: 100%; border: 1px solid black; border-collapse: collapse;">
-        <tr>
-            <td style="border: 1px solid black;"><strong>Nombre completo</strong></td>
-            <td style="border: 1px solid black;"><strong>Cargo</strong></td>
-            <td style="border: 1px solid black;"><strong>Puesto</strong></td>
-        </tr>
-        <tr>
-            <td style="border: 1px solid black;">{{ $denuncia->denunciado_nombre }}</td>
-            <td style="border: 1px solid black;">{{ $denuncia->denunciado_cargo }}</td>
-            <td style="border: 1px solid black;">{{ $denuncia->denunciado_puesto }}</td>
-        </tr>
-    </table>
-
-    <table style="width: 100%; border: 1px solid black; border-collapse: collapse;">
-        <tr>
-            <td style="border: 1px solid black;"><strong>Antecedentes</strong></td>
-        </tr>
-        <tr>
-            <td style="border: 1px solid black;">{{ $denuncia->denunciado_antecedentes }}</td>
-        </tr>
-    </table>
-
-    <br>
-
-    <table style="width: 100%; border: 1px solid black; border-collapse: collapse;">
-        <tr>
-            <td style="border: 1px solid black; background-color: #e5e7e9;"><strong>Hechos</strong></td>
-        </tr>
-    </table>
-
-    <table style="width: 100%; border: 1px solid black; border-collapse: collapse;">
-        <tr>
-            <td style="border: 1px solid black;"><strong>Como</strong></td>
-        </tr>
-        <tr>
-            <td style="border: 1px solid black;">{{ $denuncia->como }}</td>
-        </tr>
-    </table>
-
-    <table style="width: 100%; border: 1px solid black; border-collapse: collapse;">
-        <tr>
-            <td style="border: 1px solid black;"><strong>Cuando</strong></td>
-        </tr>
-        <tr>
-            <td style="border: 1px solid black;">{{ $denuncia->cuando }}</td>
-        </tr>
-    </table>
-
-    <table style="width: 100%; border: 1px solid black; border-collapse: collapse;">
-        <tr>
-            <td style="border: 1px solid black;"><strong>Donde</strong></td>
-        </tr>
-        <tr>
-            <td style="border: 1px solid black;">{{ $denuncia->donde }}</td>
-        </tr>
-    </table>
-
-    <table style="width: 100%; border: 1px solid black; border-collapse: collapse;">
-        <tr>
-            <td style="border: 1px solid black;"><strong>Testigos</strong></td>
-        </tr>
-        <tr>
-            <td style="border: 1px solid black;">{{ $denuncia->testigos }}</td>
-        </tr>
-    </table>
-
-
-    </div><!-- DIV CONTENT -->
-
-    <div class="footer">
-        <p>Página <span class="pagenum"></span> de <span class="total-pages"></span></p>
-        <p>© {{ date('Y') }} - Secretaría de Salud de Coahuila. Todos los derechos reservados.</p>
+    <!-- ENCABEZADO -->
+    <div class="header">
+        <table>
+            <tr>
+                <td class="header-left">
+                    Servicios de Salud de Coahuila de Zaragoza
+                </td>
+                <td class="header-right">
+                    Hostigamiento y Acoso Sexual
+                </td>
+            </tr>
+        </table>
     </div>
-     
+
+    <!-- DATOS GENERALES -->
+    <div class="section">
+        <div class="section-title">DATOS DE LA DENUNCIA</div>
+
+        <table class="data-table">
+            <tr>
+                <td class="label" style="width:10%;">Folio</td>
+                <td style="width:23%;">
+                    SSC/HAS/{{ $denuncia->created_at->year }}/{{ $denuncia->folio }}
+                </td>
+
+                <td class="label" style="width:10%;">Estatus</td>
+                <td style="width:17%;">
+                    {{ $denuncia->status }}
+                </td>
+
+                <td class="label" style="width:15%;">Tipo</td>
+                <td style="width:25%;">
+                    {{ $denuncia->tipo_denuncia }}
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- DATOS DE LA VICTIMA -->
+    <div class="section">
+        <div class="section-title">DATOS DE LA PRESUNTA VICTIMA</div>
+
+        <table class="data-table">
+            <tr>
+                <td class="label" style="width:12%;">Nombre</td>
+                <td style="width:50%;">
+                    {{ $denuncia->victima_nombre }}
+                </td>
+
+                <td class="label" style="width:10%;">Sexo</td>
+                <td style="width:25%;">
+                    {{ $denuncia->victima_sexo }}
+                </td>
+
+                <td class="label" style="width:10%;">Edad</td>
+                <td style="width:25%;">
+                    {{ $denuncia->victima_edad }}
+                </td>
+            </tr>
+        </table>
+
+        <table class="data-table">
+            <tr>
+                <td class="label" style="width:12%;">Télefono</td>
+                <td style="width:25%;">
+                    {{ $denuncia->victima_telefono }}
+                </td>
+
+                <td class="label" style="width:10%;">E-mail</td>
+                <td style="width:25%;">
+                    {{ $denuncia->victima_email }}
+                </td>
+
+            </tr>
+        </table>
+
+        <table class="data-table">
+            <tr>
+                <td class="label" style="width:20%;">Contrato</td>
+                <td style="width:20%;">
+                    {{ $denuncia->victima_tipo_contratacion }}
+                </td>
+        
+                <td class="label" style="width:15%;">Institución*</td>
+                <td style="width:45%;">
+                    {{ $denuncia->victima_enformacion_escuela }}
+                </td>
+            </tr>
+        </table>
+
+        <table class="data-table">
+            <tr>
+                <td class="label" style="width:20%;">Vulnerabilidad</td>
+                <td style="width:20%;">
+                    {{ $denuncia->victima_condiciones_vulnerabilidad }}
+                </td>
+        
+                <td class="label" style="width:15%;">Especifique*</td>
+                <td style="width:45%;">
+                    {{ $denuncia->victima_condiciones_vulnerabilidad_otro }}
+                </td>
+            </tr>
+        </table>
+
+        <table class="data-table">
+            <tr>
+                <td class="label" style="width:20%;">Adscripción</td>
+                <td style="width:80%;">
+                    J. {{ $denuncia->clues_jurisdiccion }} - {{ $denuncia->clues_nombre }}
+                </td>
+            </tr>
+        </table>
+
+        <table class="data-table">
+            <tr>
+                <td class="label" style="width:15%;">Área</td>
+                <td style="width:25%;">
+                    {{ $denuncia->victima_area_adscripcion }}
+                </td>
+        
+                <td class="label" style="width:15%;">Puesto</td>
+                <td style="width:25%;">
+                    {{ $denuncia->victima_puesto_desempena }}
+                </td>
+
+                <td class="label" style="width:15%;">Jefe</td>
+                <td style="width:25%;">
+                    {{ $denuncia->victima_jefe_inmediato }}
+                </td>
+            </tr>
+        </table>
+
+        <table class="data-table">
+            <tr>        
+                <td class="label" style="width:25%;">Medidas de Protección</td>
+                <td style="width:25%;">
+                    {{ $denuncia->victima_medidas_proteccion }}
+                </td>
+
+                <td class="label" style="width:25%;">¿Se solicitarón?</td>
+                <td style="width:25%;">
+                    {{ $denuncia->victima_medidas_proteccion_solicita }}
+                </td>
+            </tr>
+        </table>
+
+    </div>
+
+
+
+    <!-- DENUNCIADO -->
+    <div class="section">
+        <div class="section-title">DATOS DE LA PERSONA PRESUNTA AGRESORA</div>
+        <table class="data-table">
+            <tr>        
+                <td class="label" style="width:10%;">Nombre</td>
+                <td style="width:20%;">
+                    {{ $denuncia->agresor_nombre }}
+                </td>
+
+                <td class="label" style="width:10%;">Sexo</td>
+                <td style="width:5%;">
+                    {{ $denuncia->agresor_sexo }}
+                </td>
+
+                <td class="label" style="width:10%;">Edad</td>
+                <td style="width:5%;">
+                    {{ $denuncia->agresor_edad }}
+                </td>
+
+                <td class="label" style="width:10%;">Área</td>
+                <td style="width:20%;">
+                    {{ $denuncia->agresor_area }}
+                </td>
+            </tr>
+        </table>
+
+        <table class="data-table">
+            <tr>        
+                <td class="label" style="width:5%;">Puesto</td>
+                <td style="width:15%;">
+                    {{ $denuncia->agresor_puesto }}
+                </td>
+
+                <td class="label" style="width:10%;">Contratación</td>
+                <td style="width:10%;">
+                    {{ $denuncia->agresor_tipo_contratacion }}
+                </td>
+
+                <td class="label" style="width:5%;">Jefe</td>
+                <td style="width:10%;">
+                    {{ $denuncia->agresor_jefe_inmediato }}
+                </td>
+
+            </tr>
+        </table>
+
+    </div>
+
+    <!-- RELACION CON EL AGRESOR -->
+    <div class="section">
+        <div class="section-title">¿EXISTE ALGUNA RELACIÓN LABORAL?</div>
+        <table class="data-table">
+            <tr>        
+                <td style="width:100%;">
+                    {{ $denuncia->relacion_laboral }} -  {{ $denuncia->relacion_laboral_si }} {{ $denuncia->relacion_laboral_no }}
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- SITUACION -->
+    <div class="section">
+        <div class="section-title">NARRACIÓN DE LOS HECHOS</div>
+        <table class="data-table">
+            <tr>        
+                <td class="label" style="width:15%;">Situación</td>
+                <td style="width:85%;">
+                    {{ $denuncia->situacion }}
+                </td>
+            </tr>
+        </table>
+
+        <table class="data-table">
+            <tr>        
+                <td class="label" style="width:15%;">Como</td>
+                <td style="width:85%;">
+                    {{ $denuncia->como }}
+                </td>
+            </tr>
+        </table>
+
+        <table class="data-table">
+            <tr>        
+                <td class="label" style="width:15%;">Cuando</td>
+                <td style="width:85%;">
+                    {{ $denuncia->cuando }}
+                </td>
+            </tr>
+        </table>
+
+        <table class="data-table">
+            <tr>        
+                <td class="label" style="width:15%;">Donde</td>
+                <td style="width:85%;">
+                    {{ $denuncia->donde }}
+                </td>
+            </tr>
+        </table>
+
+    </div>
+
+
+    <!-- CONDUCATA OCURRIDO -->
+    <div class="section">
+        <div class="section-title">¿LA CONDUCTA HA OCURRIDO?</div>
+        <table class="data-table">
+            <tr>        
+                <td style="width:50%;">
+                    {{ $denuncia->conducta_ocurrido }}
+                </td>
+
+                <td class="label" style="width:25%;">Fecha aproximada</td>
+                <td style="width:25%;">
+                    {{ $denuncia->conducta_ocurrido_fecha }}
+                </td>
+            </tr>
+        </table>
+    </div>
+
+     <!-- TESTIGOS -->
+    <div class="section">
+        <div class="section-title">¿ALGUNA PERSONA O PERSONAS PRESENCIARÓN LOS HECHOS?</div>
+        <table class="data-table">
+            <tr>        
+                <td style="width:100%;">
+                    {{ $denuncia->persona_testigo }} -  {{ $denuncia->persona_testigo_si }}
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- RELACION TESTIGOS -->
+    <div class="section">
+        <div class="section-title">¿LAS PERSONAS QUE PRESENCIARÓN LOS HECHOS GUARDAN UNA RELACIÓN CON EL PRESUNTO AGRESOR?</div>
+        <table class="data-table">
+            <tr>        
+                <td style="width:100%;">
+                    {{ $denuncia->persona_relacion }} -  {{ $denuncia->persona_relacion_si }}
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- TRATO DIFERENTE -->
+    <div class="section">
+        <div class="section-title">¿HA CAMBIADO LA RELACIÓN LABORAL?</div>
+        <table class="data-table">
+            <tr>        
+                <td style="width:100%;">
+                    {{ $denuncia->persona_trato }} -  {{ $denuncia->persona_trato_si }}
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- PADECIMIENTO FISICO -->
+    <div class="section">
+        <div class="section-title">¿HA USTED PRESENTADO UN PADECIMIENTO FÍSICO?</div>
+        <table class="data-table">
+            <tr>        
+                <td style="width:100%;">
+                    {{ $denuncia->padecimiento_fisico }} -  {{ $denuncia->padecimiento_fisico_si }}
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- INTEGRIDAD -->
+    <div class="section">
+        <div class="section-title">¿CONSIDERA QUE SU INTEGRIDAD FÍSICA O EMOCIONAL SE ENCUENTRA EN RIESGO?</div>
+        <table class="data-table">
+            <tr>        
+                <td style="width:100%;">
+                    {{ $denuncia->integridad }} -  {{ $denuncia->integridad_si }}
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- AMENAZADA -->
+    <div class="section">
+        <div class="section-title">¿HA SIDO AMENAZADA(O) POR NEGARSE A LA PROPUESTA O DETENER LA SITUACIÓN?</div>
+        <table class="data-table">
+            <tr>        
+                <td style="width:100%;">
+                    {{ $denuncia->amenazada }} -  {{ $denuncia->amenazada_si }}
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- DATOS ADICIONALES -->
+    <div class="section">
+        <div class="section-title">¿HAY DATOS ADICIONALES QUE PUEDE PROPORCIONAR?</div>
+        <table class="data-table">
+            <tr>        
+                <td style="width:100%;">
+                    {{ $denuncia->adicionales }} -  {{ $denuncia->adicionales_si }}
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- PRESENTADO DENUNCIA -->
+    <div class="section">
+        <div class="section-title">¿HA PRESENTADO ALGUNA DENUNCIA FORMAL?</div>
+        <table class="data-table">
+            <tr>        
+                <td style="width:100%;">
+                    {{ $denuncia->denuncia }} -  {{ $denuncia->denuncia_si }}
+                </td>
+            </tr>
+        </table>
+    </div>
+
 </body>
 </html>
