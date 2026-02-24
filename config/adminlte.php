@@ -313,16 +313,19 @@ return [
             'text' => 'Nuevas',
             'url' => 'admin/nuevas',
             'icon' => 'fas fa-fw fa-envelope',
+            'can' => 'admin',
         ],
         [
             'text' => 'En proceso',
             'url' => 'admin/enproceso',
             'icon' => 'fas fa-fw fa-file',
+            'can' => 'admin',
         ],
         [
             'text' => 'Atendidas',
             'url' => 'admin/atendidas',
             'icon' => 'fas fa-fw fa-lock',
+            'can' => 'admin',
         ],
         [
             'text' => 'Total',
