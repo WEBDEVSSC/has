@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MicroSitioController;
 use App\Http\Controllers\NotificacionController;
+use App\Http\Controllers\UsuarioController;
 use App\Models\DenunciaDocumentacion;
 
 /**
@@ -178,5 +179,25 @@ Route::middleware(['auth'])->group(function ()
      */
 
     Route::get('admin/notificaciones/index',[NotificacionController::class,'index'])->name('notificacionesIndex');
+
+    /**
+     * 
+     * 
+     * CONFIGURACION PARA USUARIOS CRUD
+     * 
+     * 
+     */
+
+    Route::get('admin/usuarios', [UsuarioController::class, 'index'])->name('usuarios.index')->middleware('can:superAdmin');
+
+    Route::get('admin/usuarios/create', [UsuarioController::class, 'create'])->name('usuarios.create')->middleware('can:superAdmin');
+
+    Route::post('admin/usuarios/store', [UsuarioController::class, 'store'])->name('usuarios.store')->middleware('can:superAdmin');
+
+    Route::get('admin/usuarios/{id}/edit', [UsuarioController::class, 'edit'])->name('usuarios.edit')->middleware('can:superAdmin');
+
+    Route::put('admin/usuarios/{id}', [UsuarioController::class, 'update'])->name('usuarios.update')->middleware('can:superAdmin');
+    
+    Route::delete('admin/usuarios/{id}', [UsuarioController::class, 'destroy'])->name('usuarios.destroy')->middleware('can:superAdmin');
 
 });

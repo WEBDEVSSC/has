@@ -331,7 +331,16 @@ return [
             'text' => 'Total',
             'url' => 'admin/total',
             'icon' => 'fas fa-fw fa-keyboard',
+            'can' => 'admin',
         ],
+
+        [
+            'text' => 'Usuarios',
+            'url' => 'admin/usuarios',
+            'icon' => 'fas fa-fw fa-users',
+            'can' => 'superAdmin',
+        ],
+
 
     ],
 
