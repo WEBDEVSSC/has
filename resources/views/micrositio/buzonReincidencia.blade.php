@@ -1,148 +1,284 @@
 @include('micrositio.partials.header')
 
-    <div class="container">
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, #6f42c1 0%, #4b2e83 100%);
+        color: white;
+        border-radius: 20px;
+        padding: 50px 40px;
+        margin-top: 20px;
+        margin-bottom: 40px;
+        box-shadow: 0 10px 30px rgba(0,0,0,.15);
+    }
 
-        <center><h1 class="display-8 fw-bold text-black mt-3">Reincidencia de denuncia</h1></center>
-        
-        <div class="row">
-            <div class="col-md-6">
-                
-                <div class="p-5 mb-4 bg-body-tertiary rounded-3 mt-3">
-                    <div class="container-fluid py-8">
+    .info-card,
+    .form-card {
+        background: #ffffff;
+        border-radius: 18px;
+        padding: 30px;
+        box-shadow: 0 8px 20px rgba(0,0,0,.08);
+        height: 100%;
+    }
 
-                        <p>Queremos informarle sobre el proceso de seguimiento relacionado con la reincidencia de su denuncia presentada previamente a través de nuestro sistema. En casos de reincidencia, es fundamental revisar cada reporte adicional para garantizar una intervención efectiva y adecuada.</p>
+    .section-title {
+        color: #4b2e83;
+        font-weight: 700;
+    }
 
+    .step-card {
+        background: #f8f9fa;
+        border-left: 5px solid #6f42c1;
+        border-radius: 12px;
+        padding: 18px;
+        margin-bottom: 15px;
+        transition: all .3s ease;
+    }
 
-                        <p><strong>¿Qué implica el seguimiento de la reincidencia en su denuncia?</strong></p>
+    .step-card:hover {
+        transform: translateX(5px);
+        box-shadow: 0 5px 15px rgba(0,0,0,.08);
+    }
 
-                        <ol>
-                            <li><strong>Reevaluación del Caso:</strong> Nuestros especialistas revisan no solo la nueva denuncia, sino también el historial previo asociado al folio original para entender mejor el patrón de incidentes y las circunstancias actuales.</li>
-                            <li><strong>Investigación Ampliada:</strong> Se realiza una investigación más exhaustiva, considerando tanto la nueva información como cualquier prueba o testimonio previo. Este proceso incluye entrevistas adicionales y una evaluación más detallada de los hechos.</li>
-                            <li><strong>Acciones Complementarias:</strong> Documentamos todas las medidas adicionales que se tomen en respuesta a la reincidencia. Estas acciones pueden incluir la aplicación de sanciones más estrictas, el fortalecimiento de medidas preventivas o cualquier otra intervención necesaria..</li>
-                            <li><strong>Comunicación Continua:</strong> Le mantendremos informado sobre cada etapa de este nuevo proceso. Es vital que esté al tanto de las decisiones y medidas adicionales que se adopten en relación con la reincidencia.</li>
-                            <li><strong>Resolución y Revisión:</strong> Al concluir el seguimiento, le proporcionaremos un informe actualizado con los resultados y las nuevas acciones determinadas. Nuestra meta es asegurar una respuesta justa y efectiva a la reincidencia en su denuncia.</li>
-                        </ol>
-                
+    .step-card h6 {
+        color: #4b2e83;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
 
-                        <p>Agradecemos su confianza y colaboración. Si tiene alguna pregunta adicional o necesita más información, no dude en ponerse en contacto con nosotros.</p>
+    .captcha-box {
+        background: #f8f9fa;
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+    }
 
-                    
-                    </div>
-                </div>
-                
+    .btn-purple {
+        background-color: #6f42c1;
+        color: white;
+        border: none;
+        border-radius: 50px;
+        padding: 12px 30px;
+        font-weight: 600;
+        transition: all .3s ease;
+    }
+
+    .btn-purple:hover {
+        background-color: #5a32a3;
+        color: white;
+    }
+
+    .highlight-box {
+        background: #f8f9fa;
+        border-left: 5px solid #6f42c1;
+        padding: 20px;
+        border-radius: 12px;
+        margin-bottom: 25px;
+    }
+</style>
+
+<div class="container py-4">
+
+<!-- HERO -->
+<div class="hero-section text-center">
+    <h1 class="display-5 fw-bold mb-3">
+        Reincidencia de Denuncia
+    </h1>
+
+    <p class="lead mb-0">
+        Reporte nuevos hechos relacionados con una denuncia previamente registrada
+        para fortalecer el seguimiento y la atención del caso.
+    </p>
+</div>
+
+<div class="row g-4">
+
+    <!-- INFORMACIÓN -->
+    <div class="col-lg-6">
+
+        <div class="info-card">
+
+            <h3 class="section-title mb-4">
+                ¿Qué es una reincidencia?
+            </h3>
+
+            <p class="text-muted">
+                Una reincidencia ocurre cuando se presentan nuevos hechos o conductas
+                relacionados con una denuncia previamente registrada. Su reporte es
+                fundamental para garantizar una atención integral y la adopción de
+                medidas adicionales cuando sean necesarias.
+            </p>
+
+            <div class="highlight-box">
+                <strong>Importante:</strong><br>
+                La reincidencia permite fortalecer la investigación y documentar
+                cualquier nueva situación relacionada con el caso original.
             </div>
-            <div class="col-md-6">
 
-                <div class="p-5 mb-4 bg-body-tertiary rounded-3 mt-3">
-                    <div class="container-fluid py-8">
+            <h4 class="section-title mb-3">
+                Proceso de Seguimiento
+            </h4>
 
-                        
-                        
-                            <div class="col">
-                                <div class="mb-5">
-                                    <p>Para presentar una reincidencia, es necesario ingresar el número de folio asignado al momento del registro inicial</p>
-                                    <p>Ingresa únicamente el número de tu folio. Por ejemplo, si tu folio es SSC/HAS/2025/000000, debes capturar solo '000000'.</p>
-                                    
-                                    <form action="{{ route('buzonReincidenciaCreate') }}" method="POST">
-
-                                    @csrf
-                                    
-                                    <input type="number" id="folio" name="folio" value="{{ old('folio') }}" class="form-control" placeholder="000000" required maxlength="6"/>
-                                    <!-- MOSTRAMOS EL ERROR EN CASO DE QUE EXISTA -->
-                                    @error('folio')
-                                        <p><strong><div class="text-danger">{{ $message }}</div></strong></p>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <!-- ---------------------------------- -->
-
-                            <div class="row mt-3">
-                            <div class="col-md-4"></div>
-                            <div class="col-md-4">
-
-                                <center>
-                                <div>
-                                <img src="{{ captcha_src('flat') }}" onclick="this.src='{{ captcha_src('flat') }}'+Math.random()" style="cursor:pointer;">
-                                @error('denuncia_si')<p class="text-danger mt-2">{{ $message }}</p>@enderror 
-                                <br>
-                                <small>Clic sobre la imagen para recargarla</small>
-                                </div>
-                                </center>
-
-                                <br>
-
-                                <input type="text" name="captcha" class="form-control" placeholder="CAPTURE CÓDIGO">
-
-                                @error('captcha')
-                                    <div style="color:red">{{ $message }}</div>
-                                @enderror
-
-                            </div>
-                            <div class="col-md-4"></div>
-                            </div>
-
-                            <!-- ---------------------------------- -->
-                        
-                            <div class="row mt-3">
-                                <div class="mb-2">
-                                    <center><button type="submit" class="btn btn-purple">PRESENTAR REINCIDENCIA</button></center> 
-                                </div>
-                            </div>
-                            </div>
-                        
-                        </div>
-                            
-                            </form>
-                        
-                            
-                    </div>
-                </div>
-
+            <div class="step-card">
+                <h6>1. Reevaluación del Caso</h6>
+                <p class="mb-0">
+                    Se analiza la nueva información junto con el historial
+                    completo de la denuncia original.
+                </p>
             </div>
+
+            <div class="step-card">
+                <h6>2. Investigación Ampliada</h6>
+                <p class="mb-0">
+                    Se incorporan nuevas evidencias, testimonios y elementos
+                    relevantes para fortalecer el expediente.
+                </p>
+            </div>
+
+            <div class="step-card">
+                <h6>3. Acciones Complementarias</h6>
+                <p class="mb-0">
+                    Se implementan medidas adicionales de atención, prevención
+                    o sanción según corresponda.
+                </p>
+            </div>
+
+            <div class="step-card">
+                <h6>4. Comunicación Continua</h6>
+                <p class="mb-0">
+                    Se mantiene informado al denunciante sobre el avance de
+                    las acciones derivadas de la reincidencia.
+                </p>
+            </div>
+
+            <div class="step-card">
+                <h6>5. Resolución Actualizada</h6>
+                <p class="mb-0">
+                    Se emite una respuesta integral considerando tanto la
+                    denuncia inicial como los nuevos hechos reportados.
+                </p>
+            </div>
+
         </div>
 
-        
+    </div>
 
-    </div><!-- CONTAINER -->
+    <!-- FORMULARIO -->
+    <div class="col-lg-6">
 
-    @section('plugins.Sweetalert2', true)
+        <div class="form-card">
 
-    @if(session('reincidencia'))
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            Swal.fire({
-                title: 'Exito',
-                text: "{{ session('reincidencia') }}",
-                icon: 'success',
-                confirmButtonText: 'Ok'
-            });
-        });
-    </script>
-    @endif
+            <h3 class="section-title mb-4">
+                Registrar Reincidencia
+            </h3>
 
-            <!-- Incluye jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <form action="{{ route('buzonReincidenciaCreate') }}" method="POST">
 
-    <!-- Incluye Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6k3I4F+VppvIEnq0u5tkU7l1RZm5SaaPqC+78LUeF9v/8gV56N4FJP" crossorigin="anonymous"></script>
+                @csrf
 
-    <!-- Incluye SweetAlert2 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                <div class="mb-4">
 
-    <!-- Incluye Select2 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+                    <label class="form-label fw-semibold">
+                        Número de Folio
+                    </label>
 
-    <!-- Incluye jQuery y Bootstrap JS 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>-->
+                    <p class="text-muted small">
+                        Capture únicamente los últimos números de su folio.
+                        Por ejemplo, si su folio es:
+                        <strong>SSC/HAS/2025/000123</strong>,
+                        deberá ingresar únicamente:
+                        <strong>000123</strong>.
+                    </p>
 
+                    <input
+                        type="number"
+                        id="folio"
+                        name="folio"
+                        value="{{ old('folio') }}"
+                        class="form-control @error('folio') is-invalid @enderror"
+                        placeholder="000123"
+                        required>
 
-    <!-- ----------------------------------------------- -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+                    @error('folio')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
 
-    
-    <!-- -- -->
-  </body>
+                </div>
+
+                <!-- CAPTCHA -->
+
+                <div class="captcha-box mb-4">
+
+                    <img
+                        src="{{ captcha_src('flat') }}"
+                        onclick="this.src='{{ captcha_src('flat') }}'+Math.random()"
+                        style="cursor:pointer;"
+                        class="img-fluid rounded"
+                        alt="Captcha">
+
+                    <div class="mt-2">
+                        <small class="text-muted">
+                            Haga clic sobre la imagen para generar un nuevo código.
+                        </small>
+                    </div>
+
+                    <input
+                        type="text"
+                        name="captcha"
+                        class="form-control mt-3 @error('captcha') is-invalid @enderror"
+                        placeholder="Ingrese el código de la imagen">
+
+                    @error('captcha')
+                        <div class="invalid-feedback d-block">
+                            {{ $message }}
+                        </div>
+                    @enderror
+
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-purple">
+                        PRESENTAR REINCIDENCIA
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="text-center mt-5">
+    <small class="text-muted">
+        Secretaría de Salud de Coahuila · Sistema de Atención y Seguimiento
+        de Casos de Hostigamiento y Acoso Sexual.
+    </small>
+</div>
+
+</div>
+
+@if(session('reincidencia'))
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    Swal.fire({
+        title: 'Éxito',
+        text: "{{ session('reincidencia') }}",
+        icon: 'success',
+        confirmButtonText: 'Aceptar'
+    });
+});
+</script>
+
+@endif
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
 </html>
-

@@ -12,23 +12,16 @@ class DenunciaDocumentacionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        //
-    }
-
+    
     public function download($filename)
-    {
-        $filePath = storage_path('app/documents/' . $filename);
+    {    
+        $filePath = storage_path('app/documents/documentacion/' . $filename);
 
-        if (file_exists($filePath)) 
-        {
+        if (file_exists($filePath)) {
             return response()->download($filePath);
-        } 
-        else 
-        {
-            return redirect()->back()->with('error', 'Archivo no encontrado');
         }
+
+        return redirect()->back()->with('error', 'Archivo no encontrado');
     }
 
     /**
@@ -80,14 +73,21 @@ class DenunciaDocumentacionController extends Controller
         // Consultamos el folio para renombrar el archivo
         $folio = Denuncia::findOrFail($denuncia);
 
+        $archivoPath = null;
+
         // Obtener la fecha y hora actual en el formato deseado
         $timestamp = now()->format('Ymd_His');
 
-        // Crear el nombre del archivo con la fecha y hora
-        $archivoNombre = $folio->folio . '_D_' . $timestamp . '.' . $archivo->extension();
+        if ($request->hasFile('archivo') && $request->file('archivo')->isValid()) {
 
-        // Almacenar el archivo en la carpeta 'documents' en el almacenamiento local
-        $archivoPath = $archivo->storeAs('documents/documentacion', $archivoNombre, 'local');
+            $archivoNombre = $folio->folio . '_D_' . $timestamp . '.' . $request->file('archivo')->extension();
+
+            $archivoPath = $request->file('archivo')->storeAs(
+                'documents/documentacion',
+                $archivoNombre,
+                'local'
+            );
+        }
 
         //CREAMOS
 

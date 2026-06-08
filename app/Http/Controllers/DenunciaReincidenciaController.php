@@ -17,16 +17,13 @@ class DenunciaReincidenciaController extends Controller
     
     public function download($filename)
     {
-        $filePath = storage_path('app/documents/' . $filename);
+        $filePath = storage_path('app/documents/reincidencia/' . $filename);
 
-        if (file_exists($filePath)) 
-        {
+        if (file_exists($filePath)) {
             return response()->download($filePath);
-        } 
-        else 
-        {
-            return redirect()->back()->with('error', 'Archivo no encontrado');
         }
+
+        return redirect()->back()->with('error', 'Archivo no encontrado');
     }
     /**
      * Display a listing of the resource.
@@ -88,14 +85,34 @@ class DenunciaReincidenciaController extends Controller
         // Consultamos el folio para enviarlo a la vista del correo
         $folio = Denuncia::find($denuncia)->folio;
 
+
+
+
+        // Obtener la fecha y hora actual en el formato deseado
+        //$timestamp = now()->format('Ymd_His');
+
+        // Crear el nombre del archivo con la fecha y hora
+        //$archivoNombre = $denuncia . '_R_' . $timestamp . '.' . $archivo->extension();
+
+        // Almacenar el archivo en la carpeta 'documents' en el almacenamiento local
+        //$archivoPath = $archivo->storeAs('documents', $archivoNombre, 'local');
+
+
+        $archivoPath = null;
+
         // Obtener la fecha y hora actual en el formato deseado
         $timestamp = now()->format('Ymd_His');
 
-        // Crear el nombre del archivo con la fecha y hora
-        $archivoNombre = $denuncia . '_R_' . $timestamp . '.' . $archivo->extension();
+        if ($request->hasFile('archivo') && $request->file('archivo')->isValid()) {
 
-        // Almacenar el archivo en la carpeta 'documents' en el almacenamiento local
-        $archivoPath = $archivo->storeAs('documents', $archivoNombre, 'local');
+            $archivoNombre = $denuncia . '_R_' . $timestamp . '.' . $request->file('archivo')->extension();
+
+            $archivoPath = $request->file('archivo')->storeAs(
+                'documents/reincidencia',
+                $archivoNombre,
+                'local'
+            );
+        }
 
         //Guardar la información del archivo en la base de datos
         $registro = new DenunciaReincidencia();

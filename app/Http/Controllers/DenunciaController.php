@@ -132,30 +132,7 @@ class DenunciaController extends Controller
          // Pasar los datos a la vista
         return view('formulario', compact('clues'));
     }
-
     
-
-        
-
-    
-
-
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
     /**
      * 
@@ -283,38 +260,14 @@ class DenunciaController extends Controller
 
     public function download($filename)
     {
-        $filePath = storage_path('app/documents/' . $filename);
+        $filePath = storage_path('app/documents/denuncia/' . $filename);
 
-        if (file_exists($filePath)) 
+        if (file_exists($filePath))
         {
             return response()->download($filePath);
-        } 
-        else 
-        {
-            return redirect()->back()->with('error', 'Archivo no encontrado');
         }
+
+        return redirect()->back()->with('error', 'Archivo no encontrado');
     }
    
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    
-
-    
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

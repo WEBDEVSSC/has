@@ -1,131 +1,187 @@
 @include('micrositio.partials.header')
 
-    <div class="container">
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, #6f42c1 0%, #4b2e83 100%);
+        color: white;
+        border-radius: 20px;
+        padding: 40px;
+        margin-top: 20px;
+        margin-bottom: 30px;
+        box-shadow: 0 10px 30px rgba(0,0,0,.15);
+    }
 
-        <center><h1 class="display-8 fw-bold text-black mt-3">Reincidencia de denuncia SSC/HAS/2025/{{ $denuncia->folio}}</h1></center>
-        
-        <div class="row">
-           
-            <div class="col-md-12">
+    .form-card {
+        background: #fff;
+        border-radius: 18px;
+        padding: 30px;
+        box-shadow: 0 8px 20px rgba(0,0,0,.08);
+    }
 
-                <div class="p-5 mb-4 bg-body-tertiary rounded-3 mt-3">
-                    <div class="container-fluid py-8">
+    .section-title {
+        color: #4b2e83;
+        font-weight: 700;
+    }
 
-                        
-                        
-                            <div class="col">
-                                <div class="mb-5">
-                                    <p>Descripción del evento.</p>
-                                    
-                                    <form action="{{ route('buzonReincidenciaStore') }}" method="POST" enctype="multipart/form-data">
+    .highlight-box {
+        background: #f8f9fa;
+        border-left: 5px solid #6f42c1;
+        padding: 20px;
+        border-radius: 12px;
+        margin-bottom: 25px;
+    }
 
-                                    @csrf
+    .captcha-box {
+        background: #f8f9fa;
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+    }
 
-                                    <input type="hidden" name="id_denuncia" id="id_denuncia" value={{ $denuncia->id }}>
-                                    <input type="hidden" name="folio" id="folio" value={{ $denuncia->folio }}>
-                                    
-                                    <textarea name="descripcion" id="descripcion" rows="10" class="form-control"></textarea>
-                                    <!-- MOSTRAMOS EL ERROR EN CASO DE QUE EXISTA -->
-                                    @error('descripcion')
-                                        <p><strong><div class="text-danger">{{ $message }}</div></strong></p>
-                                    @enderror
+    .btn-purple {
+        background-color: #6f42c1;
+        color: white;
+        border: none;
+        border-radius: 50px;
+        padding: 12px 30px;
+        font-weight: 600;
+        transition: .3s;
+    }
 
-                                    <p>En caso de tener alguna prueba, favor de anexarla</p>
-                                    <input type="file" name="archivo" id="archivo" class="form-contro-input">
-                                    @error('archivo')
-                                        <div class="text-red-500 text-sm mt-2">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
+    .btn-purple:hover {
+        background-color: #5a32a3;
+        color: white;
+    }
+</style>
 
-                            <!-- ---------------------------------- -->
+<div class="container py-4">
 
-                            <div class="row mt-3">
-                            <div class="col-md-4"></div>
-                            <div class="col-md-4">
+    <!-- ENCABEZADO -->
+    <div class="hero-section text-center">
+        <h1 class="display-6 fw-bold">
+            Reincidencia de Denuncia
+        </h1>
 
-                                <center>
-                                <div>
-                                <img src="{{ captcha_src('flat') }}" onclick="this.src='{{ captcha_src('flat') }}'+Math.random()" style="cursor:pointer;">
-                                @error('denuncia_si')<p class="text-danger mt-2">{{ $message }}</p>@enderror 
-                                <br>
-                                <small>Clic sobre la imagen para recargarla</small>
-                                </div>
-                                </center>
+        <p class="lead mb-0">
+            Folio SSC/HAS/2025/{{ $denuncia->folio }}
+        </p>
+    </div>
 
-                                <br>
+    <div class="row justify-content-center">
 
-                                <input type="text" name="captcha" class="form-control" placeholder="CAPTURE CÓDIGO">
+        <div class="col-lg-8">
 
-                                @error('captcha')
-                                    <div style="color:red">{{ $message }}</div>
-                                @enderror
+            <div class="form-card">
 
-                            </div>
-                            <div class="col-md-4"></div>
-                            </div>
+                <h3 class="section-title mb-4">
+                    Registro de Reincidencia
+                </h3>
 
-                            <!-- ---------------------------------- -->
-                        
-                            <div class="row mt-3">
-                                <div class="mb-2">
-                                    <center><button type="submit" class="btn btn-purple">REGISTRAR REINCIDENCIA</button></center> 
-                                </div>
-                            </div>
-                            </div>
-                        
-                        </div>
-                            
-                            </form>
-                        
-                            
-                    </div>
+                <div class="highlight-box">
+                    Describa de forma clara los nuevos hechos relacionados con
+                    la denuncia previamente registrada. Si cuenta con evidencia,
+                    puede anexarla al formulario.
                 </div>
 
+                <form action="{{ route('buzonReincidenciaStore') }}"
+                      method="POST"
+                      enctype="multipart/form-data">
+
+                    @csrf
+
+                    <input type="hidden"
+                           name="id_denuncia"
+                           value="{{ $denuncia->id }}">
+
+                    <input type="hidden"
+                           name="folio"
+                           value="{{ $denuncia->folio }}">
+
+                    <!-- DESCRIPCIÓN -->
+
+                    <div class="mb-4">
+
+                        <label class="form-label fw-bold">
+                            Descripción del Evento
+                        </label>
+
+                        <textarea
+                            name="descripcion"
+                            rows="8"
+                            class="form-control @error('descripcion') is-invalid @enderror"
+                            placeholder="Describa detalladamente los nuevos hechos...">{{ old('descripcion') }}</textarea>
+
+                        @error('descripcion')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+
+                    </div>
+
+                    <!-- ARCHIVO -->
+
+                    <div class="mb-4">
+
+                        <label class="form-label fw-bold">
+                            Evidencia (Opcional)
+                        </label>
+
+                        <input type="file"
+                               name="archivo"
+                               class="form-control @error('archivo') is-invalid @enderror">
+
+                        @error('archivo')
+                            <div class="invalid-feedback d-block">
+                                {{ $message }}
+                            </div>
+                        @enderror
+
+                    </div>
+
+                    <!-- CAPTCHA -->
+
+                    <div class="captcha-box mb-4">
+
+                        <img
+                            src="{{ captcha_src('flat') }}"
+                            onclick="this.src='{{ captcha_src('flat') }}'+Math.random()"
+                            style="cursor:pointer;"
+                            class="img-fluid rounded"
+                            alt="Captcha">
+
+                        <div class="mt-2">
+                            <small class="text-muted">
+                                Haga clic sobre la imagen para generar un nuevo código.
+                            </small>
+                        </div>
+
+                        <input
+                            type="text"
+                            name="captcha"
+                            class="form-control mt-3 @error('captcha') is-invalid @enderror"
+                            placeholder="Ingrese el código">
+
+                        @error('captcha')
+                            <div class="invalid-feedback d-block">
+                                {{ $message }}
+                            </div>
+                        @enderror
+
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-purple">
+                            REGISTRAR REINCIDENCIA
+                        </button>
+                    </div>
+
+                </form>
+
             </div>
+
         </div>
 
-        
+    </div>
 
-    </div><!-- CONTAINER -->
-
-    @section('plugins.Sweetalert2', true)
-
-    @if(session('error'))
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            Swal.fire({
-                title: 'Error',
-                text: "{{ session('error') }}",
-                icon: 'error',
-                confirmButtonText: 'Ok'
-            });
-        });
-    </script>
-    @endif
-
-            <!-- Incluye jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <!-- Incluye Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6k3I4F+VppvIEnq0u5tkU7l1RZm5SaaPqC+78LUeF9v/8gV56N4FJP" crossorigin="anonymous"></script>
-
-    <!-- Incluye SweetAlert2 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <!-- Incluye Select2 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
-    <!-- Incluye jQuery y Bootstrap JS 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>-->
-
-
-    <!-- ----------------------------------------------- -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-
-    
-    <!-- -- -->
-  </body>
-</html>
-
+</div>

@@ -33,6 +33,7 @@ use App\Models\DenunciaDocumentacion;
 Route::get('/', [MicroSitioController::class, 'inicio'])->name('inicio');
 
 Route::get('/formato-denuncia',[MicroSitioController::class,'formatoDenuncia'])->name('formatoDenuncia');
+
 Route::post('/formato-denuncia-store',[MicroSitioController::class,'formatoDenunciaStore'])->name('formatoDenunciaStore');
 
 Route::get('/protocolo', [MicroSitioController::class, 'protocolo'])->name('protocolo');
@@ -142,7 +143,7 @@ Route::middleware(['auth'])->group(function ()
     Route::post('admin/{id}/documentoshow', [DenunciaDocumentacionController::class, 'show'])->name('documento.show');
 
     //ENLACE PARA DESCARGAR DE MANERA SEGURA LOS DOCUMENTOS
-    Route::get('download/{filename}', [DenunciaDocumentacionController::class, 'download'])->name('file.download');
+    Route::get('admin/documentos/download/{filename}', [DenunciaDocumentacionController::class, 'download'])->name('documento.download');
 
     /*
     *
@@ -158,7 +159,7 @@ Route::middleware(['auth'])->group(function ()
     Route::post('admin/{id}/reincidenciatore', [DenunciaReincidenciaController::class, 'store'])->name('reincidencia.store');
 
     //ENLACE PARA DESCARGAR DE MANERA SEGURA LOS DOCUMENTOS
-    Route::get('download/{filename}', [DenunciaReincidenciaController::class, 'download'])->name('file.download');
+    Route::get('admin/reincidencia/download/{filename}', [DenunciaReincidenciaController::class, 'download'])->name('file.download');
 
     /**
      * 
@@ -197,7 +198,7 @@ Route::middleware(['auth'])->group(function ()
     Route::get('admin/usuarios/{id}/edit', [UsuarioController::class, 'edit'])->name('usuarios.edit')->middleware('can:superAdmin');
 
     Route::put('admin/usuarios/{id}', [UsuarioController::class, 'update'])->name('usuarios.update')->middleware('can:superAdmin');
-    
+
     Route::delete('admin/usuarios/{id}', [UsuarioController::class, 'destroy'])->name('usuarios.destroy')->middleware('can:superAdmin');
 
 });

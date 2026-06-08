@@ -581,7 +581,7 @@
                             <hr>
 
                             @if($documentacion->archivo)
-                                <a class="btn btn-dark btn-sm btn-block" href="{{ route('file.download', basename($documentacion->archivo)) }}">Descargar archivo</a>
+                                <a class="btn btn-dark btn-sm btn-block" href="{{ route('documento.download', basename($documentacion->archivo)) }}">Descargar archivo</a>
                             @else
                                 
                             @endif

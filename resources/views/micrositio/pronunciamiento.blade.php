@@ -1,70 +1,210 @@
 @include('micrositio.partials.header')
 
-<br>
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, #6f42c1 0%, #4b2e83 100%);
+        color: white;
+        border-radius: 20px;
+        padding: 50px 40px;
+        margin-top: 20px;
+        margin-bottom: 40px;
+        box-shadow: 0 10px 30px rgba(0,0,0,.15);
+    }
 
-<!-- -------------------------- -->
+    .section-title {
+        color: #4b2e83;
+        font-weight: 700;
+    }
 
-<div class="container mx-auto p-4">
+    .info-card {
+        background: #ffffff;
+        border-radius: 18px;
+        padding: 30px;
+        box-shadow: 0 8px 20px rgba(0,0,0,.08);
+        height: 100%;
+    }
 
-    <center><h3 class="text-3xl font-bold dark:text-purple-600">Pronunciamiento Cero Tolerancia</h3></center>
+    .objective-card {
+        background: #f8f9fa;
+        border-left: 5px solid #6f42c1;
+        border-radius: 12px;
+        padding: 18px;
+        margin-bottom: 15px;
+        transition: all .3s ease;
+    }
 
+    .objective-card:hover {
+        transform: translateX(5px);
+        box-shadow: 0 5px 15px rgba(0,0,0,.08);
+    }
+
+    .objective-card h5 {
+        color: #4b2e83;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .pdf-card {
+        background: #ffffff;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 8px 20px rgba(0,0,0,.08);
+    }
+
+    .btn-purple {
+        background-color: #6f42c1;
+        color: white;
+        border-radius: 50px;
+        padding: 10px 25px;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .btn-purple:hover {
+        background-color: #5a32a3;
+        color: white;
+    }
+
+    .info-box {
+        background: #f8f9fa;
+        border-left: 5px solid #6f42c1;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 25px;
+    }
+</style>
+
+<div class="container py-4">
+
+<!-- HERO -->
+<div class="hero-section text-center">
+    <h1 class="display-5 fw-bold mb-3">
+        Pronunciamiento de Cero Tolerancia
+    </h1>
+
+    <p class="lead mb-0">
+        Compromiso institucional para prevenir, atender y erradicar cualquier
+        manifestación de hostigamiento, acoso sexual, violencia y discriminación.
+    </p>
 </div>
 
-<div class="container mx-auto p-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="row g-4">
 
-    <div class="col-span-1">
-        <p class="mb-3 text-gray-500 dark:text-black">El "Pronunciamiento Cero Tolerancia" es una declaración oficial que establece una política de tolerancia cero hacia comportamientos o prácticas específicas dentro de una organización, institución, o comunidad. Este pronunciamiento se enfoca en la erradicación de conductas inaceptables, como el hostigamiento, el acoso sexual, la violencia, la corrupción o cualquier forma de discriminación.</p>        
-        
-        <h2 class="mb-2 text-lg font-semibold text-gray-900 dark:text-purple-500">Objetivos Clave</h2>
-        
-        <ol class="space-y-4 text-gray-500 list-decimal list-inside dark:text-black">
-        <li>
-        <strong>Promover un Ambiente Seguro y Respetuoso</strong>
-            <ul class="ps-5 mt-2 space-y-1 list-disc list-inside">
-                <li>La política busca asegurar que todos los miembros de la organización se sientan seguros y respetados, sin temor a ser víctimas de comportamientos inapropiados o dañinos.</li>
-            </ul>
-        </li>
-        <li>
-        <strong>Establecer Normas Claras:</strong>
-            <ul class="ps-5 mt-2 space-y-1 list-disc list-inside">
-                <li>Define claramente qué comportamientos son inaceptables y proporciona un marco para la conducta esperada dentro de la organización o comunidad.</li>
-            </ul>
-        </li>
-        <li>
-        <strong>Garantizar Acción Inmediata:</strong>
-            <ul class="ps-5 mt-2 space-y-1 list-disc list-inside">
-                <li>Se compromete a tomar medidas firmes y rápidas ante cualquier violación de la política, sin permitir excepciones ni tolerancia hacia las infracciones.</li>
-            </ul>
-        </li>
-        <li>
-        <strong>Fomentar la Responsabilidad y la Transparencia:</strong>
-            <ul class="ps-5 mt-2 space-y-1 list-disc list-inside">
-                <li>Refuerza la importancia de la rendición de cuentas y la transparencia en la gestión de casos y la aplicación de sanciones.</li>
-            </ul>
-        </li>
-        <li>
-        <strong>Educación y Concienciación:</strong>
-            <ul class="ps-5 mt-2 space-y-1 list-disc list-inside">
-                <li>Promueve la educación y la formación continua para prevenir la ocurrencia de conductas inaceptables y para educar a los miembros sobre las políticas y procedimientos establecidos.</li>
-            </ul>
-        </li>
-        </ol>
+    <!-- INFORMACIÓN -->
+    <div class="col-lg-4">
 
+        <div class="info-card">
 
+            <h3 class="section-title mb-4">
+                ¿Qué es el Pronunciamiento de Cero Tolerancia?
+            </h3>
 
+            <p class="text-muted">
+                El Pronunciamiento de Cero Tolerancia es una declaración oficial
+                mediante la cual la institución reafirma su compromiso con la
+                construcción de ambientes laborales seguros, inclusivos y
+                respetuosos para todas las personas.
+            </p>
+
+            <div class="info-box">
+                <strong>Compromiso Institucional:</strong><br>
+                Ninguna conducta de hostigamiento, acoso sexual, violencia,
+                discriminación o abuso será tolerada dentro de la Secretaría
+                de Salud de Coahuila.
+            </div>
+
+            <h4 class="section-title mb-3">
+                Objetivos Principales
+            </h4>
+
+            <div class="objective-card">
+                <h5>1. Ambiente Seguro y Respetuoso</h5>
+                <p class="mb-0">
+                    Garantizar espacios laborales donde todas las personas
+                    puedan desempeñarse con dignidad y seguridad.
+                </p>
+            </div>
+
+            <div class="objective-card">
+                <h5>2. Normas Claras de Conducta</h5>
+                <p class="mb-0">
+                    Definir comportamientos aceptables e inaceptables dentro
+                    de la institución.
+                </p>
+            </div>
+
+            <div class="objective-card">
+                <h5>3. Acción Inmediata</h5>
+                <p class="mb-0">
+                    Atender oportunamente cualquier conducta que contravenga
+                    las políticas institucionales.
+                </p>
+            </div>
+
+            <div class="objective-card">
+                <h5>4. Transparencia y Responsabilidad</h5>
+                <p class="mb-0">
+                    Fortalecer la rendición de cuentas y la correcta gestión
+                    de los casos presentados.
+                </p>
+            </div>
+
+            <div class="objective-card">
+                <h5>5. Capacitación y Sensibilización</h5>
+                <p class="mb-0">
+                    Promover la formación continua para prevenir conductas
+                    indebidas y fomentar una cultura de respeto.
+                </p>
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="{{ asset('docs/PRONUNCIAMIENTO_12-09-2024.pdf') }}"
+                   target="_blank"
+                   class="btn btn-purple">
+                    Descargar Documento PDF
+                </a>
+            </div>
+
+        </div>
 
     </div>
 
-    <div class="col-span-1">
-        <iframe src="{{ asset('docs/PRONUNCIAMIENTO_12-09-2024.pdf') }}" width="100%" height="1200px">
-            Este navegador no soporta PDFs. Por favor descarga el PDF para verlo: 
-            <a href="{{ asset('docs/PRONUNCIAMIENTO_12-09-2024.pdf') }}">Descargar PDF</a>.
-        </iframe>
+    <!-- PDF -->
+    <div class="col-lg-8">
+
+        <div class="pdf-card">
+
+            <div class="p-3 border-bottom bg-light">
+                <h5 class="mb-0 section-title">
+                    Consulta del Pronunciamiento Oficial
+                </h5>
+            </div>
+
+            <iframe
+                src="{{ asset('docs/PRONUNCIAMIENTO_12-09-2024.pdf') }}"
+                width="100%"
+                height="1200"
+                style="border:none;">
+            </iframe>
+
+        </div>
+
     </div>
 
 </div>
 
-<!-- -------------------------- -->
-<script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
+<!-- FOOTER -->
+<div class="text-center mt-5 mb-4">
+    <small class="text-muted">
+        Secretaría de Salud de Coahuila · Política Institucional de Cero Tolerancia
+        al Hostigamiento y Acoso Sexual.
+    </small>
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

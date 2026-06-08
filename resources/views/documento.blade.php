@@ -108,7 +108,7 @@
                         <td>{{ $documento->descripcion }}</td> 
                         <td>
                             @if($documento->archivo)
-                                <a class="btn btn-info btn-sm btn-block" href="{{ route('file.download', basename($documento->archivo)) }}">Descargar archivo</a>
+                                <a class="btn btn-info btn-sm btn-block" href="{{ route('documento.download', basename($documento->archivo)) }}">Descargar archivo</a>
                             @else
                                 No disponible
                             @endif

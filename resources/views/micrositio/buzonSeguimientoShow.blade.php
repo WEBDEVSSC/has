@@ -1,100 +1,206 @@
 @include('micrositio.partials.header')
 
-    <div class="container">
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, #6f42c1 0%, #4b2e83 100%);
+        color: white;
+        border-radius: 20px;
+        padding: 50px 40px;
+        margin-top: 20px;
+        margin-bottom: 40px;
+        box-shadow: 0 10px 30px rgba(0,0,0,.15);
+    }
 
-        <center><h1 class="display-8 fw-bold text-black mt-3">Resultados de la Búsqueda SSC/HAS/{{ $denuncia->folio }}</h1></center>
-        
-        <div class="row">
-            <div class="col-md-6">
-                
-                <div class="p-5 mb-4 bg-body-tertiary rounded-3 mt-3">
-                    <div class="container-fluid py-8">
+    .info-card,
+    .form-card {
+        background: #fff;
+        border-radius: 18px;
+        padding: 30px;
+        box-shadow: 0 8px 20px rgba(0,0,0,.08);
+        height: 100%;
+    }
 
-                        <p>A continuación se enlistan todos los seguimientos que se le han dado a la denuncia realizada. Los registros están ordenados de acuerdo con la fecha de creación, mostrando primero los más recientes.</p>
+    .section-title {
+        color: #4b2e83;
+        font-weight: 700;
+    }
 
-                        <p>Si, lamentablemente, has sido víctima de una reincidencia relacionada con esta denuncia, te pedimos que la reportes a través del siguiente enlace.</p>
+    .step-card {
+        background: #f8f9fa;
+        border-left: 5px solid #6f42c1;
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 15px;
+    }
 
-                        <center><a href="{{ route('buzonReincidencia') }}" class="btn btn-purple">PRESENTAR REINCIDENCIA</a></center>
-                    
-                    </div>
+    .step-card h6 {
+        color: #4b2e83;
+        font-weight: 700;
+    }
+
+    .btn-purple {
+        background-color: #6f42c1;
+        color: white;
+        border: none;
+        border-radius: 50px;
+        padding: 12px 30px;
+        font-weight: 600;
+        transition: .3s;
+    }
+
+    .btn-purple:hover {
+        background-color: #5a32a3;
+        color: white;
+    }
+
+    .table-purple thead {
+        background: #6f42c1;
+        color: white;
+    }
+
+    .table-purple {
+        border-radius: 12px;
+        overflow: hidden;
+    }
+</style>
+
+<div class="container py-4">
+
+    <!-- HERO -->
+    <div class="hero-section text-center">
+        <h1 class="display-5 fw-bold mb-3">
+            Resultados de la Búsqueda
+        </h1>
+
+        <p class="lead mb-0">
+            SSC/HAS/{{ $denuncia->folio }}
+        </p>
+    </div>
+
+    <div class="row g-4">
+
+        <!-- INFORMACIÓN -->
+        <div class="col-lg-5">
+
+            <div class="info-card">
+
+                <h3 class="section-title mb-4">
+                    Seguimiento de la Denuncia
+                </h3>
+
+                <p class="text-muted">
+                    A continuación se muestran todos los seguimientos
+                    registrados para esta denuncia.
+                </p>
+
+                <div class="step-card">
+                    <h6>Información Importante</h6>
+                    <p class="mb-0">
+                        Los registros se muestran ordenados por fecha,
+                        comenzando por los más recientes.
+                    </p>
                 </div>
-                
-            </div>
-            <div class="col-md-6">
 
-                
+                <div class="step-card">
+                    <h6>¿Existe reincidencia?</h6>
+                    <p class="mb-0">
+                        Si ha vuelto a presentarse una situación relacionada
+                        con esta denuncia, puede generar una reincidencia
+                        para que sea incorporada al expediente.
+                    </p>
+                </div>
 
-                        <table class="table table-striped">
-                            <thead >
-                                <tr>
-                                    <th scope="col">
-                                        Seguimiento
-                                    </th>
-                                    <th scope="col">
-                                        Fecha
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse($seguimientos as $seguimiento)
-                                    <tr>
-                                        <td>{{ $seguimiento->mensaje }}</td>
-                                        <td>{{ $seguimiento->created_at->format('d/m/Y H:i') }}</td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="2" class="px-6 py-4 text-center text-gray-500">No hay seguimientos registrados.</td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-                                            
-                            
-                    
+                <div class="text-center mt-4">
+                    <a href="{{ route('buzonReincidencia') }}"
+                       class="btn btn-purple">
+                        PRESENTAR REINCIDENCIA
+                    </a>
+                </div>
+
             </div>
+
         </div>
 
-        
+        <!-- TABLA DE SEGUIMIENTOS -->
+        <div class="col-lg-7">
 
-    </div><!-- CONTAINER -->
+            <div class="form-card">
 
-    @section('plugins.Sweetalert2', true)
+                <h3 class="section-title mb-4">
+                    Historial de Seguimientos
+                </h3>
 
-    @if(session('error'))
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            Swal.fire({
-                title: 'Error',
-                text: "{{ session('error') }}",
-                icon: 'error',
-                confirmButtonText: 'Ok'
-            });
-        });
-    </script>
-    @endif
+                <div class="table-responsive">
 
-            <!-- Incluye jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                    <table class="table table-striped table-hover table-purple align-middle">
 
-    <!-- Incluye Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6k3I4F+VppvIEnq0u5tkU7l1RZm5SaaPqC+78LUeF9v/8gV56N4FJP" crossorigin="anonymous"></script>
+                        <thead>
+                            <tr>
+                                <th>Seguimiento</th>
+                                <th width="180">Fecha</th>
+                            </tr>
+                        </thead>
 
-    <!-- Incluye SweetAlert2 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                        <tbody>
 
-    <!-- Incluye Select2 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+                            @forelse($seguimientos as $seguimiento)
 
-    <!-- Incluye jQuery y Bootstrap JS 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>-->
+                                <tr>
+                                    <td>
+                                        {{ $seguimiento->mensaje }}
+                                    </td>
 
+                                    <td>
+                                        {{ $seguimiento->created_at->format('d/m/Y H:i') }}
+                                    </td>
+                                </tr>
 
-    <!-- ----------------------------------------------- -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+                            @empty
 
-    
-    <!-- -- -->
-  </body>
+                                <tr>
+                                    <td colspan="2" class="text-center text-muted py-4">
+                                        No hay seguimientos registrados.
+                                    </td>
+                                </tr>
+
+                            @endforelse
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="text-center mt-5">
+        <small class="text-muted">
+            Secretaría de Salud de Coahuila · Sistema de Seguimiento de Denuncias
+            de Hostigamiento y Acoso Sexual.
+        </small>
+    </div>
+
+</div>
+
+@if(session('error'))
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    Swal.fire({
+        title: 'Error',
+        text: "{{ session('error') }}",
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+    });
+});
+</script>
+@endif
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
 </html>
-
