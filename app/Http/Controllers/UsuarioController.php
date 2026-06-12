@@ -74,7 +74,7 @@ class UsuarioController extends Controller
             'chat_id' => 'required|string|max:255',
             'notificacion' => 'required|integer|in:0,1',
             'password' => 'nullable|string|min:8',
-            'role' => 'required|string|in:admin,subsecretario,superAdmin',
+            'role' => 'required|string|in:admin,subsecretario,superAdmin,user',
         ],[
             'name.required' => 'El nombre es obligatorio.',
             'name.max' => 'El nombre no puede exceder los 255 caracteres.',
