@@ -22,15 +22,13 @@ class UsuarioController extends Controller
 
     public function store(Request $request)
     {
-        
-
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'chat_id' => 'required|string|max:255',
             'notificacion' => 'required|integer|in:0,1',
             'password' => 'required|string|min:8',
-            'role' => 'required|string|in:admin,subsecretario,superAdmin',
+            'role' => 'required|string|in:admin,subsecretario,superAdmin,user',
         ],[
             'name.required' => 'El campo nombre es obligatorio.',
             'email.required' => 'El campo correo electrónico es obligatorio.',
