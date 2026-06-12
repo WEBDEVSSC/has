@@ -2,6 +2,21 @@
 
 @section('title', 'Usuarios')
 
+@section('plugins.Sweetalert2', true)
+
+@if(session('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    title: 'Éxito',
+                    text: "{{ session('success') }}",
+                    icon: 'success',
+                    confirmButtonText: 'Ok'
+                });
+            });
+        </script>
+@endif
+
 @section('content_header')
     <h1><strong>Usuarios</strong><small class="text-muted">Panel de Control</small></h1>
 @stop
