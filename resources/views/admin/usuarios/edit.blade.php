@@ -89,6 +89,7 @@
                         <option value="superAdmin" {{ old('role', $usuario->role) == 'superAdmin' ? 'selected' : '' }}>SuperAdmin</option>
                         <option value="admin" {{ old('role', $usuario->role) == 'admin' ? 'selected' : '' }}>Admin</option>
                         <option value="subsecretario" {{ old('role', $usuario->role) == 'subsecretario' ? 'selected' : '' }}>Subsecretario</option>
+                        <option value="user" {{ old('role', $usuario->role) == 'user' ? 'selected' : '' }}>Usuario</option>
                     </select>
                     
                     @error('role')
