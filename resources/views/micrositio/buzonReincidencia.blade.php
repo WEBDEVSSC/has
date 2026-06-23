@@ -210,30 +210,16 @@
 
                 <div class="captcha-box mb-4">
 
-                    <img
-                        src="{{ captcha_src('flat') }}"
-                        onclick="this.src='{{ captcha_src('flat') }}'+Math.random()"
-                        style="cursor:pointer;"
-                        class="img-fluid rounded"
-                        alt="Captcha">
+                    <center>
 
-                    <div class="mt-2">
-                        <small class="text-muted">
-                            Haga clic sobre la imagen para generar un nuevo código.
-                        </small>
+                    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
+                    <div class="cf-turnstile"
+                        data-sitekey="{{ env('TURNSTILE_SITE_KEY') }}"
+                        data-theme="light">
                     </div>
 
-                    <input
-                        type="text"
-                        name="captcha"
-                        class="form-control mt-3 @error('captcha') is-invalid @enderror"
-                        placeholder="Ingrese el código de la imagen">
-
-                    @error('captcha')
-                        <div class="invalid-feedback d-block">
-                            {{ $message }}
-                        </div>
-                    @enderror
+                    </center>
 
                 </div>
 

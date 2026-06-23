@@ -33,7 +33,7 @@ class MicroSitioController extends Controller
         //dd($request->documento_dos);
         // Validamos los datos
         $request -> validate([
-            'captcha' => 'required|captcha',
+            //'captcha' => 'required|captcha',
             //0
             'tipo_denuncia' => 'required',
             //1
@@ -184,7 +184,25 @@ class MicroSitioController extends Controller
             'denuncia_si.required_if' => 'El campo denuncia (SI) es obligatorio cuando se presenta una denuncia.',
         ]);
 
-        
+        // VALIDACION PARA CLOUDFLARE
+
+        $turnstile = Http::post(
+            'https://challenges.cloudflare.com/turnstile/v0/siteverify',
+            [
+                'secret' => env('TURNSTILE_SECRET_KEY'),
+                'response' => $request->input('cf-turnstile-response'),
+                'remoteip' => $request->ip(),
+            ]
+        );
+
+        $result = $turnstile->json();
+
+        if (!($result['success'] ?? false))
+        {
+            return back()->withErrors([
+                'captcha' => 'Verificación fallida, intenta nuevamente.'
+            ]);
+        }
 
         // Generamos el status
         $status = "NUEVO";
@@ -420,7 +438,7 @@ class MicroSitioController extends Controller
         
         // Validamos los datos
         $request->validate([
-                'captcha' => 'required|captcha',
+                //'captcha' => 'required|captcha',
                 'folio' => 'required|digits:6',
             ], [
                 'captcha.required' => 'El captcha es obligatorio.',
@@ -428,6 +446,24 @@ class MicroSitioController extends Controller
                 'folio.required' => 'El folio es obligatorio.',
                 'folio.digits' => 'El folio debe tener exactamente 6 dígitos.',
             ]);
+
+        $turnstile = Http::post(
+            'https://challenges.cloudflare.com/turnstile/v0/siteverify',
+            [
+                'secret' => env('TURNSTILE_SECRET_KEY'),
+                'response' => $request->input('cf-turnstile-response'),
+                'remoteip' => $request->ip(),
+            ]
+        );
+
+        $result = $turnstile->json();
+
+        if (!($result['success'] ?? false))
+        {
+            return back()->withErrors([
+                'captcha' => 'Verificación fallida, intenta nuevamente.'
+            ]);
+        }
 
         // Busca la denuncia por el folio
         $denuncia = Denuncia::where('folio', $request->folio)->first();   
@@ -475,7 +511,7 @@ class MicroSitioController extends Controller
         // Validamos los datos ingresados
         $validatedData = $request->validate([
             'folio' => 'required|numeric|digits:6',
-            'captcha' => 'required|captcha',
+            //'captcha' => 'required|captcha',
         ],[
             'folio.required' => 'El folio es necesario',
             'folio.numeric' => 'El folio debe ser numerico',
@@ -483,6 +519,24 @@ class MicroSitioController extends Controller
             'captcha.required' => 'El captcha es obligatorio.',
             'captcha.captcha' => 'El captcha ingresado es incorrecto.',
         ]);
+
+        $turnstile = Http::post(
+            'https://challenges.cloudflare.com/turnstile/v0/siteverify',
+            [
+                'secret' => env('TURNSTILE_SECRET_KEY'),
+                'response' => $request->input('cf-turnstile-response'),
+                'remoteip' => $request->ip(),
+            ]
+        );
+
+        $result = $turnstile->json();
+
+        if (!($result['success'] ?? false))
+        {
+            return back()->withErrors([
+                'captcha' => 'Verificación fallida, intenta nuevamente.'
+            ]);
+        }
 
         // Buscamos el id que corresponda a ese folio y lo almacenamos en id_denuncia
         $denuncia = Denuncia::where('folio', $request->folio)->first();
@@ -501,7 +555,7 @@ class MicroSitioController extends Controller
     {
         // Validamos los datos que vienen desde el formulario
         $request->validate([
-            'captcha' => 'required|captcha',
+            //'captcha' => 'required|captcha',
             'descripcion'=>'required|string',
             'archivo' => 'file|mimes:jpg,jpeg,png,mp4,mp3,pdf,doc,docx,|max:10240',
         ],[
@@ -510,6 +564,24 @@ class MicroSitioController extends Controller
             'captcha.required' => 'El captcha es obligatorio.',
             'captcha.captcha' => 'El captcha ingresado es incorrecto.',
         ]);
+
+        $turnstile = Http::post(
+            'https://challenges.cloudflare.com/turnstile/v0/siteverify',
+            [
+                'secret' => env('TURNSTILE_SECRET_KEY'),
+                'response' => $request->input('cf-turnstile-response'),
+                'remoteip' => $request->ip(),
+            ]
+        );
+
+        $result = $turnstile->json();
+
+        if (!($result['success'] ?? false))
+        {
+            return back()->withErrors([
+                'captcha' => 'Verificación fallida, intenta nuevamente.'
+            ]);
+        }
         
         // Traemos las variables ocultas en el codigo
         $id_denuncia = $request->input('id_denuncia');

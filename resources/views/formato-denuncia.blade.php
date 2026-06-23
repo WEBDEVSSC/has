@@ -615,21 +615,17 @@
           <div class="col-md-4">
 
             <center>
-            <div>
-              <img src="{{ captcha_src('flat') }}" onclick="this.src='{{ captcha_src('flat') }}'+Math.random()" style="cursor:pointer;">
-              @error('denuncia_si')<p class="text-danger mt-2">{{ $message }}</p>@enderror 
-              <br>
-              <small>Clic sobre la imagen para recargarla</small>
-            </div>
+
+              <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
+              <div class="cf-turnstile"
+                  data-sitekey="{{ env('TURNSTILE_SITE_KEY') }}"
+                  data-theme="light">
+              </div>
+
             </center>
 
-            <br>
-
-            <input type="text" name="captcha" class="form-control" placeholder="CAPTURE CÓDIGO">
-
-            @error('captcha')
-                <div style="color:red">{{ $message }}</div>
-            @enderror
+            
 
           </div>
           <div class="col-md-4"></div>
