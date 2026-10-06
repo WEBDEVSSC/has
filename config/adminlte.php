@@ -292,57 +292,50 @@ return [
     | https://github.com/jeroennoten/Laravel-AdminLTE/wiki/Menu-Configuration
     |
     */
+'menu' => [
 
-    'menu' => [
-        // Navbar items:
-        [
-            'type' => 'fullscreen-widget',
-            'topnav_right' => true,
-        ],
+    ['header' => 'DASHBOARD'],
 
-        ['header' => 'DASHBOARD'],
-
-        [
-            'text' => 'Home',
-            'url' => '/home',
-            'icon' => 'fas fa-fw fa-chart-line',
-        ],
-
-        ['header' => 'DENUNCIAS'],
-        [
-            'text' => 'Nuevas',
-            'url' => 'admin/nuevas',
-            'icon' => 'fas fa-fw fa-envelope',
-            'can' => 'user',
-        ],
-        [
-            'text' => 'En proceso',
-            'url' => 'admin/enproceso',
-            'icon' => 'fas fa-fw fa-file',
-            'can' => 'user',
-        ],
-        [
-            'text' => 'Atendidas',
-            'url' => 'admin/atendidas',
-            'icon' => 'fas fa-fw fa-lock',
-            'can' => 'user',
-        ],
-        [
-            'text' => 'Total',
-            'url' => 'admin/total',
-            'icon' => 'fas fa-fw fa-keyboard',
-            'can' => 'user',
-        ],
-
-        [
-            'text' => 'Usuarios',
-            'url' => 'admin/usuarios',
-            'icon' => 'fas fa-fw fa-users',
-            'can' => 'superAdmin',
-        ],
-
-
+    [
+        'text' => 'Home',
+        'route' => 'home', // En lugar de 'url' => '/home'
+        'icon' => 'fas fa-fw fa-chart-line',
     ],
+
+    ['header' => 'DENUNCIAS'],
+    [
+        'text' => 'Nuevas',
+        'route' => 'denuncias.nuevas', // Cambia por el ->name() de tu ruta
+        'icon' => 'fas fa-fw fa-envelope',
+        'can' => 'user',
+    ],
+    [
+        'text' => 'En proceso',
+        'route' => 'denuncias.enproceso', // Cambia por el ->name() de tu ruta
+        'icon' => 'fas fa-fw fa-file',
+        'can' => 'user',
+    ],
+    [
+        'text' => 'Atendidas',
+        'route' => 'denuncias.atendidas', // Cambia por el ->name() de tu ruta
+        'icon' => 'fas fa-fw fa-lock',
+        'can' => 'user',
+    ],
+    [
+        'text' => 'Total',
+        'route' => 'denuncias.total', // Cambia por el ->name() de tu ruta
+        'icon' => 'fas fa-fw fa-keyboard',
+        'can' => 'user',
+    ],
+
+    [
+        'text' => 'Usuarios',
+        'route' => 'usuarios.index', // Cambia por el ->name() de tu ruta
+        'icon' => 'fas fa-fw fa-users',
+        'can' => 'superAdmin',
+    ],
+
+],
 
     /*
     |--------------------------------------------------------------------------

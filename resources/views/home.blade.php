@@ -5,600 +5,447 @@
 @section('plugins.Chartjs', true)
 
 @section('content_header')
-    <h1>Dashboard {{ now()->year }}</h1>
+    <div class="d-flex justify-content-between align-items-center my-2">
+        <div>
+            <h1 class="font-weight-bold m-0" style="color: #2C3E50;">
+                Dashboard {{ now()->year }}
+            </h1>
+            <p class="text-muted small m-0">Panel de control de denuncias e indicadores institucionales</p>
+        </div>
+    </div>
 @stop
 
 @section('content')
 
-
+<!-- TARJETAS ESTADÍSTICAS SUPERIORES CON PALETA COMBINADA -->
 <div class="row">
-
-<div class="col-lg-3 col-6">
-
-    <div class="small-box bg-danger">
-        <div class="inner">
-            <h3>{{$totalDenunciasNuevas}}</h3>
-            <p>Nuevas</p>
-        </div>
-        <div class="icon">
-            <i class="ion ion-bag"></i>
-        </div>
-        <a href="{{ route('denuncias.nuevas') }}" class="small-box-footer">Detalles <i class="fas fa-arrow-circle-right"></i></a>
-    </div>
-
-</div>
-
-
-<div class="col-lg-3 col-6">
-
-    <div class="small-box bg-info">
-        <div class="inner">
-            <h3>{{$totalDenunciasEnProceso}}<sup style="font-size: 20px"></sup></h3>
-            <p>En proceso</p>
-        </div>
-        <div class="icon">
-            <i class="ion ion-stats-bars"></i>
-        </div>
-        <a href="{{ route('denuncias.enproceso') }}" class="small-box-footer">Detalles <i class="fas fa-arrow-circle-right"></i></a>
-    </div>
-
-</div>
-
-<div class="col-lg-3 col-6">
-
-    <div class="small-box bg-success">
-        <div class="inner">
-            <h3>{{$totalDenunciasAtendidas}}</h3>
-            <p>Atendidas</p>
-        </div>
-        <div class="icon">
-            <i class="ion ion-person-add"></i>
-        </div>
-        <a href="{{ route('denuncias.atendidas') }}" class="small-box-footer">Detalles <i class="fas fa-arrow-circle-right"></i></a>
-    </div>
-
-</div>
-
-
-<div class="col-lg-3 col-6">
-
-    <div class="small-box bg-dark">
-        <div class="inner">
-            <h3>{{ $totalDenunciasNuevas+$totalDenunciasEnProceso+$totalDenunciasAtendidas }}</h3>
-            <p>Total</p>
-        </div>
-        <div class="icon">
-            <i class="ion ion-pie-graph"></i>
-        </div>
-        <a href="{{ route('denuncias.total') }}" class="small-box-footer">Detalles <i class="fas fa-arrow-circle-right"></i></a>
-    </div>
-
-</div>
-
-</div>
-
-<!-- --------------------------------------------------------- -->
-
-<div class="row">
-    <div class="col-md-6">
-
-        
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">Top 5 de municipios con más denuncias</h3>
-            </div>
-            <div class="card-body">
-                <table class="table table-bordered">
-                <thead>
-                <tr>
-                <th style="width: 10px">#</th>
-                <th>Municipio</th>
-                <th style="width: 40px">Cantidad</th>
-                </tr>
-                </thead>
-                <tbody>
-
-                <tr>
-                    <td>1.</td>
-                    <td>{{ $municipio }}</td>
-                    <td><span class="badge bg-info">{{ $cantidadRepeticiones }}</span></td>
-                </tr>
-
-                <tr>
-                    <td>2.</td>
-                    <td>{{ $municipio_dos }}</td>
-                    <td><span class="badge bg-info">{{ $cantidadRepeticiones_dos }}</span></td>
-                </tr>
-
-                <tr>
-                    <td>3.</td>
-                    <td>{{ $municipio_tres }}</td>
-                    <td><span class="badge bg-info">{{ $cantidadRepeticiones_tres }}</span></td>
-                </tr>
-
-                <tr>
-                    <td>4.</td>
-                    <td>{{ $municipio_cuatro }}</td>
-                    <td><span class="badge bg-info">{{ $cantidadRepeticiones_cuatro }}</span></td>
-                </tr>
-
-                <tr>
-                    <td>5.</td>
-                    <td>{{ $municipio_cinco }}</td>  
-                    <td><span class="badge bg-info">{{ $cantidadRepeticiones_cinco }}</span></td>
-                </tr>
-
-                </tbody>
-                </table>
-            </div>
-        </div>
-
-    </div>
-    <div class="col-md-6">
-
-    <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">Registros por mes</h3>
-            </div>
-            <div class="card-body">
-
+    <!-- Nuevas (Morado Principal) -->
+    <div class="col-lg-3 col-sm-6 col-12 mb-4">
+        <div class="card border-0 shadow-sm rounded-lg h-100 overflow-hidden" style="background: linear-gradient(135deg, #4A148C 0%, #6A1B9A 100%); color: #fff;">
+            <div class="card-body d-flex align-items-center justify-content-between p-4">
                 <div>
+                    <span class="text-uppercase small font-weight-bold" style="letter-spacing: 1px; opacity: 0.85;">Nuevas</span>
+                    <h2 class="display-4 font-weight-bold mb-0 mt-1">{{ $totalDenunciasNuevas }}</h2>
+                </div>
+                <div class="rounded-circle p-3 d-flex align-items-center justify-content-center" style="background: rgba(255, 255, 255, 0.15); width: 60px; height: 60px;">
+                    <i class="fas fa-folder-plus fa-2x text-white"></i>
+                </div>
+            </div>
+            <a href="{{ route('denuncias.nuevas') }}" class="card-footer text-white text-decoration-none d-flex align-items-center justify-content-between py-2 px-4" style="background: rgba(0, 0, 0, 0.12); border: none;">
+                <span class="small font-weight-bold">Ver Detalles</span>
+                <i class="fas fa-arrow-right fa-sm"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- En Proceso (Azul Índigo) -->
+    <div class="col-lg-3 col-sm-6 col-12 mb-4">
+        <div class="card border-0 shadow-sm rounded-lg h-100 overflow-hidden" style="background: linear-gradient(135deg, #3F51B5 0%, #5C6BC0 100%); color: #fff;">
+            <div class="card-body d-flex align-items-center justify-content-between p-4">
+                <div>
+                    <span class="text-uppercase small font-weight-bold" style="letter-spacing: 1px; opacity: 0.85;">En Proceso</span>
+                    <h2 class="display-4 font-weight-bold mb-0 mt-1">{{ $totalDenunciasEnProceso }}</h2>
+                </div>
+                <div class="rounded-circle p-3 d-flex align-items-center justify-content-center" style="background: rgba(255, 255, 255, 0.15); width: 60px; height: 60px;">
+                    <i class="fas fa-spinner fa-2x text-white"></i>
+                </div>
+            </div>
+            <a href="{{ route('denuncias.enproceso') }}" class="card-footer text-white text-decoration-none d-flex align-items-center justify-content-between py-2 px-4" style="background: rgba(0, 0, 0, 0.12); border: none;">
+                <span class="small font-weight-bold">Ver Detalles</span>
+                <i class="fas fa-arrow-right fa-sm"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Atendidas (Teal / Verde Turquesa) -->
+    <div class="col-lg-3 col-sm-6 col-12 mb-4">
+        <div class="card border-0 shadow-sm rounded-lg h-100 overflow-hidden" style="background: linear-gradient(135deg, #00897B 0%, #26A69A 100%); color: #fff;">
+            <div class="card-body d-flex align-items-center justify-content-between p-4">
+                <div>
+                    <span class="text-uppercase small font-weight-bold" style="letter-spacing: 1px; opacity: 0.85;">Atendidas</span>
+                    <h2 class="display-4 font-weight-bold mb-0 mt-1">{{ $totalDenunciasAtendidas }}</h2>
+                </div>
+                <div class="rounded-circle p-3 d-flex align-items-center justify-content-center" style="background: rgba(255, 255, 255, 0.15); width: 60px; height: 60px;">
+                    <i class="fas fa-check-circle fa-2x text-white"></i>
+                </div>
+            </div>
+            <a href="{{ route('denuncias.atendidas') }}" class="card-footer text-white text-decoration-none d-flex align-items-center justify-content-between py-2 px-4" style="background: rgba(0, 0, 0, 0.12); border: none;">
+                <span class="small font-weight-bold">Ver Detalles</span>
+                <i class="fas fa-arrow-right fa-sm"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Total (Gris / Azul Oscuro Neutro) -->
+    <div class="col-lg-3 col-sm-6 col-12 mb-4">
+        <div class="card border-0 shadow-sm rounded-lg h-100 overflow-hidden" style="background: linear-gradient(135deg, #37474F 0%, #546E7A 100%); color: #fff;">
+            <div class="card-body d-flex align-items-center justify-content-between p-4">
+                <div>
+                    <span class="text-uppercase small font-weight-bold" style="letter-spacing: 1px; opacity: 0.85;">Total</span>
+                    <h2 class="display-4 font-weight-bold mb-0 mt-1">{{ $totalDenunciasNuevas + $totalDenunciasEnProceso + $totalDenunciasAtendidas }}</h2>
+                </div>
+                <div class="rounded-circle p-3 d-flex align-items-center justify-content-center" style="background: rgba(255, 255, 255, 0.15); width: 60px; height: 60px;">
+                    <i class="fas fa-chart-pie fa-2x text-white"></i>
+                </div>
+            </div>
+            <a href="{{ route('denuncias.total') }}" class="card-footer text-white text-decoration-none d-flex align-items-center justify-content-between py-2 px-4" style="background: rgba(0, 0, 0, 0.12); border: none;">
+                <span class="small font-weight-bold">Ver Detalles</span>
+                <i class="fas fa-arrow-right fa-sm"></i>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- SECCIÓN: TOP MUNICIPIOS Y BARRAS POR MES -->
+<div class="row">
+    <!-- Tabla Top 5 Municipios -->
+    <div class="col-lg-6 mb-4">
+        <div class="card border-0 shadow-sm rounded-lg h-100">
+            <div class="card-header bg-white border-0 pt-4 px-4">
+                <h5 class="font-weight-bold m-0" style="color: #2C3E50;">
+                    <i class="fas fa-map-marker-alt mr-2" style="color: #4A148C;"></i> Top 5 de municipios con más denuncias
+                </h5>
+            </div>
+            <div class="card-body px-4 pb-4">
+                <div class="table-responsive">
+                    <table class="table table-borderless align-middle mb-0">
+                        <thead class="text-muted border-bottom">
+                            <tr>
+                                <th style="width: 50px;">#</th>
+                                <th>Municipio</th>
+                                <th class="text-right" style="width: 100px;">Cantidad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-bottom-soft">
+                                <td class="font-weight-bold text-muted">1</td>
+                                <td class="font-weight-semibold text-dark">{{ $municipio }}</td>
+                                <td class="text-right">
+                                    <span class="badge badge-pill py-2 px-3" style="background-color: #F3E5F5; color: #4A148C; font-weight: 600;">{{ $cantidadRepeticiones }}</span>
+                                </td>
+                            </tr>
+                            <tr class="border-bottom-soft">
+                                <td class="font-weight-bold text-muted">2</td>
+                                <td class="font-weight-semibold text-dark">{{ $municipio_dos }}</td>
+                                <td class="text-right">
+                                    <span class="badge badge-pill py-2 px-3" style="background-color: #E8EAF6; color: #3F51B5; font-weight: 600;">{{ $cantidadRepeticiones_dos }}</span>
+                                </td>
+                            </tr>
+                            <tr class="border-bottom-soft">
+                                <td class="font-weight-bold text-muted">3</td>
+                                <td class="font-weight-semibold text-dark">{{ $municipio_tres }}</td>
+                                <td class="text-right">
+                                    <span class="badge badge-pill py-2 px-3" style="background-color: #E0F2F1; color: #00897B; font-weight: 600;">{{ $cantidadRepeticiones_tres }}</span>
+                                </td>
+                            </tr>
+                            <tr class="border-bottom-soft">
+                                <td class="font-weight-bold text-muted">4</td>
+                                <td class="font-weight-semibold text-dark">{{ $municipio_cuatro }}</td>
+                                <td class="text-right">
+                                    <span class="badge badge-pill py-2 px-3" style="background-color: #ECEFF1; color: #455A64; font-weight: 600;">{{ $cantidadRepeticiones_cuatro }}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="font-weight-bold text-muted">5</td>
+                                <td class="font-weight-semibold text-dark">{{ $municipio_cinco }}</td>
+                                <td class="text-right">
+                                    <span class="badge badge-pill py-2 px-3" style="background-color: #FCE4EC; color: #C2185B; font-weight: 600;">{{ $cantidadRepeticiones_cinco }}</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gráfica Registros por Mes -->
+    <div class="col-lg-6 mb-4">
+        <div class="card border-0 shadow-sm rounded-lg h-100">
+            <div class="card-header bg-white border-0 pt-4 px-4">
+                <h5 class="font-weight-bold m-0" style="color: #2C3E50;">
+                    <i class="fas fa-chart-bar mr-2" style="color: #3F51B5;"></i> Registros por mes
+                </h5>
+            </div>
+            <div class="card-body px-4 pb-4">
+                <div style="position: relative; height: 280px; width: 100%;">
                     <canvas id="denunciasPorMes"></canvas>
                 </div>
             </div>
-    </div>
-
-    
-
-
+        </div>
     </div>
 </div>
 
+<!-- SECCIÓN: GRÁFICAS DE DONA (DISTRIBUCIÓN) -->
 <div class="row">
-    <div class="col-md-3">
-
-        <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Registros por jurisdicción</h3>
+    <!-- Jurisdicción -->
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="card border-0 shadow-sm rounded-lg h-100">
+            <div class="card-header bg-white border-0 pt-4 px-3 text-center">
+                <h6 class="font-weight-bold m-0" style="color: #2C3E50;">Jurisdicción</h6>
+            </div>
+            <div class="card-body p-3 d-flex align-items-center justify-content-center">
+                <div style="position: relative; width: 100%; max-height: 230px;">
+                    <canvas id="registrosPorJurisdiccion"></canvas>
                 </div>
-                <div class="card-body">
-
-                    <div>
-                        <canvas id="registrosPorJurisdiccion" width="400" height="400"></canvas>
-                    </div>
-
-                </div>
+            </div>
         </div>
-
     </div>
-    <div class="col-md-3">
 
-        <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Registros por sexo</h3>
+    <!-- Sexo -->
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="card border-0 shadow-sm rounded-lg h-100">
+            <div class="card-header bg-white border-0 pt-4 px-3 text-center">
+                <h6 class="font-weight-bold m-0" style="color: #2C3E50;">Sexo</h6>
+            </div>
+            <div class="card-body p-3 d-flex align-items-center justify-content-center">
+                <div style="position: relative; width: 100%; max-height: 230px;">
+                    <canvas id="registrosPorSexo"></canvas>
                 </div>
-                <div class="card-body">
-
-                    <div>
-                        <canvas id="registrosPorSexo" width="400" height="400"></canvas>
-                    </div>
-
-                </div>
+            </div>
         </div>
-
     </div>
-    <div class="col-md-3">
 
-        <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Tipo de contratación</h3>
+    <!-- Tipo de contratación -->
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="card border-0 shadow-sm rounded-lg h-100">
+            <div class="card-header bg-white border-0 pt-4 px-3 text-center">
+                <h6 class="font-weight-bold m-0" style="color: #2C3E50;">Tipo de Contratación</h6>
+            </div>
+            <div class="card-body p-3 d-flex align-items-center justify-content-center">
+                <div style="position: relative; width: 100%; max-height: 230px;">
+                    <canvas id="registrosTipoSolicitud"></canvas>
                 </div>
-                <div class="card-body">
-
-                    <div>
-                        <canvas id="registrosTipoSolicitud" width="400" height="400"></canvas>
-                    </div>
-
-                </div>
+            </div>
         </div>
-
     </div>
-    <div class="col-md-3">
 
-        <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Tipo de denuncia</h3>
+    <!-- Tipo de denuncia -->
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="card border-0 shadow-sm rounded-lg h-100">
+            <div class="card-header bg-white border-0 pt-4 px-3 text-center">
+                <h6 class="font-weight-bold m-0" style="color: #2C3E50;">Tipo de Denuncia</h6>
+            </div>
+            <div class="card-body p-3 d-flex align-items-center justify-content-center">
+                <div style="position: relative; width: 100%; max-height: 230px;">
+                    <canvas id="registrosTipoContratacion"></canvas>
                 </div>
-                <div class="card-body">
-
-                    <div>
-                        <canvas id="registrosTipoContratacion" width="400" height="400"></canvas>
-                    </div>
-
-                </div>
+            </div>
         </div>
-
     </div>
 </div>
 
-<!-- --------------------------------------------------------- -->
-
-    <div class="row">
-        <div class="col-md-3">
-
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Rangos de Edad</h3>
+<!-- SECCIÓN: RANGOS DE EDAD -->
+<div class="row">
+    <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card border-0 shadow-sm rounded-lg h-100">
+            <div class="card-header bg-white border-0 pt-4 px-3 text-center">
+                <h6 class="font-weight-bold m-0" style="color: #2C3E50;">Rangos de Edad</h6>
+            </div>
+            <div class="card-body p-3 d-flex align-items-center justify-content-center">
+                <div style="position: relative; width: 100%; max-height: 240px;">
+                    <canvas id="registrosRangosDeEdad"></canvas>
                 </div>
-                <div class="card-body">
-
-                    <div>
-                        <canvas id="registrosRangosDeEdad" width="400" height="400"></canvas>
-                    </div>
-
-                </div>
-        </div>
-            
+            </div>
         </div>
     </div>
-
-<!-- --------------------------------------------------------- -->
+</div>
 
 @stop
 
 @section('footer')
-<p>Copyright © <?php echo date('Y') ?> <strong>Servicios de Salud de Coahuila de Zaragoza</strong></p>
+<div class="text-center text-muted py-2">
+    <small>Copyright © <?php echo date('Y') ?> <strong>Servicios de Salud de Coahuila de Zaragoza</strong>. Todos los derechos reservados.</small>
+</div>
 @stop
 
 @section('css')
-    {{-- Add here extra stylesheets --}}
-    {{-- <link rel="stylesheet" href="/css/admin_custom.css"> --}}
+<style>
+    body {
+        background-color: #F4F6F9 !important;
+        font-family: 'Roboto', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    .card {
+        border-radius: 12px !important;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card:hover {
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08) !important;
+    }
+    .border-bottom-soft {
+        border-bottom: 1px solid #F1F3F5;
+    }
+    .table td, .table th {
+        padding: 0.85rem 0.5rem;
+    }
+</style>
 @stop
 
 @section('js')
-    <script> console.log("Hi, I'm using the Laravel-AdminLTE package!"); </script>
-
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-  const ctx = document.getElementById('denunciasPorMes');
-
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio','Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-      datasets: [{
-        label: 'Total de registros',
-        data: [
-        {{$totalDenunciasEnero}},
-        {{$totalDenunciasFebrero}},
-        {{$totalDenunciasMarzo}},
-        {{$totalDenunciasAbril}},
-        {{$totalDenunciasMayo}},
-        {{$totalDenunciasJunio}},
-        {{$totalDenunciasJulio}},
-        {{$totalDenunciasAgosto}},
-        {{$totalDenunciasSeptiembre}},
-        {{$totalDenunciasOctubre}},
-        {{$totalDenunciasNoviembre}},
-        {{$totalDenunciasDiciembre}}
-    ],
-        backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',    // Rosa
-        'rgba(54, 162, 235, 0.2)',   // Azul
-        'rgba(255, 206, 86, 0.2)',   // Amarillo
-        'rgba(75, 192, 192, 0.2)',   // Verde agua
-        'rgba(153, 102, 255, 0.2)',  // Morado
-        'rgba(255, 159, 64, 0.2)',   // Naranja
-        'rgba(255, 205, 210, 0.2)',  // Rosa claro
-        'rgba(201, 203, 207, 0.2)',  // Gris claro
-        'rgba(244, 67, 54, 0.2)',    // Rojo
-        'rgba(0, 188, 212, 0.2)',    // Cian
-        'rgba(76, 175, 80, 0.2)',    // Verde
-        'rgba(255, 193, 7, 0.2)',    // Ámbar
-    ],
-    borderColor: [
-      'rgb(255, 99, 132)',
-      'rgb(54, 162, 235)',
-      'rgb(255, 206, 86)',
-      'rgb(75, 192, 192)',
-      'rgb(153, 102, 255)',
-      'rgb(255, 159, 64)',
-      'rgb(255, 205, 210)',
-      'rgb(201, 203, 207)',
-      'rgb(244, 67, 54)',
-      'rgb(0, 188, 212)',
-      'rgb(76, 175, 80)',
-      'rgb(255, 193, 7)'
-    ],
-    borderWidth: 1
-      }]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
-    }
-  });
-</script>
-
-<script>
-    // Espera a que el contenido del DOM esté cargado
 document.addEventListener('DOMContentLoaded', function() {
-    // Obtén el contexto del canvas
-    var ctx = document.getElementById('registrosPorJurisdiccion').getContext('2d');
-    
-    // Crea la gráfica de dona
-    var myDoughnutChart = new Chart(ctx, {
-        type: 'doughnut',
+
+    // PALETA COMBINADA (Morado + Índigo + Teal + Coral + Azul Claro + Slate)
+    const combinedPalette = [
+        '#4A148C', // Morado Institucional
+        '#3F51B5', // Azul Índigo
+        '#00897B', // Teal / Verde Agua
+        '#EC407A', // Coral / Rosa
+        '#0288D1', // Azul Cielo
+        '#7E57C2', // Lavanda
+        '#00A896', // Verde Turquesa
+        '#78909C'  // Gris Slate
+    ];
+
+    // Opciones generales para gráficas de Dona (Doughnut)
+    const donutOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'bottom',
+                labels: {
+                    usePointStyle: true,
+                    boxWidth: 8,
+                    font: { size: 11 }
+                }
+            },
+            tooltip: {
+                backgroundColor: 'rgba(44, 62, 80, 0.9)',
+                titleFont: { size: 13 },
+                bodyFont: { size: 12 },
+                padding: 10,
+                cornerRadius: 8
+            }
+        },
+        cutout: '68%'
+    };
+
+    // 1. Gráfica Denuncias por Mes
+    const ctxMes = document.getElementById('denunciasPorMes').getContext('2d');
+    new Chart(ctxMes, {
+        type: 'bar',
         data: {
-            labels: ['J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8',],
+            labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
             datasets: [{
-                label: 'Número de votos',
+                label: 'Registros',
                 data: [
-                    {{$totaldenunciasJurisdiccionUno}},
-                    {{$totaldenunciasJurisdiccionDos}},
-                    {{$totaldenunciasJurisdiccionTres}},
-                    {{$totaldenunciasJurisdiccionCuatro}},
-                    {{$totaldenunciasJurisdiccionCinco}},
-                    {{$totaldenunciasJurisdiccionSeis}},
-                    {{$totaldenunciasJurisdiccionSiete}},
-                    {{$totaldenunciasJurisdiccionOcho}}
-                 ],
-                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',  // Rojo claro
-                    'rgba(54, 162, 235, 0.2)',  // Azul claro
-                    'rgba(75, 192, 192, 0.2)',  // Verde azulado claro
-                    'rgba(255, 159, 64, 0.2)',  // Naranja claro
-                    'rgba(153, 102, 255, 0.2)', // Morado claro
-                    'rgba(255, 205, 86, 0.2)',  // Amarillo claro
-                    'rgba(201, 203, 207, 0.2)', // Gris claro
-                    'rgba(0, 204, 102, 0.2)',   // Verde claro
-                    'rgba(255, 99, 71, 0.2)'    // Tomate claro
+                    {{$totalDenunciasEnero}}, {{$totalDenunciasFebrero}}, {{$totalDenunciasMarzo}},
+                    {{$totalDenunciasAbril}}, {{$totalDenunciasMayo}}, {{$totalDenunciasJunio}},
+                    {{$totalDenunciasJulio}}, {{$totalDenunciasAgosto}}, {{$totalDenunciasSeptiembre}},
+                    {{$totalDenunciasOctubre}}, {{$totalDenunciasNoviembre}}, {{$totalDenunciasDiciembre}}
                 ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',    // Rojo
-                    'rgba(54, 162, 235, 1)',    // Azul
-                    'rgba(75, 192, 192, 1)',    // Verde azulado
-                    'rgba(255, 159, 64, 1)',    // Naranja
-                    'rgba(153, 102, 255, 1)',   // Morado
-                    'rgba(255, 205, 86, 1)',    // Amarillo
-                    'rgba(201, 203, 207, 1)',   // Gris
-                    'rgba(0, 204, 102, 1)',     // Verde
-                    'rgba(255, 99, 71, 1)'      // Tomate
-                ],
-                borderWidth: 1
+                backgroundColor: '#3F51B5',
+                hoverBackgroundColor: '#303F9F',
+                borderRadius: 6
             }]
         },
         options: {
             responsive: true,
+            maintainAspectRatio: false,
             plugins: {
-                legend: {
-                    position: 'top',
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: '#F1F3F5', drawBorder: false }
                 },
-                tooltip: {
-                    callbacks: {
-                        label: function(tooltipItem) {
-                            return tooltipItem.label + ': ' + tooltipItem.raw;
-                        }
-                    }
+                x: {
+                    grid: { display: false }
                 }
             }
         }
     });
-});
 
-</script>
+    // 2. Gráfica Registros por Jurisdicción
+    new Chart(document.getElementById('registrosPorJurisdiccion').getContext('2d'), {
+        type: 'doughnut',
+        data: {
+            labels: ['J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8'],
+            datasets: [{
+                data: [
+                    {{$totaldenunciasJurisdiccionUno}}, {{$totaldenunciasJurisdiccionDos}},
+                    {{$totaldenunciasJurisdiccionTres}}, {{$totaldenunciasJurisdiccionCuatro}},
+                    {{$totaldenunciasJurisdiccionCinco}}, {{$totaldenunciasJurisdiccionSeis}},
+                    {{$totaldenunciasJurisdiccionSiete}}, {{$totaldenunciasJurisdiccionOcho}}
+                ],
+                backgroundColor: combinedPalette,
+                borderWidth: 2,
+                borderColor: '#ffffff'
+            }]
+        },
+        options: donutOptions
+    });
 
-<script>
-    // Espera a que el contenido del DOM esté cargado
-document.addEventListener('DOMContentLoaded', function() {
-    // Obtén el contexto del canvas
-    var ctx = document.getElementById('registrosPorSexo').getContext('2d');
-    
-    // Crea la gráfica de dona
-    var myDoughnutChart = new Chart(ctx, {
+    // 3. Gráfica Registros por Sexo (Contrastado entre Morado y Teal)
+    new Chart(document.getElementById('registrosPorSexo').getContext('2d'), {
         type: 'doughnut',
         data: {
             labels: ['Masculino', 'Femenino'],
             datasets: [{
-                label: 'Número de votos',
                 data: [{{$totalDenunciasMasculino}}, {{$totalDenunciasFemenino}}],
-                backgroundColor: [
-                    'rgba(133, 193, 233, 0.2)',
-                    'rgba(195, 155, 211, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(133, 193, 233, 1)',
-                    'rgba(195, 155, 211, 1)'
-                ],
-                borderWidth: 1
+                backgroundColor: ['#3F51B5', '#EC407A'],
+                borderWidth: 2,
+                borderColor: '#ffffff'
             }]
         },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'top',
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function(tooltipItem) {
-                            return tooltipItem.label + ': ' + tooltipItem.raw;
-                        }
-                    }
-                }
-            }
-        }
+        options: donutOptions
     });
-});
 
-</script>
-
-<script>
-    // Espera a que el contenido del DOM esté cargado
-document.addEventListener('DOMContentLoaded', function() {
-    // Obtén el contexto del canvas
-    var ctx = document.getElementById('registrosTipoSolicitud').getContext('2d');
-    
-    // Crea la gráfica de dona
-    var myDoughnutChart = new Chart(ctx, {
+    // 4. Tipo de Contratación
+    new Chart(document.getElementById('registrosTipoSolicitud').getContext('2d'), {
         type: 'doughnut',
         data: {
-            labels: ['CONFIANZA', 'BASE', 'CONTRATO','EN FORMACION','OTRA'],
+            labels: ['Confianza', 'Base', 'Contrato', 'En Formación', 'Otra'],
             datasets: [{
-                label: 'Número de votos',
                 data: [
-                    {{$totaldenunciasConfianza}}, 
-                    {{$totaldenunciasBase}},
-                    {{$totaldenunciasContrato}},
-                    {{$totaldenunciasEnFormacion}},
+                    {{$totaldenunciasConfianza}}, {{$totaldenunciasBase}},
+                    {{$totaldenunciasContrato}}, {{$totaldenunciasEnFormacion}},
                     {{$totaldenunciasOtra}}
                 ],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',  // Rojo brillante
-                    'rgba(54, 162, 235, 0.2)',  // Azul brillante
-                    'rgba(75, 192, 192, 0.2)',  // Verde azulado
-                    'rgba(255, 159, 64, 0.2)',  // Naranja
-                    'rgba(153, 102, 255, 0.2)'  // Morado
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',    // Rojo brillante
-                    'rgba(54, 162, 235, 1)',    // Azul brillante
-                    'rgba(75, 192, 192, 1)',    // Verde azulado
-                    'rgba(255, 159, 64, 1)',    // Naranja
-                    'rgba(153, 102, 255, 1)'    // Morado
-                ],
-                borderWidth: 1
+                backgroundColor: ['#4A148C', '#3F51B5', '#00897B', '#0288D1', '#78909C'],
+                borderWidth: 2,
+                borderColor: '#ffffff'
             }]
         },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'top',
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function(tooltipItem) {
-                            return tooltipItem.label + ': ' + tooltipItem.raw;
-                        }
-                    }
-                }
-            }
-        }
+        options: donutOptions
     });
-});
 
-</script>
-
-<script>
-    // Espera a que el contenido del DOM esté cargado
-document.addEventListener('DOMContentLoaded', function() {
-    // Obtén el contexto del canvas
-    var ctx = document.getElementById('registrosTipoContratacion').getContext('2d');
-    
-    // Crea la gráfica de dona
-    var myDoughnutChart = new Chart(ctx, {
+    // 5. Tipo de Denuncia
+    new Chart(document.getElementById('registrosTipoContratacion').getContext('2d'), {
         type: 'doughnut',
         data: {
-            labels: ['ACOSO', 'HOSTIGAMIENTO', 'OTRO'],
+            labels: ['Acoso', 'Hostigamiento'],
             datasets: [{
-                label: 'Número de votos',
-                data: [
-                    {{$totaldenunciasAcosoSexual}}, 
-                    {{$totaldenunciasHostigamiento}}
-                ],
-                backgroundColor: [
-                    'rgba(236, 112, 99, 0.2)', // Azul claro
-                    'rgba(245, 176, 65, 0.2)', // Amarillo suave
-                ],
-                borderColor: [
-                    'rgba(236, 112, 99, 1)',   // Azul claro
-                    'rgba(245, 176, 65, 1)',   // Amarillo suave
-                ],
-                borderWidth: 1
+                data: [{{$totaldenunciasAcosoSexual}}, {{$totaldenunciasHostigamiento}}],
+                backgroundColor: ['#4A148C', '#00897B'],
+                borderWidth: 2,
+                borderColor: '#ffffff'
             }]
         },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'top',
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function(tooltipItem) {
-                            return tooltipItem.label + ': ' + tooltipItem.raw;
-                        }
-                    }
-                }
-            }
-        }
+        options: donutOptions
     });
-});
 
-</script>
-
-<script>
-    // Espera a que el contenido del DOM esté cargado
-document.addEventListener('DOMContentLoaded', function() {
-    // Obtén el contexto del canvas
-    var ctx = document.getElementById('registrosRangosDeEdad').getContext('2d');
-    
-    // Crea la gráfica de dona
-    var myDoughnutChart = new Chart(ctx, {
+    // 6. Rangos de Edad
+    new Chart(document.getElementById('registrosRangosDeEdad').getContext('2d'), {
         type: 'doughnut',
         data: {
-            labels: ['PRIMERA INFANCIA', 'INFANCIA', 'ADOLESCENCIA','JUVENTUD','ADULTEZ','PERSONA MAYOR'],
+            labels: ['1° Infancia', 'Infancia', 'Adolescencia', 'Juventud', 'Adultez', 'Adulto Mayor'],
             datasets: [{
-                label: 'Número de votos',
                 data: [
-                    {{$primeraInfancia}}, 
-                    {{$infancia}},
-                    {{$adolescencia}},
-                    {{$juventud}},
-                    {{$adultez}},
-                    {{$personaMayor}}
+                    {{$primeraInfancia}}, {{$infancia}}, {{$adolescencia}},
+                    {{$juventud}}, {{$adultez}}, {{$personaMayor}}
                 ],
-                backgroundColor: [
-                    'rgba(236, 112, 99, 0.2)',   // Primera Infancia (rojo claro)
-                    'rgba(245, 176, 65, 0.2)',    // Infancia (amarillo suave)
-                    'rgba(187, 143, 206, 0.2)',   // Adolescencia (morado claro)
-                    'rgba(54, 162, 235, 0.2)',    // Juventud (azul brillante)
-                    'rgba(75, 192, 192, 0.2)',    // Adultez (verde claro)
-                    'rgba(153, 102, 255, 0.2)'    // Persona Mayor (lavanda suave)
-                ],
-                borderColor: [
-                    'rgba(236, 112, 99, 1)',     // Primera Infancia (rojo claro)
-                    'rgba(245, 176, 65, 1)',     // Infancia (amarillo suave)
-                    'rgba(187, 143, 206, 1)',    // Adolescencia (morado claro)
-                    'rgba(54, 162, 235, 1)',     // Juventud (azul brillante)
-                    'rgba(75, 192, 192, 1)',     // Adultez (verde claro)
-                    'rgba(153, 102, 255, 1)'     // Persona Mayor (lavanda suave)
-                ],
-                borderWidth: 1
+                backgroundColor: combinedPalette.slice(0, 6),
+                borderWidth: 2,
+                borderColor: '#ffffff'
             }]
         },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'top',
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function(tooltipItem) {
-                            return tooltipItem.label + ': ' + tooltipItem.raw;
-                        }
-                    }
-                }
-            }
-        }
+        options: donutOptions
     });
 });
-
 </script>
 @stop

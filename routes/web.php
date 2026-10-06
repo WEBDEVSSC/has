@@ -1,204 +1,233 @@
 <?php
 
-use App\Http\Controllers\DenunciaController;
-use App\Http\Controllers\DenunciaDocumentacionController;
-use App\Http\Controllers\DenunciaReincidenciaController;
-use App\Http\Controllers\DenunciaSeguimientoController;
-use App\Http\Controllers\FileController;
-use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+// Importación de Controladores
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MicroSitioController;
 use App\Http\Controllers\NotificacionController;
 use App\Http\Controllers\UsuarioController;
-use App\Models\DenunciaDocumentacion;
+use App\Http\Controllers\DenunciaController;
+use App\Http\Controllers\DenunciaDocumentacionController;
+use App\Http\Controllers\DenunciaReincidenciaController;
+use App\Http\Controllers\DenunciaSeguimientoController;
 
-/**
- * 
- * 
- * 
- * RUTAS PUBLICAS PARA LA PAGINA WEB
- * UTILIZANDO MICROSITIOCONTROLLER
- * 
- * 
- */
+/*
+|--------------------------------------------------------------------------
+| RUTAS PÚBLICAS (MICROSITIO)
+|--------------------------------------------------------------------------
+*/
 
-
-
-// Ruta de bienvenida
-
+// Muestra la página principal / bienvenida del sitio
 Route::get('/', [MicroSitioController::class, 'inicio'])->name('inicio');
 
-Route::get('/formato-denuncia',[MicroSitioController::class,'formatoDenuncia'])->name('formatoDenuncia');
+// Muestra el formulario para realizar una denuncia pública
+Route::get('/formato-denuncia', [MicroSitioController::class, 'formatoDenuncia'])->name('formatoDenuncia');
 
-Route::post('/formato-denuncia-store',[MicroSitioController::class,'formatoDenunciaStore'])->name('formatoDenunciaStore');
+// Procesa y guarda la denuncia enviada por el ciudadano (Protegido contra Spam con Throttle: máximo 5 envíos por minuto)
+Route::post('/formato-denuncia-store', [MicroSitioController::class, 'formatoDenunciaStore'])
+    ->middleware('throttle:5,1')
+    ->name('formatoDenunciaStore');
 
+// Muestra la información relativa al protocolo institucional
 Route::get('/protocolo', [MicroSitioController::class, 'protocolo'])->name('protocolo');
+
+// Muestra el documento/información del pronunciamiento
 Route::get('/pronunciamiento', [MicroSitioController::class, 'pronunciamiento'])->name('pronunciamiento');
+
+// Muestra la sección descriptiva del comité/sistema
 Route::get('/queEs', [MicroSitioController::class, 'QueEs'])->name('queEs');
+
+// Muestra la vista del buzón de denuncias
 Route::get('/buzonDenuncia', [MicroSitioController::class, 'buzon'])->name('buzonDenuncia');
-Route::post('/buzonDenuncia', [MicroSitioController::class, 'buzonStore'])->name('buzonStore');
 
-// Ruta para mostrar el formulario de Seguimiento
+// Guarda los mensajes/quejas recibidos en el buzón público (Protegido con Throttle)
+Route::post('/buzonDenuncia', [MicroSitioController::class, 'buzonStore'])
+    ->middleware('throttle:5,1')
+    ->name('buzonStore');
+
+// Muestra el formulario de consulta de seguimiento para el denunciante
 Route::get('/buzon-seguimiento', [MicroSitioController::class, 'buzonSeguimiento'])->name('buzonSeguimiento');
-Route::post('/buzon-seguimiento-resultados', [MicroSitioController::class, 'buzonSeguimientoShow'])->name('buzonSeguimientoShow');
 
-// Ruta para mostrar el formulario de Reincidencia
+// Consulta los resultados del seguimiento (Protegido contra escaneo masivo con Throttle)
+Route::post('/buzon-seguimiento-resultados', [MicroSitioController::class, 'buzonSeguimientoShow'])
+    ->middleware('throttle:10,1')
+    ->name('buzonSeguimientoShow');
+
+// Muestra la vista para solicitar/registrar una reincidencia desde la parte pública
 Route::get('/buzon-reincidencia', [MicroSitioController::class, 'buzonReincidencia'])->name('buzonReincidencia');
-Route::post('/buzon-reincidencia-create', [MicroSitioController::class, 'buzonReincidenciaCreate'])->name('buzonReincidenciaCreate');
-Route::post('/buzon-reincidencia-store', [MicroSitioController::class, 'buzonReincidenciaStore'])->name('buzonReincidenciaStore');
 
-/*Route::get('/phpinfo', function () {
-    phpinfo();
-});*/
-    
-    //DECLARAMOS LA VARIABLE A LA CUAL LE CARGAMOS EL METODO LOAD Y LA RUTA DE LA VISTA
-    //$pdf = PDF::loadView('pdf.pdf');
+// Procesa la solicitud o búsqueda inicial de reincidencia (Protegido con Throttle)
+Route::post('/buzon-reincidencia-create', [MicroSitioController::class, 'buzonReincidenciaCreate'])
+    ->middleware('throttle:10,1')
+    ->name('buzonReincidenciaCreate');
 
-    //LO IMRPIME EN EL NAVEGADOR
-    //return $pdf->stream();
-
-    //LO DESCARGA AUTOMATICAMENTE
-    //return $pdf->download();
-
-    //LO GUARDA EN UN DIRECTORIO EN ESPECIFICO
-    //return $pdf->save();
+// Registra la reincidencia en la base de datos (Protegido con Throttle)
+Route::post('/buzon-reincidencia-store', [MicroSitioController::class, 'buzonReincidenciaStore'])
+    ->middleware('throttle:5,1')
+    ->name('buzonReincidenciaStore');
 
 
+/*
+|--------------------------------------------------------------------------
+| AUTENTICACIÓN
+|--------------------------------------------------------------------------
+*/
+
+// Rutas predeterminadas de autenticación (Login, Reset Password). Desactiva el registro público si solo el superAdmin crea usuarios.
+Auth::routes(['register' => false]);
 
 
-// RUTA PARA MOSTRAR EL FORMULARIO DE INICIO
+/*
+|--------------------------------------------------------------------------
+| PANEL ADMINISTRATIVO (REQUERE AUTENTICACIÓN)
+|--------------------------------------------------------------------------
+*/
 
-Auth::routes();
+Route::middleware(['auth'])->prefix('admin')->group(function () {
 
-//RUTA PARA NUEVAS
-
-Route::middleware(['auth'])->group(function () 
-{
+    // Vista principal del panel de administración
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
     /*
-    *
-    *
-    * DENUNCIA CONTROLLER
-    *
+    |--------------------------------------------------------------------------
+    | GESTIÓN DE DENUNCIAS
+    |--------------------------------------------------------------------------
     */
 
-    //RUTA PARA MOSTRAR EL PANEL DE NUEVAS DENUNCIAS
-    Route::get('admin/nuevas', [DenunciaController::class, 'nuevas'])->name('denuncias.nuevas');
+    // Muestra el listado de denuncias nuevas ingresadas
+    Route::get('/nuevas', [DenunciaController::class, 'nuevas'])->name('denuncias.nuevas');
 
-    //RUTA PARA MOSTRAR EL PANEL DE DENUNCIAS EN PROCESO
-    Route::get('admin/enproceso', [DenunciaController::class, 'enproceso'])->name('denuncias.enproceso');
+    // Muestra el listado de denuncias actualmente en trámite/proceso
+    Route::get('/enproceso', [DenunciaController::class, 'enproceso'])->name('denuncias.enproceso');
 
-    //RUTA PARA MOSTRAR EL PANEL DE DENUNCIAS ATENDIDAS
-    Route::get('admin/atendidas', [DenunciaController::class, 'atendidas'])->name('denuncias.atendidas');
+    // Muestra el listado de denuncias concluidas/atendidas
+    Route::get('/atendidas', [DenunciaController::class, 'atendidas'])->name('denuncias.atendidas');
 
-    //RUTA PARA MOSTRAR TODOS LOS REGISTROS
-    Route::get('admin/total', [DenunciaController::class, 'total'])->name('denuncias.total');
+    // Muestra la lista consolidada de todas las denuncias
+    Route::get('/total', [DenunciaController::class, 'total'])->name('denuncias.total');
 
-    //RUTA PARA MOSTRAR LA VISTA DE DETALLES DE DENUNCIA
-    Route::get('admin/{id}/detalles', [DenunciaController::class, 'detalles'])->name('denuncias.detalles');
+    // Muestra el detalle de una denuncia específica (Validado que el ID sea estrictamente numérico)
+    Route::get('/{id}/detalles', [DenunciaController::class, 'detalles'])
+        ->whereNumber('id')
+        ->name('denuncias.detalles');
 
-    Route::get('admin/detalles/{filename}', [DenunciaController::class, 'download'])->name('file.detalles');
+    // Descarga/visualiza archivos adjuntos a los detalles (Validado contra Path Traversal)
+    Route::get('/detalles/archivo/{filename}', [DenunciaController::class, 'download'])
+        ->where('filename', '[A-Za-z0-9_\-\.]+')
+        ->name('file.detalles');
 
+    // Muestra el formulario para cambiar el estatus de la denuncia
+    Route::get('/{id}/status', [DenunciaController::class, 'status'])
+        ->whereNumber('id')
+        ->name('denuncias.status');
 
-    
+    // Actualiza el estatus de la denuncia en la base de datos
+    Route::put('/{id}/statusupdate', [DenunciaController::class, 'update'])
+        ->whereNumber('id')
+        ->name('denuncias.update');
 
-    //RUTA PARA MOSTRAR EL FORMULARIO DEL STATUS
-    Route::get('admin/{id}/status', [DenunciaController::class, 'status'])->name('denuncias.status');
-
-    //RUTA PARA ACTUALIZAR EL STATUS EN LA BD
-    Route::put('admin/{id}/statusupdate', [DenunciaController::class, 'update'])->name('denuncias.update');
+    // Genera la ficha/expediente completo en formato PDF
+    Route::get('/{id}/generar-pdf', [DenunciaController::class, 'generarPDF'])
+        ->whereNumber('id')
+        ->name('generar.pdf');
 
     /*
-    *
-    *
-    * DENUNCIA SEGUIMIENTO CONTROLLER
-    *
+    |--------------------------------------------------------------------------
+    | SEGUIMIENTO DE DENUNCIAS
+    |--------------------------------------------------------------------------
     */
 
-    //RUTA PARA MOSTRAR EL FORMULARIO PARA SEGUIMIENTO
-    Route::get('admin/{id}/seguimientocreate', [DenunciaSeguimientoController::class, 'create'])->name('seguimiento.create');
+    // Muestra el formulario interno para registrar un nuevo avance/seguimiento
+    Route::get('/{id}/seguimientocreate', [DenunciaSeguimientoController::class, 'create'])
+        ->whereNumber('id')
+        ->name('seguimiento.create');
 
-    //RUTA PARA REGISTRAR EL SEGUIMIENTO
-    Route::post('admin/seguimientostore', [DenunciaSeguimientoController::class, 'store'])->name('seguimiento.store');
+    // Guarda el nuevo seguimiento administrativo
+    Route::post('/seguimientostore', [DenunciaSeguimientoController::class, 'store'])->name('seguimiento.store');
 
     /*
-    *
-    *
-    * RUTAS PARA SUBIR UN ARCHIVO EN DOCUMENTACION
-    *
+    |--------------------------------------------------------------------------
+    | DOCUMENTACIÓN Y ANEXOS
+    |--------------------------------------------------------------------------
     */
 
-    //RUTA PARA MOSTRAR EL FORMULARIO PARA SUBIR DOCUMENTOS ANEXOS
-    Route::get('admin/{id}/documento', [DenunciaDocumentacionController::class, 'create'])->name('documento.create');
+    // Muestra el formulario para anexar documentos al expediente
+    Route::get('/{id}/documento', [DenunciaDocumentacionController::class, 'create'])
+        ->whereNumber('id')
+        ->name('documento.create');
 
-    //RUTA PARA GUARDAR LOS DATOS DEL FORMULARIO PARA SUBIR DOCUMENTOS
-    Route::post('admin/{id}/documentostore', [DenunciaDocumentacionController::class, 'store'])->name('documento.store');
+    // Guarda los documentos subidos al servidor
+    Route::post('/{id}/documentostore', [DenunciaDocumentacionController::class, 'store'])
+        ->whereNumber('id')
+        ->name('documento.store');
 
-    //RUTA PARA VER EL DOCUMENTO QUE SE ACABA DE SUBIR
-    Route::post('admin/{id}/documentoshow', [DenunciaDocumentacionController::class, 'show'])->name('documento.show');
+    // Muestra un documento específico cargado
+    Route::post('/{id}/documentoshow', [DenunciaDocumentacionController::class, 'show'])
+        ->whereNumber('id')
+        ->name('documento.show');
 
-    //ENLACE PARA DESCARGAR DE MANERA SEGURA LOS DOCUMENTOS
-    Route::get('admin/documentos/download/{filename}', [DenunciaDocumentacionController::class, 'download'])->name('documento.download');
+    // Descarga segura de expedientes/documentos adjuntos
+    Route::get('/documentos/download/{filename}', [DenunciaDocumentacionController::class, 'download'])
+        ->where('filename', '[A-Za-z0-9_\-\.]+')
+        ->name('documento.download');
 
     /*
-    *
-    *
-    * RUTAS PARA REINCIDENCIA
-    *
+    |--------------------------------------------------------------------------
+    | REINCIDENCIAS
+    |--------------------------------------------------------------------------
     */
 
-    //RUTA PARA MOSTRAR EL FORMULARIO PARA CREAR UNA NUEVA REINCIDENCIA
-    Route::get('admin/{id}/reincidencia', [DenunciaReincidenciaController::class, 'create'])->name('reincidencia.create');
+    // Formulario administrativo para vincular una reincidencia
+    Route::get('/{id}/reincidencia', [DenunciaReincidenciaController::class, 'create'])
+        ->whereNumber('id')
+        ->name('reincidencia.create');
 
-    //RUTA PARA GUARDAR LOS DATOS DEL FORMULARIO PARA SUBIR DOCUMENTOS
-    Route::post('admin/{id}/reincidenciatore', [DenunciaReincidenciaController::class, 'store'])->name('reincidencia.store');
+    // Guarda el registro de reincidencia
+    Route::post('/{id}/reincidenciastore', [DenunciaReincidenciaController::class, 'store'])
+        ->whereNumber('id')
+        ->name('reincidencia.store');
 
-    //ENLACE PARA DESCARGAR DE MANERA SEGURA LOS DOCUMENTOS
-    Route::get('admin/reincidencia/download/{filename}', [DenunciaReincidenciaController::class, 'download'])->name('file.download');
+    // Descarga segura de adjuntos de reincidencia
+    Route::get('/reincidencia/download/{filename}', [DenunciaReincidenciaController::class, 'download'])
+        ->where('filename', '[A-Za-z0-9_\-\.]+')
+        ->name('file.download');
 
-    /**
-     * 
-     * 
-     *  RUTAS PARA GENERAR ARCHIVO PDF CON DONPDF
-     * 
-     * 
-     */
+    /*
+    |--------------------------------------------------------------------------
+    | NOTIFICACIONES
+    |--------------------------------------------------------------------------
+    */
 
-    Route::get('admin/{id}/generar-pdf', [DenunciaController::class, 'generarPDF'])->name('generar.pdf');
+    // Muestra la bandeja/panel de notificaciones del sistema
+    Route::get('/notificaciones/index', [NotificacionController::class, 'index'])->name('notificacionesIndex');
 
-    /**
-     * 
-     * 
-     *  RUTAS PARA NOTIFICACION DE CORREO
-     * 
-     * 
-     */
+    /*
+    |--------------------------------------------------------------------------
+    | ADMINISTRACIÓN DE USUARIOS (SÓLO SUPERADMIN)
+    |--------------------------------------------------------------------------
+    */
 
-    Route::get('admin/notificaciones/index',[NotificacionController::class,'index'])->name('notificacionesIndex');
+    Route::middleware(['can:superAdmin'])->prefix('usuarios')->group(function () {
+        // Listado general de usuarios
+        Route::get('/', [UsuarioController::class, 'index'])->name('usuarios.index');
 
-    /**
-     * 
-     * 
-     * CONFIGURACION PARA USUARIOS CRUD
-     * 
-     * 
-     */
+        // Formulario de creación de nuevos usuarios
+        Route::get('/create', [UsuarioController::class, 'create'])->name('usuarios.create');
 
-    Route::get('admin/usuarios', [UsuarioController::class, 'index'])->name('usuarios.index')->middleware('can:superAdmin');
+        // Guarda el nuevo usuario
+        Route::post('/store', [UsuarioController::class, 'store'])->name('usuarios.store');
 
-    Route::get('admin/usuarios/create', [UsuarioController::class, 'create'])->name('usuarios.create')->middleware('can:superAdmin');
+        // Formulario de edición de un usuario existente
+        Route::get('/{id}/edit', [UsuarioController::class, 'edit'])->whereNumber('id')->name('usuarios.edit');
 
-    Route::post('admin/usuarios/store', [UsuarioController::class, 'store'])->name('usuarios.store')->middleware('can:superAdmin');
+        // Actualiza la información del usuario
+        Route::put('/{id}', [UsuarioController::class, 'update'])->whereNumber('id')->name('usuarios.update');
 
-    Route::get('admin/usuarios/{id}/edit', [UsuarioController::class, 'edit'])->name('usuarios.edit')->middleware('can:superAdmin');
-
-    Route::put('admin/usuarios/{id}', [UsuarioController::class, 'update'])->name('usuarios.update')->middleware('can:superAdmin');
-
-    Route::delete('admin/usuarios/{id}', [UsuarioController::class, 'destroy'])->name('usuarios.destroy')->middleware('can:superAdmin');
+        // Elimina/desactiva un usuario
+        Route::delete('/{id}', [UsuarioController::class, 'destroy'])->whereNumber('id')->name('usuarios.destroy');
+    });
 
 });
