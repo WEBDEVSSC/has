@@ -86,7 +86,8 @@ Auth::routes(['register' => false]);
 |--------------------------------------------------------------------------
 */
 
-Route::middleware(['auth'])->prefix('admin')->group(function () {
+//Route::middleware(['auth'])->prefix('admin')->group(function () {
+Route::middleware(['auth'])->group(function () {
 
     // Vista principal del panel de administración
     Route::get('/home', [HomeController::class, 'index'])->name('home');
