@@ -89,7 +89,7 @@ Auth::routes(['register' => false]);
 Route::middleware(['auth'])->prefix('admin')->group(function () {
 
     // Vista principal del panel de administración
-    Route::get('/admin/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
 
     /*
     |--------------------------------------------------------------------------
