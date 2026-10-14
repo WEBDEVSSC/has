@@ -298,7 +298,7 @@ return [
 
     [
         'text' => 'Home',
-        'route' => '/home', // En lugar de 'url' => '/home'
+        'url' => '/home',
         'icon' => 'fas fa-fw fa-chart-line',
     ],
 
