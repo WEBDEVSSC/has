@@ -94,10 +94,10 @@ class DenunciaController extends Controller
         $totalDenuncias = $denuncias->count();
 
         // Desencriptar el valor "nombre" para cada denuncia
-        $denuncias->transform(function ($denuncia) {
+        /*$denuncias->transform(function ($denuncia) {
             $denuncia->nombre = Crypt::decryptString($denuncia->nombre);
             return $denuncia;
-        });
+        });*/
 
         // Pasar los registros a una vista para mostrarlos
         return view('atendidas', compact('denuncias', 'totalDenuncias'));
