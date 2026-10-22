@@ -93,7 +93,7 @@
                                         <td class="text-muted small">
                                             {{ $denuncia->created_at->format('d/m/Y') }}
                                         </td>
-                                        td>
+                                        <td>
                                             @if($denuncia->status === 'PENDIENTE')
                                                 <span class="badge badge-pill px-3 py-2" style="background-color: #FFF3E0; color: #FB8C00; font-weight: 600;">
                                                     {{ $denuncia->status }}
@@ -111,6 +111,7 @@
                                                     {{ $denuncia->status }}
                                                 </span>
                                             @endif
+                                        </td>
                                         <td class="text-center">
                                             <div class="btn-group" role="group">
                                                 <button id="btnGroupDrop{{ $denuncia->id }}" type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle px-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border-radius: 20px;">
