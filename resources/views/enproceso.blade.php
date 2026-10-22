@@ -58,6 +58,7 @@
                                 <tr>
                                     <th>Folio</th>
                                     <th>Denunciante</th>
+                                    <th>Municipio</th>
                                     <th>Tipo</th>
                                     <th>Registro</th>
                                     <th class="text-center" style="width: 120px;">Acciones</th>
@@ -68,25 +69,28 @@
                                     <tr>
                                         <td>
                                             <span class="font-weight-bold text-dark">
-                                                SSC/HAS/{{ $denuncia->created_at ? \Carbon\Carbon::parse($denuncia->created_at)->format('Y') : date('Y') }}/{{ $denuncia->folio }}
+                                                SSC/HAS/{{ $denuncia->created_at->format('Y') }}/{{ $denuncia->folio }}
                                             </span>
                                         </td>
                                         <td class="font-weight-semibold text-secondary">
-                                            {{ $denuncia->nombre }}
+                                            {{ $denuncia->victima_nombre }}
                                         </td>
                                         <td>
-                                            @if($denuncia->tipo_solicitud === 'ACOSO SEXUAL')
+                                            <span class="text-muted"><i class="fas fa-map-marker-alt text-muted mr-1"></i> {{ $denuncia->clues_municipio_label }}</span>
+                                        </td>
+                                        <td>
+                                            @if($denuncia->tipo_denuncia === 'ACOSO SEXUAL')
                                                 <span class="badge badge-pill px-3 py-2" style="background-color: #FCE4EC; color: #C2185B; font-weight: 600;">
-                                                    <i class="fas fa-exclamation-circle mr-1"></i> {{ $denuncia->tipo_solicitud }}
+                                                    <i class="fas fa-exclamation-circle mr-1"></i> {{ $denuncia->tipo_denuncia }}
                                                 </span>
                                             @else
                                                 <span class="badge badge-pill px-3 py-2" style="background-color: #E8EAF6; color: #3F51B5; font-weight: 600;">
-                                                    {{ $denuncia->tipo_solicitud }}
+                                                    {{ $denuncia->tipo_denuncia }}
                                                 </span>
                                             @endif
                                         </td>
                                         <td class="text-muted small">
-                                            {{ $denuncia->created_at ? \Carbon\Carbon::parse($denuncia->created_at)->format('d/m/Y') : '-' }}
+                                            {{ $denuncia->created_at->format('d/m/Y') }}
                                         </td>
                                         <td class="text-center">
                                             <div class="btn-group" role="group">
