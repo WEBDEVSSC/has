@@ -207,9 +207,9 @@
 @section('auth_header')
     <div class="card-title-custom">
         <i class="fas fa-shield-alt"></i>
-        <span>Sistema Denuncias</span>
+        <span>SIAHAS</span>
     </div>
-    <p class="login-card-header-subtitle">Servicios de Salud de Coahuila de Zaragoza</p>
+    <p class="login-card-header-subtitle">Sistema Integral de Atención al Hostigamiento y Acoso Sexual</p>
 @stop
 
 @section('auth_footer')
