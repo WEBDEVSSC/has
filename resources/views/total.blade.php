@@ -69,28 +69,28 @@
                                     <tr>
                                         <td>
                                             <span class="font-weight-bold text-dark">
-                                                SSC/HAS/{{ $denuncia->created_at ? \Carbon\Carbon::parse($denuncia->created_at)->format('Y') : date('Y') }}/{{ $denuncia->folio }}
+                                                SSC/HAS/{{ $denuncia->created_at->format('Y') }}/{{ $denuncia->folio }}
                                             </span>
                                         </td>
                                         <td class="font-weight-semibold text-secondary">
-                                            {{ $denuncia->nombre }}
-                                        </td>
-                                        <td class="text-secondary">
-                                            {{ $denuncia->entidad }}
+                                            {{ $denuncia->victima_nombre }}
                                         </td>
                                         <td>
-                                            @if($denuncia->tipo_solicitud === 'ACOSO SEXUAL')
+                                            <span class="text-muted"><i class="fas fa-map-marker-alt text-muted mr-1"></i> {{ $denuncia->clues_municipio_label }}</span>
+                                        </td>
+                                        <td>
+                                            @if($denuncia->tipo_denuncia === 'ACOSO SEXUAL')
                                                 <span class="badge badge-pill px-3 py-2" style="background-color: #FCE4EC; color: #C2185B; font-weight: 600;">
-                                                    <i class="fas fa-exclamation-circle mr-1"></i> {{ $denuncia->tipo_solicitud }}
+                                                    <i class="fas fa-exclamation-circle mr-1"></i> {{ $denuncia->tipo_denuncia }}
                                                 </span>
                                             @else
-                                                <span class="badge badge-pill px-3 py-2" style="background-color: #F3E5F5; color: #4A148C; font-weight: 600;">
-                                                    {{ $denuncia->tipo_solicitud }}
+                                                <span class="badge badge-pill px-3 py-2" style="background-color: #E8EAF6; color: #3F51B5; font-weight: 600;">
+                                                    {{ $denuncia->tipo_denuncia }}
                                                 </span>
                                             @endif
                                         </td>
                                         <td class="text-muted small">
-                                            {{ $denuncia->created_at ? \Carbon\Carbon::parse($denuncia->created_at)->format('d/m/Y') : '-' }}
+                                            {{ $denuncia->created_at->format('d/m/Y') }}
                                         </td>
                                         <td class="text-center">
                                             <div class="btn-group" role="group">
@@ -105,7 +105,7 @@
                                                         <i class="fas fa-sync-alt text-info mr-2"></i> Actualizar Status
                                                     </a>
                                                     <a class="dropdown-item py-2" href="{{ route('seguimiento.create', $denuncia->id) }}">
-                                                        <i class="fas fa-tasks mr-2" style="color: #4A148C;"></i> Seguimiento (NOSOTROS)
+                                                        <i class="fas fa-tasks text-purple mr-2" style="color: #4A148C;"></i> Seguimiento (NOSOTROS)
                                                     </a>
                                                     <a class="dropdown-item py-2" href="{{ route('reincidencia.create', $denuncia->id) }}">
                                                         <i class="fas fa-user-shield text-warning mr-2"></i> Reincidencia (VÍCTIMA)
