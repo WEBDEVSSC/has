@@ -273,7 +273,7 @@ class MicroSitioController extends Controller
         $denuncia->victima_medidas_proteccion_solicita = $request->victima_medidas_proteccion_solicita;
 
         $denuncia->clues_nombre = $clues->nombre;
-        $denuncia->clues_municipio = $clues->municipio;
+        $denuncia->clues_municipio = $clues->municipio_id;
         $denuncia->clues_municipio_label = $clues->municipio;
         $denuncia->clues_jurisdiccion = $clues->jurisdiccion;
         $denuncia->clues_jurisdiccion_label = $clues->jurisdiccion_label;
