@@ -61,6 +61,7 @@
                                     <th>Municipio</th>
                                     <th>Tipo</th>
                                     <th>Registro</th>
+                                    <th>Status</th>
                                     <th class="text-center" style="width: 120px;">Acciones</th>
                                 </tr>
                             </thead>
@@ -92,6 +93,24 @@
                                         <td class="text-muted small">
                                             {{ $denuncia->created_at->format('d/m/Y') }}
                                         </td>
+                                        td>
+                                            @if($denuncia->status === 'PENDIENTE')
+                                                <span class="badge badge-pill px-3 py-2" style="background-color: #FFF3E0; color: #FB8C00; font-weight: 600;">
+                                                    {{ $denuncia->status }}
+                                                </span>
+                                            @elseif($denuncia->status === 'EN PROCESO')
+                                                <span class="badge badge-pill px-3 py-2" style="background-color: #E3F2FD; color: #1E88E5; font-weight: 600;">
+                                                    {{ $denuncia->status }}
+                                                </span>
+                                            @elseif($denuncia->status === 'ATENDIDA')
+                                                <span class="badge badge-pill px-3 py-2" style="background-color: #E8F5E9; color: #43A047; font-weight: 600;">
+                                                    {{ $denuncia->status }}
+                                                </span>
+                                            @else
+                                                <span class="badge badge-pill px-3 py-2" style="background-color: #FCE4EC; color: #C2185B; font-weight: 600;">
+                                                    {{ $denuncia->status }}
+                                                </span>
+                                            @endif
                                         <td class="text-center">
                                             <div class="btn-group" role="group">
                                                 <button id="btnGroupDrop{{ $denuncia->id }}" type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle px-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border-radius: 20px;">
